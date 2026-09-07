@@ -1,12 +1,21 @@
 import { ArrowRight, BookOpen, Github, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { GithubStats } from "@/components/github-stats";
-import { HomeAttackGraph, ProductTour, StatsRow, SwarmDiagram, WhyGrid } from "@/components/home-sections";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { HomeAttackGraph, ProductTour, Screenshots, StatsRow, SwarmDiagram, WhyGrid } from "@/components/home-sections";
 import { InstallTabs } from "@/components/install-tabs";
 import { MissionControl } from "@/components/mission-control";
 import { Typewriter } from "@/components/typewriter";
 import { SectionHeading } from "@/components/ui";
 import { SITE } from "@/lib/site";
+
+const SHOT_FILES = ["run-creation.png", "attack-graph.png", "evidence-findings.png", "final-report.png"] as const;
+
+function screenshotAvailability(): Record<string, boolean> {
+  const dir = join(process.cwd(), "public", "screenshots");
+  return Object.fromEntries(SHOT_FILES.map((f) => [f, existsSync(join(dir, f))]));
+}
 
 export default function HomePage() {
   return (
@@ -122,6 +131,16 @@ export default function HomePage() {
           lede="The WebUI is a loopback-only, bearer-token console at 127.0.0.1:8765 — wizard, live stream, graph, evidence, skills, modules, benchmarks, memory, connections and system in one place."
         />
         <ProductTour />
+      </section>
+
+      {/* real screenshots — placeholders until public/screenshots/ is populated */}
+      <section className="mx-auto max-w-6xl border-t px-4 py-16 sm:px-6">
+        <SectionHeading
+          eyebrow="Screenshots"
+          title="The real WebUI"
+          lede="Actual BreachPilot console captures from a local lab run — not mockups. Missing captures show exactly which file to add."
+        />
+        <Screenshots available={screenshotAvailability()} />
       </section>
 
       {/* safety strip */}
