@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # prebuild (scripts/sync-docs.mjs) expects the main BreachPilot
+      # repo's docs/ + README.md as siblings of this checkout, so
+      # sparse-clone just those into the right place.
+      - name: Fetch BreachPilot docs (prebuild sync source)
+        run: |
+          PARENT_DIR="$(dirname "$GITHUB_WORKSPACE")"
+          rm -rf "$PARENT_DIR/docs" "$PARENT_DIR/README.md"
+          git clone --depth 1 --filter=blob:none --sparse https://github.com/braydos-h/BreachPilot.git /tmp/breachpilot
+          cd /tmp/breachpilot
+          git sparse-checkout set docs README.md
+          cp -r docs "$PARENT_DIR/docs"
+          cp README.md "$PARENT_DIR/README.md"
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build
