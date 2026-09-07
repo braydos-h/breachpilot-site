@@ -1,29 +1,29 @@
 {
   "version": "0.68.4",
-  "commit": "1a80fd153df6a28ef979b1659b6f9464364190b8",
-  "commitShort": "1a80fd153df6",
-  "commitDate": "2026-09-07T21:34:18+09:30",
-  "describe": "beta-534-g1a80fd1",
+  "commit": "e5b6c98fb23a72d49eddf659e4da5db34ce3d00e",
+  "commitShort": "e5b6c98fb23a",
+  "commitDate": "2026-09-07T22:40:22+09:30",
+  "describe": "beta-540-ge5b6c98",
   "latestTag": "v0.49.2",
   "versionTags": [
     "v0.49.2"
   ],
   "staticRoutes": {
-    "": "2026-09-07T19:38:25+09:30",
-    "/features": "2026-09-07T19:38:25+09:30",
+    "": "2026-09-07T22:53:42+09:30",
+    "/features": "2026-09-07T22:28:50+09:30",
     "/features/swarm": "2026-09-07T19:38:25+09:30",
-    "/architecture": "2026-09-07T19:38:25+09:30",
+    "/architecture": "2026-09-07T22:28:50+09:30",
     "/providers": "2026-09-07T19:38:25+09:30",
     "/plugins": "2026-09-07T19:38:25+09:30",
     "/benchmarks": "2026-09-07T19:38:25+09:30",
     "/safety": "2026-09-07T19:38:25+09:30",
-    "/install": "2026-09-07T19:38:25+09:30",
+    "/install": "2026-09-07T22:46:43+09:30",
     "/docs": "2026-09-07T19:38:25+09:30",
     "/contributing": "2026-09-07T19:38:25+09:30",
     "/security": "2026-09-07T19:38:25+09:30",
     "/privacy": "2026-09-07T19:38:25+09:30",
     "/legal": "2026-09-07T19:38:25+09:30",
-    "/releases": "2026-09-07T21:34:18+09:30"
+    "/releases": "2026-09-07T22:49:31+09:30"
   },
   "skills": 139,
   "plugins": 14,
@@ -43,6 +43,6 @@
     "docDates": "git log -1 --format=%cI per docs file, else synced copy mtime"
   },
   "source": "adjacent BreachPilot checkout",
-  "generatedAt": "2026-09-07T12:34:33.552Z",
+  "generatedAt": "2026-09-07T13:24:16.664Z",
   "stale": false
 }
