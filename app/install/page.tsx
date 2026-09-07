@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Install",
   description:
     "Install BreachPilot: Linux primary platform and Windows secondary. One-line installers, review-first flows, requirements and post-install checks.",
-  alternates: { canonical: "https://breachpilot.dev/install" },
+  alternates: { canonical: `${SITE.url}/install` },
 };
 
 const ESSENTIAL: Array<[string, string, string]> = [
@@ -19,20 +19,21 @@ const ESSENTIAL: Array<[string, string, string]> = [
 ];
 
 const OPTIONAL: Array<[string, string, string]> = [
-  ["Node.js + npm", "Node 18+", "Only for the first WebUI build (auto-built, opens at 127.0.0.1:8765)."],
+  ["Node.js + npm", "Node 18+", `Only for the first WebUI build (auto-built, opens at 127.0.0.1:${SITE.webuiDefaultPort}).`],
   ["Docker", "Engine / Desktop + breachpilot-sandbox image", "Sandbox is default-on; without it attacks degrade or block per config."],
   ["Disk / rights / Git", "~4GB free, admin for installs", "Git required for clone. Linux Kali arsenal optional (metasploit, hydra, impacket…)."],
 ];
 
-function RequirementsTable({ rows }: { rows: Array<[string, string, string]> }) {
+function RequirementsTable({ caption, rows }: { caption: string; rows: Array<[string, string, string]> }) {
   return (
     <div className="mt-3 overflow-x-auto rounded-xl border">
       <table className="w-full min-w-[560px]">
+        <caption className="sr-only">{caption}</caption>
         <thead>
           <tr>
-            <th>Need</th>
-            <th>Minimum</th>
-            <th>Notes</th>
+            <th scope="col">Need</th>
+            <th scope="col">Minimum</th>
+            <th scope="col">Notes</th>
           </tr>
         </thead>
         <tbody>
@@ -57,9 +58,12 @@ export default function InstallPage() {
         title="Install BreachPilot"
         lede="Linux is the primary platform. Windows is supported as a secondary platform. Never pipe a script you haven't read — every shortcut below has a review-first alternative."
       >
-        {/* compact: drops the "Full install guide" self-link */}
         <div className="mt-6 max-w-2xl">
           <InstallTabs compact />
+          <p className="mt-3 text-sm text-muted-foreground">
+            For authorized testing only — only test systems you own or have explicit written permission to assess.{" "}
+            <Link href="/safety" className="font-medium text-foreground underline underline-offset-4">Safety model →</Link>
+          </p>
         </div>
       </PageHero>
       <section className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
@@ -92,25 +96,39 @@ export default function InstallPage() {
           </div>
         </div>
 
-        <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">After install</h2>
+        <h2 className="mt-12 text-xl font-semibold tracking-tight">After install</h2>
+        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+          Verify the install before your first run — each step is safe to run locally.
+        </p>
         <div className="mt-3">
           <CodeSnippet
-            code={`bp                  # launch the local WebUI (default, opens http://127.0.0.1:8765)\nbp --setup-api-keys # store OLLAMA_API_KEY and friends in secr.json\nbp --doctor         # environment check — expect all [OK]\nbp --self-test      # safe localhost-only smoke test`}
+            code={`bp                  # launch the local WebUI (default, opens http://127.0.0.1:${SITE.webuiDefaultPort})\nbp --setup-api-keys # store OLLAMA_API_KEY and friends in secr.json\nbp --doctor         # environment check — expect all [OK]\nbp --self-test      # safe localhost-only smoke test`}
             title="post-install checks"
           />
         </div>
 
-        <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Essential</h2>
-        <RequirementsTable rows={ESSENTIAL} />
+        <h2 className="mt-12 text-xl font-semibold tracking-tight">Essential requirements</h2>
+        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+          Install these first — <code className="rounded border bg-muted px-1 font-mono text-[13px]">bp --doctor</code> fails without them.
+        </p>
+        <RequirementsTable caption="Essential requirements" rows={ESSENTIAL} />
 
-        <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Optional — skip if WebUI-only</h2>
-        <RequirementsTable rows={OPTIONAL} />
+        <h2 className="mt-12 text-xl font-semibold tracking-tight">Optional — skip if WebUI-only</h2>
+        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+          Needed for sandboxing, the WebUI build, and full tool coverage. Safe to add later.
+        </p>
+        <RequirementsTable caption="Optional requirements" rows={OPTIONAL} />
 
-        <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">First lab run</h2>
+        <h2 className="mt-12 text-xl font-semibold tracking-tight">First lab run</h2>
+        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+          Authorized testing only — run against a local lab target you own, never against hosts you do not own or
+          lack explicit written permission to assess. See the{" "}
+          <Link href="/safety" className="font-medium text-foreground underline underline-offset-4">safety model</Link>.
+        </p>
         <div className="mt-3">
           <CodeSnippet
             code={`docker run --rm -p 8080:80 vulnerables/web-dvwa   # local victim on http://127.0.0.1:8080\nbp --target 127.0.0.1 --mode recon --goal initial_access --yes`}
-            title="never scan hosts you don't own"
+            title="first lab run against localhost only"
           />
         </div>
         <p className="mt-6 text-sm text-muted-foreground">

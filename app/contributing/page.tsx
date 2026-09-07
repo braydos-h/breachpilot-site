@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
-import { Card, CodeSnippet } from "@/components/ui";
+import { Card, CodeSnippet, SectionHeading } from "@/components/ui";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contributing",
   description:
     "Contribute to BreachPilot: Apache 2.0 open source, mocked test suite, CI with lint/types/CodeQL, contribution guide and AGENTS.md.",
-  alternates: { canonical: "https://breachpilot.dev/contributing" },
+  alternates: { canonical: `${SITE.url}/contributing` },
 };
 
 export default function ContributingPage() {
@@ -15,15 +16,15 @@ export default function ContributingPage() {
     <div>
       <PageHero
         eyebrow="Open source"
-        title="Contribute on GitHub"
-        lede="Apache 2.0, public repository, mocked test suite, CI on every push and PR. Read the guide and AGENTS.md, keep changes focused, and verify flags and config still match reality before you open a PR."
+        title="Contribute to BreachPilot"
+        lede={`${SITE.license} licensed, public repository, fully mocked test suite, CI on every push and PR. Read the guide and AGENTS.md, keep changes focused, and verify flags and config still match reality before you open a PR.`}
       >
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
           <a
             href={SITE.repo}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
           >
             Contribute on GitHub
           </a>
@@ -31,14 +32,24 @@ export default function ContributingPage() {
             href={`${SITE.repo}/blob/main/CONTRIBUTING.md`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex rounded-md border bg-background px-4 py-2 text-sm font-medium hover:bg-muted"
+            className="inline-flex items-center justify-center rounded-md border bg-background px-5 py-2.5 text-sm font-medium hover:bg-muted"
           >
             Contribution guide
           </a>
         </div>
+        <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground">
+          BreachPilot is for authorized testing only — contributions must preserve scope gating, the target
+          allowlist lock, and the audit trail.
+        </p>
       </PageHero>
-      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section aria-label="Contribution expectations" className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+        <SectionHeading
+          eyebrow="What to expect"
+          title="Mocked tests, strict gates, docs in the same PR"
+          lede="Safety-relevant changes need regression tests. Keep PRs focused and verify every flag and config key still matches reality."
+          align="left"
+        />
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {[
             ["Tests", "~250 mocked test files — no live Nmap, everything mocks subprocess and network. New safety-relevant code needs regression tests."],
             ["CI", "Mocked suite on Python 3.11–3.13, coverage, ruff check + format, mypy over tools/, package build, WebUI build + tests, mocked eval suite."],
@@ -47,17 +58,29 @@ export default function ContributingPage() {
             ["TypeScript / WebUI", "tsc + vite build + vitest in webui/ — run all three if you touch the UI."],
             ["Docs discipline", "Adding a flag, tool or config key means updating the user-facing docs in the same PR."],
           ].map(([t, b]) => (
-            <Card key={t}>
-              <h2 className="font-semibold tracking-tight">{t}</h2>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">{b}</p>
-            </Card>
+            <li key={t}>
+              <Card className="h-full">
+                <h3 className="font-semibold tracking-tight">{t}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{b}</p>
+              </Card>
+            </li>
           ))}
-        </div>
-        <div className="mt-8">
-          <CodeSnippet
-            code={`python -m pytest tests/ -v\nruff check .\nruff format --check .\nmypy --follow-imports=skip tools`}
-            title="checks to run before a PR"
-          />
+        </ul>
+        <div className="mt-10">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            Checks to run before a PR
+          </h2>
+          <div className="mt-4 max-w-3xl">
+            <CodeSnippet
+              code={`python -m pytest tests/ -v\nruff check .\nruff format --check .\nmypy --follow-imports=skip tools`}
+              title="checks to run before a PR"
+            />
+          </div>
+          <p className="mt-4 text-sm leading-6 text-muted-foreground">
+            Read the <Link href="/docs" className="font-medium text-foreground underline underline-offset-4">docs</Link>{" "}
+            and the <Link href="/safety" className="font-medium text-foreground underline underline-offset-4">safety model</Link>{" "}
+            before touching scope, policy, or tool-execution code.
+          </p>
         </div>
       </section>
     </div>

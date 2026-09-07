@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Releases",
   description:
     "BreachPilot release channels: stable tags, edge builds, pinned installs and what the upstream repository must publish for checksum verification.",
-  alternates: { canonical: "https://breachpilot.dev/releases" },
+  alternates: { canonical: `${SITE.url}/releases` },
 };
 
 export default function ReleasesPage() {
@@ -20,17 +20,34 @@ export default function ReleasesPage() {
         eyebrow="Releases"
         title="Stable by default, edge when you ask"
         lede="The hosted installers pin a stable tag — never a moving branch. Everything below is derived from the upstream repository at build time, not a hand-kept changelog."
-      />
+      >
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a
+            href={`${SITE.repo}/releases/tag/${tag}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+          >
+            Release notes for {tag}
+          </a>
+          <Link
+            href="/install"
+            className="inline-flex items-center justify-center rounded-md border bg-background px-5 py-2.5 text-sm font-medium hover:bg-muted"
+          >
+            Install guide
+          </Link>
+        </div>
+        <p className="mt-4 text-sm text-muted-foreground">
+          For authorized testing only — run BreachPilot only against systems you own or have explicit
+          permission to test.
+        </p>
+      </PageHero>
       <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
         <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-xl border bg-card p-5">
             <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">Latest stable tag</p>
-            <p className="mt-2 font-mono text-2xl font-semibold tabular-nums">{tag}</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              <a href={`${SITE.repo}/releases/tag/${tag}`} target="_blank" rel="noopener noreferrer" className="font-medium text-foreground underline underline-offset-4">
-                Release notes →
-              </a>
-            </p>
+            <p className="mt-2 break-all font-mono text-2xl font-semibold tabular-nums">{tag}</p>
+            <p className="mt-2 text-sm text-muted-foreground">Pinned by the hosted installers — never a moving branch.</p>
           </div>
           <div className="rounded-xl border bg-card p-5">
             <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">Package version</p>
@@ -89,8 +106,7 @@ export default function ReleasesPage() {
           Full history:{" "}
           <a href={`${SITE.repo}/releases`} target="_blank" rel="noopener noreferrer" className="font-medium text-foreground underline underline-offset-4">
             GitHub releases →
-          </a>{" "}
-          · Install guide: <Link href="/install" className="font-medium text-foreground underline underline-offset-4">/install →</Link>
+          </a>
         </p>
       </section>
     </div>

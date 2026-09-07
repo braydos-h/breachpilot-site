@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import { ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Card, SectionHeading } from "@/components/ui";
 import { META } from "@/lib/meta";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Features",
   description:
     "BreachPilot capabilities: reconnaissance, execution and chaining, adaptive intelligence and evidence-backed reporting.",
-  alternates: { canonical: "https://breachpilot.dev/features" },
+  alternates: { canonical: `${SITE.url}/features` },
 };
 
 /** Pipeline overview strip — CSS-only anchors into the four groups below. */
@@ -50,25 +52,27 @@ const INTEL: Array<[string, string, string]> = [
   ["Telemetry + peer consult", "Tokens/context per call; advisory second opinions.", "consult_peer_models · gated"],
 ];
 
+const REPORTING: Array<string> = [
+  "Findings with timeline, CVSS, chain, and linked evidence",
+  "Markdown + HTML reports with decision log and audit chain",
+  "MITRE ATT&CK Navigator export + ticket creation",
+  "Oracle-verified outcomes — verified ≠ claimed",
+];
+
 export default function FeaturesPage() {
   return (
     <div>
       <PageHero
         eyebrow="Capabilities"
-        title="What BreachPilot can do"
-        lede="Recon, exploitation, adaptive intelligence and reporting — capability overview, not a how-to."
+        title="Full assessment lifecycle, under supervision"
+        lede="Recon, target-locked execution, adaptive intelligence, and evidence-backed reporting — for authorized testing only. Capability overview, not a how-to."
       >
-        <ol className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-stretch" aria-label="Capability overview">
-          {OVERVIEW.map((o, i) => (
-            <li key={o.href} className="flex min-w-0 flex-1 items-stretch gap-2">
-              {i > 0 && (
-                <span className="hidden shrink-0 items-center text-muted-foreground sm:flex" aria-hidden>
-                  →
-                </span>
-              )}
+        <ol className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-4" aria-label="Capability overview">
+          {OVERVIEW.map((o) => (
+            <li key={o.href} className="min-w-0">
               <a
                 href={o.href}
-                className="min-w-0 flex-1 rounded-lg border bg-background px-4 py-3 transition-colors hover:bg-muted"
+                className="block min-w-0 rounded-lg border bg-background px-4 py-3 transition-colors hover:bg-muted"
               >
                 <span className="block text-sm font-semibold">{o.step}</span>
                 <span className="mt-0.5 block font-mono text-xs text-muted-foreground">{o.sub}</span>
@@ -76,9 +80,34 @@ export default function FeaturesPage() {
             </li>
           ))}
         </ol>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <Link
+            href="/install"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+          >
+            Install for your lab
+          </Link>
+          <Link
+            href="/safety"
+            className="inline-flex items-center justify-center rounded-md border bg-background px-5 py-2.5 text-sm font-medium hover:bg-muted"
+          >
+            Read the safety model
+          </Link>
+        </div>
+        <p className="mt-4 flex items-start gap-1.5 text-sm text-muted-foreground">
+          <ShieldAlert className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
+          <span>
+            Authorized testing only — only test systems you own or have explicit written permission to assess.
+          </span>
+        </p>
       </PageHero>
 
-      <Group id="recon" eyebrow="Reconnaissance" title="See the whole surface first">
+      <Group
+        id="recon"
+        eyebrow="Reconnaissance"
+        title="See the whole surface first"
+        lede="Parallel discovery against allowlisted targets — cached per run, enriched with vuln intel."
+      >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {RECON.map(([t, b, proof]) => (
             <Card key={t}>
@@ -94,7 +123,7 @@ export default function FeaturesPage() {
         id="execution"
         eyebrow="Execution"
         title="Capability-aware, target-locked"
-        lede="Modules, payloads and bridges compose into chains against in-scope targets."
+        lede="Modules, payloads, and bridges compose into chains against explicitly authorized targets."
         tint
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -108,8 +137,12 @@ export default function FeaturesPage() {
         </div>
         <div className="mt-4 rounded-lg border bg-card p-4 text-sm leading-6 text-muted-foreground">
           <span className="font-semibold text-foreground">Guardrail: </span>
-          lab targets (RFC1918/loopback) run relaxed; public targets get pacing, jitter and noise
-          accounting — advisory only, the operator always sees the advice.
+          lab targets (RFC1918/loopback) run relaxed; public targets get pacing, jitter, and noise
+          accounting — advisory only, the operator always sees the advice. Every action stays
+          target-locked to explicitly authorized scope.{" "}
+          <Link href="/safety" className="font-medium text-foreground underline underline-offset-4">
+            Safety model
+          </Link>
         </div>
       </Group>
 
@@ -137,15 +170,9 @@ export default function FeaturesPage() {
         tint
       >
         <ul className="grid gap-2 text-sm leading-6 sm:grid-cols-2">
-          {[
-            "Findings with timeline, CVSS, chain, linked evidence",
-            "Markdown + HTML reports, decision log, audit chain",
-            "MITRE ATT&CK Navigator export + ticket creation",
-            "Oracle-verified outcomes — verified ≠ claimed",
-          ].map((item) => (
-            <li key={item} className="rounded-lg border bg-card px-4 py-3 text-muted-foreground">
-              <span className="text-foreground">{item.split("—")[0].trim()}</span>
-              {item.includes("—") ? ` —${item.split("—").slice(1).join("—")}` : null}
+          {REPORTING.map((item) => (
+            <li key={item} className="rounded-lg border bg-card px-4 py-3 text-foreground">
+              {item}
             </li>
           ))}
         </ul>

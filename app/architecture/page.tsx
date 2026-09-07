@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ShieldAlert } from "lucide-react";
 import { AttackGraph, type GraphNode } from "@/components/attack-graph";
 import { PageHero } from "@/components/page-hero";
 import { Card } from "@/components/ui";
 import { META } from "@/lib/meta";
+import { PROVIDERS, SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Architecture",
   description:
     "BreachPilot architecture: operator → planner → agent → MCP tool layer → sandbox → evidence → verification → report, with swarm, memory, providers and audit alongside.",
-  alternates: { canonical: "https://breachpilot.dev/architecture" },
+  alternates: { canonical: `${SITE.url}/architecture` },
 };
 
 const PIPELINE_NODES: GraphNode[] = [
@@ -38,7 +40,7 @@ const SIDE = [
   ["Swarm Orchestrator", "Six specialists on a shared blackboard."],
   ["Autonomous Orchestrator", "Persistent campaigns with resume."],
   ["Skills + Memory", `${META.skills ?? "140+"} advisory skills, semantic + experience memory.`],
-  ["Provider layer", "Ollama, OpenCode Go, ChatGPT behind one contract."],
+  ["Provider layer", `${PROVIDERS.map((p) => p.name).join(" · ")} behind one contract.`],
 ];
 
 export default function ArchitecturePage() {
@@ -47,8 +49,27 @@ export default function ArchitecturePage() {
       <PageHero
         eyebrow="Architecture"
         title="One pipeline, fully instrumented"
-        lede="An MCP-based exploitation engine with a WebUI console, a policy-gated agent loop and a target-locked tool layer."
-      />
+        lede="Operator-supervised assessment engine: a policy-gated agent loop over a target-locked MCP tool layer, with evidence-backed verification and reporting. For authorized testing only."
+      >
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <Link
+            href="/install"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+          >
+            Install for your lab
+          </Link>
+          <Link
+            href="/safety"
+            className="inline-flex items-center justify-center rounded-md border bg-background px-5 py-2.5 text-sm font-medium hover:bg-muted"
+          >
+            Read the safety model
+          </Link>
+        </div>
+        <p className="mt-4 flex items-center gap-1.5 text-sm text-muted-foreground">
+          <ShieldAlert className="h-3.5 w-3.5 shrink-0" aria-hidden />
+          <span>Authorized testing only — every action is allowlist-gated and audited.</span>
+        </p>
+      </PageHero>
       {/* pipeline diagram — the page's main visual */}
       <section className="mx-auto max-w-6xl px-4 pt-12 sm:px-6" aria-label="Runtime pipeline">
         <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
@@ -61,10 +82,10 @@ export default function ArchitecturePage() {
           operator → planner → agent → mcp tools → sandbox → evidence → verification → report
         </p>
       </section>
-      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6" aria-label="Pipeline stages">
         <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
           <div>
-            <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Main path</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Main path — one supervised run</h2>
             <ol className="mt-4">
               {LAYERS.map(([t, b], i) => (
                 <li key={t} className="relative flex gap-4 pb-5 last:pb-0">
@@ -81,7 +102,7 @@ export default function ArchitecturePage() {
             </ol>
           </div>
           <div>
-            <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Alongside</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Alongside — every run</h2>
             <div className="mt-4 space-y-3">
               {SIDE.map(([t, b]) => (
                 <Card key={t} className="p-4">
@@ -93,9 +114,10 @@ export default function ArchitecturePage() {
           </div>
         </div>
       </section>
-      <section className="border-t bg-muted/30">
+      <section className="border-t bg-muted/30" aria-label="Further reading and next steps">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-          <p className="text-sm text-muted-foreground">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Go deeper</h2>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
             Engineering depth:{" "}
             <Link href="/docs/architecture" className="font-medium text-foreground underline underline-offset-4">architecture</Link>
             {" · "}
@@ -105,6 +127,20 @@ export default function ArchitecturePage() {
             {" · "}
             <Link href="/docs/sandbox" className="font-medium text-foreground underline underline-offset-4">sandbox</Link>
           </p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/install"
+              className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+            >
+              Install for your lab
+            </Link>
+            <Link
+              href="/features"
+              className="inline-flex items-center justify-center rounded-md border bg-background px-5 py-2.5 text-sm font-medium hover:bg-muted"
+            >
+              See what it can do
+            </Link>
+          </div>
         </div>
       </section>
     </div>

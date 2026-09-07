@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Card, StatusDot } from "@/components/ui";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Benchmarks",
   description:
     "BreachPilot's oracle-verified benchmark system: claimed vs verified success, false positives, trial history, run comparison and regression gates. No invented scores.",
-  alternates: { canonical: "https://breachpilot.dev/benchmarks" },
+  alternates: { canonical: `${SITE.url}/benchmarks` },
 };
 
 const METRICS = [
@@ -34,11 +35,26 @@ export default function BenchmarksPage() {
         eyebrow="Evaluation"
         title="Verified, or it didn't happen"
         lede="Benchmark targets run under the sandboxed execution architecture, outcomes are verified by an independent oracle, and every run records enough metadata to reproduce and defend the numbers."
-      />
-      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="rounded-xl border bg-card p-5 sm:p-6" role="img" aria-label="Illustrative benchmark dashboard: verified vs claimed outcomes per trial">
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">suite · illustrative shape, no scores</p>
-          <ul className="mt-4 space-y-2 font-mono text-[12px]">
+      >
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <Link
+            href="/docs/benchmarks"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+          >
+            Read the benchmark docs
+          </Link>
+          <Link
+            href="/safety"
+            className="inline-flex items-center justify-center rounded-md border bg-background px-5 py-2.5 text-sm font-medium hover:bg-muted"
+          >
+            Safety model
+          </Link>
+        </div>
+      </PageHero>
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6" aria-label="Benchmark trial illustration and method">
+        <div className="rounded-xl border bg-card p-5 sm:p-6">
+          <h2 className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">suite · illustrative shape, no scores</h2>
+          <ul className="mt-4 space-y-2 font-mono text-[12px]" aria-label="Example trial outcomes">
             {[
               ["trial-01 · dvwa-login", "ok", "VERIFIED"],
               ["trial-02 · smb-relay", "warn", "FALSE_POSITIVE"],
@@ -47,8 +63,8 @@ export default function BenchmarksPage() {
             ].map(([label, tone, verdict]) => (
               <li key={label as string} className="flex items-center gap-2.5 rounded border bg-background px-3 py-2">
                 <StatusDot tone={tone as "ok" | "warn" | "idle"} />
-                <span>{label}</span>
-                <span className="ml-auto rounded-full border px-2 py-px text-[10px]">{verdict}</span>
+                <span className="min-w-0 break-all">{label}</span>
+                <span className="ml-auto shrink-0 whitespace-nowrap rounded-full border px-2 py-px text-[10px]">{verdict}</span>
               </li>
             ))}
           </ul>
@@ -68,7 +84,7 @@ export default function BenchmarksPage() {
                     {i + 1}
                   </span>
                   <div>
-                    <p className="font-semibold">{t}</p>
+                    <h3 className="font-semibold tracking-tight">{t}</h3>
                     <p className="mt-0.5 text-sm leading-6 text-muted-foreground">{b}</p>
                   </div>
                 </li>
@@ -80,7 +96,7 @@ export default function BenchmarksPage() {
             <div className="mt-4 space-y-3">
               {METRICS.map(([t, b]) => (
                 <Card key={t} className="p-4">
-                  <p className="font-mono text-sm font-semibold">{t}</p>
+                  <h3 className="font-mono text-sm font-semibold">{t}</h3>
                   <p className="mt-1 text-sm leading-6 text-muted-foreground">{b}</p>
                 </Card>
               ))}

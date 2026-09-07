@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
-import { Card } from "@/components/ui";
+import { Card, SectionHeading } from "@/components/ui";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Safety",
   description:
     "BreachPilot safety model: operator supervision, target allowlist lock, mission scope gate, permission modes, sandbox isolation, tamper-evident audit chain. Authorized testing only.",
-  alternates: { canonical: "https://breachpilot.dev/safety" },
+  alternates: { canonical: `${SITE.url}/safety` },
 };
 
 const LAYERS: Array<[string, string]> = [
@@ -27,16 +28,35 @@ export default function SafetyPage() {
       <PageHero
         eyebrow="Safety model"
         title="Built for authorized security testing."
-        lede="Layered controls, not a single switch — and honest language about what each layer does and doesn't do. The attack path is unrestricted but target-locked; recon stays fully gated."
+        lede="Layered controls, not a single switch — with honest language about what each layer does and doesn't do. The attack path is unrestricted but target-locked; recon stays fully gated."
       >
         <blockquote className="mt-6 max-w-2xl border-l-2 border-foreground pl-4 text-lg font-medium leading-8 tracking-tight">
           Only test systems you own or have explicit written permission to assess.
         </blockquote>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <Link
+            href="/docs/safety-model"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+          >
+            Read the safety model
+          </Link>
+          <Link
+            href="/install"
+            className="inline-flex items-center justify-center rounded-md border bg-background px-5 py-2.5 text-sm font-medium hover:bg-muted"
+          >
+            Install for your lab
+          </Link>
+        </div>
       </PageHero>
 
-      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">The layers</h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+      <section aria-label="Safety layers" className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+        <SectionHeading
+          eyebrow="The layers"
+          title="Eight controls, no single point of trust"
+          lede="Each layer narrows what the agent may do — scope, risk, routing, and audit all have to agree."
+          align="left"
+        />
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {LAYERS.map(([t, b]) => (
             <Card key={t}>
               <h3 className="font-semibold tracking-tight">{t}</h3>
@@ -46,10 +66,15 @@ export default function SafetyPage() {
         </div>
       </section>
 
-      <section className="border-t bg-muted/30">
+      <section aria-label="Full-access mode" className="border-t bg-muted/30">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Attack / full-access mode, stated plainly</h2>
-          <div className="mt-4 rounded-xl border bg-card p-6">
+          <SectionHeading
+            eyebrow="Full-access mode"
+            title="Attack posture, stated plainly"
+            lede="For authorized lab targets only — what stays enforced when approvals are relaxed."
+            align="left"
+          />
+          <div className="mt-8 rounded-xl border bg-card p-6 sm:p-8">
             <p className="text-[15px] leading-7">
               In <code className="rounded border bg-muted px-1.5 font-mono text-sm">full_access</code>, the policy
               auto-approves every in-scope action <strong>with no command-content inspection</strong> — destructive
@@ -78,26 +103,42 @@ export default function SafetyPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">What to read next</h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-3">
-          {[
-            ["Safety model", "Scope checks, risk checks, permission modes, audit records, secure dev rules.", "/docs/safety-model"],
-            ["Sandbox", "Disposable worker architecture, network containment, fail-closed posture, residual risks.", "/docs/sandbox"],
-            ["Outcomes & evidence", "Outcome taxonomy, truth-vs-claim, finding verification, report generation.", "/docs/outcome-evidence"],
-          ].map(([t, b, href]) => (
-            <Card key={href}>
-              <h3 className="font-semibold tracking-tight">{t}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">{b}</p>
-              <p className="mt-3 text-sm">
-                <Link href={href} className="font-medium underline underline-offset-4">Read →</Link>
-              </p>
-            </Card>
-          ))}
+      <section aria-label="Further reading" className="border-t">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+          <SectionHeading
+            eyebrow="Further reading"
+            title="What to read next"
+            align="left"
+          />
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            {[
+              ["Safety model", "Scope checks, risk checks, permission modes, audit records, secure dev rules.", "/docs/safety-model"],
+              ["Sandbox", "Disposable worker architecture, network containment, fail-closed posture, residual risks.", "/docs/sandbox"],
+              ["Outcomes & evidence", "Outcome taxonomy, truth-vs-claim, finding verification, report generation.", "/docs/outcome-evidence"],
+            ].map(([t, b, href]) => (
+              <Card key={href}>
+                <h3 className="font-semibold tracking-tight">{t}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{b}</p>
+                <p className="mt-3 text-sm">
+                  <Link href={href} aria-label={`Read the ${t} docs`} className="font-medium underline underline-offset-4 hover:text-foreground">
+                    Read<span aria-hidden> →</span>
+                  </Link>
+                </p>
+              </Card>
+            ))}
+          </div>
+          <p className="mt-8 text-sm text-muted-foreground">
+            Full source:{" "}
+            <a
+              href={`${SITE.repo}/blob/main/docs/safety-model.md`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground underline underline-offset-4"
+            >
+              docs/safety-model.md
+            </a>
+          </p>
         </div>
-        <p className="mt-8 text-sm text-muted-foreground">
-          Full source: <a href="https://github.com/braydos-h/BreachPilot/blob/main/docs/safety-model.md" target="_blank" rel="noopener noreferrer" className="font-medium text-foreground underline underline-offset-4">docs/safety-model.md</a>
-        </p>
       </section>
     </div>
   );

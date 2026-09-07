@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ArrowRight, Github, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { GithubStats } from "@/components/github-stats";
@@ -9,6 +10,11 @@ import { MissionControl } from "@/components/mission-control";
 import { Typewriter } from "@/components/typewriter";
 import { SectionHeading } from "@/components/ui";
 import { SITE } from "@/lib/site";
+
+export const metadata: Metadata = {
+  description: SITE.description,
+  alternates: { canonical: SITE.url },
+};
 
 const SHOT_FILES = ["run-creation.png", "attack-graph.png", "evidence-findings.png", "final-report.png"] as const;
 
@@ -22,7 +28,7 @@ export default function HomePage() {
     <div>
       {/* hero */}
       <section className="bg-grid relative overflow-hidden">
-        <div className="bg-radial-fade pointer-events-none absolute inset-0 bg-grid" aria-hidden />
+        <div className="bg-radial-fade pointer-events-none absolute inset-0" aria-hidden />
         <div className="relative mx-auto max-w-6xl px-4 pb-10 pt-10 sm:px-6 sm:pt-12">
           <div className="max-w-3xl">
             <p className="inline-flex rounded-full border bg-background px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
@@ -83,7 +89,7 @@ export default function HomePage() {
       {/* stats */}
       <section aria-label="Project metrics" className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
         <StatsRow />
-        <p className="mt-3 flex items-center justify-center gap-2 text-center text-sm text-muted-foreground">
+        <p className="mt-3 flex flex-wrap items-center justify-center gap-2 text-center text-sm text-muted-foreground">
           Live counts from the repository catalog.
           <GithubStats owner="braydos-h" repo="BreachPilot" />
         </p>
@@ -128,7 +134,7 @@ export default function HomePage() {
         <SectionHeading
           eyebrow="Inside BreachPilot"
           title="Mission control for the whole run"
-          lede="Loopback-only console at 127.0.0.1:8765 — wizard, stream, graph, evidence and more in one place."
+          lede={`Loopback-only console at 127.0.0.1:${SITE.webuiDefaultPort} — wizard, stream, graph, evidence and more in one place.`}
         />
         <ProductTour />
       </section>
@@ -144,7 +150,7 @@ export default function HomePage() {
       </section>
 
       {/* safety strip */}
-      <section className="border-t">
+      <section aria-label="Authorized testing notice" className="border-t">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           <div className="grid gap-6 rounded-xl border bg-card p-6 sm:p-8 lg:grid-cols-[1.1fr_1fr] lg:items-center">
             <div>
