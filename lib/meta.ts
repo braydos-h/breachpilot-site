@@ -24,11 +24,11 @@ if (META.stale && typeof window === "undefined") {
 
 /** Exact derived counts for display; each label names the counting method. */
 export const DERIVED_METRICS = [
-  { value: String(META.skills ?? "—"), label: "advisory skills (skills/ SKILL.md)" },
-  { value: String(META.mcpTools ?? "—"), label: "MCP tools (tools/mcp_tools/)" },
-  { value: String(META.attackFamilies ?? "—"), label: "attack-module families" },
-  { value: String(META.swarmAgents ?? "—"), label: "specialist swarm agents" },
-  { value: String(META.toolFamilies ?? "—"), label: "MCP tool families" },
+  { value: String(META.skills ?? "—"), label: "advisory skills" },
+  { value: String(META.mcpTools ?? "—"), label: "MCP tools" },
+  { value: String(META.attackFamilies ?? "—"), label: "attack families" },
+  { value: String(META.swarmAgents ?? "—"), label: "swarm agents" },
+  { value: String(META.toolFamilies ?? "—"), label: "tool families" },
 ] as const;
 
 export const VERSION = META.version ?? "unknown";
