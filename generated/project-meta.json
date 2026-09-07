@@ -23,7 +23,7 @@
     "/security": "2026-09-07T19:38:25+09:30",
     "/privacy": "2026-09-07T19:38:25+09:30",
     "/legal": "2026-09-07T19:38:25+09:30",
-    "/releases": "2026-09-07T23:10:38+09:30"
+    "/releases": "2026-09-07T23:22:56+09:30"
   },
   "skills": 139,
   "plugins": 14,
@@ -43,6 +43,6 @@
     "docDates": "git log -1 --format=%cI per docs file, else synced copy mtime"
   },
   "source": "adjacent BreachPilot checkout",
-  "generatedAt": "2026-09-07T13:49:16.613Z",
+  "generatedAt": "2026-09-07T14:04:24.290Z",
   "stale": false
 }
