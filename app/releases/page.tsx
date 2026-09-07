@@ -24,7 +24,7 @@ export default function ReleasesPage() {
       <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
         <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-xl border bg-card p-5">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Latest stable tag</p>
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">Latest stable tag</p>
             <p className="mt-2 font-mono text-2xl font-semibold tabular-nums">{tag}</p>
             <p className="mt-2 text-sm text-muted-foreground">
               <a href={`${SITE.repo}/releases/tag/${tag}`} target="_blank" rel="noopener noreferrer" className="font-medium text-foreground underline underline-offset-4">
@@ -33,12 +33,12 @@ export default function ReleasesPage() {
             </p>
           </div>
           <div className="rounded-xl border bg-card p-5">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Package version</p>
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">Package version</p>
             <p className="mt-2 font-mono text-2xl font-semibold tabular-nums">v{VERSION}</p>
             <p className="mt-2 text-sm text-muted-foreground">From upstream pyproject.toml at build time.</p>
           </div>
           <div className="rounded-xl border bg-card p-5">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Built from commit</p>
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">Built from commit</p>
             <p className="mt-2 font-mono text-2xl font-semibold tabular-nums">{COMMIT_SHORT ?? "—"}</p>
             <p className="mt-2 text-sm text-muted-foreground">
               {META.stale ? (
@@ -50,7 +50,7 @@ export default function ReleasesPage() {
           </div>
         </div>
 
-        <h2 className="mt-12 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Install a channel</h2>
+        <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Install a channel</h2>
         <div className="mt-3 grid gap-4 md:grid-cols-2">
           <div className="rounded-xl border bg-card p-5">
             <h3 className="font-semibold tracking-tight">Stable (default)</h3>
@@ -73,7 +73,7 @@ export default function ReleasesPage() {
           </div>
         </div>
 
-        <h2 className="mt-12 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Verify what you installed</h2>
+        <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Verify what you installed</h2>
         <div className="mt-3">
           <CodeSnippet
             code={`BREACHPILOT_SHA256=<expected> bash install.sh --version ${tag}`}

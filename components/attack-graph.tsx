@@ -38,10 +38,10 @@ export function AttackGraph({ nodes = DEFAULT_NODES }: { nodes?: GraphNode[] }) 
   return (
     <div className="overflow-hidden rounded-xl border bg-card">
       <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2.5">
-        <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+        <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
           attack plan · dag
         </span>
-        <span className="flex items-center gap-3 font-mono text-[11px] text-muted-foreground">
+        <span className="flex items-center gap-3 font-mono text-xs text-muted-foreground">
           <span className="inline-flex items-center gap-1.5">
             <i className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden /> ready
           </span>
@@ -120,7 +120,7 @@ export function AttackGraph({ nodes = DEFAULT_NODES }: { nodes?: GraphNode[] }) 
             </span>
             <span className={cn("flex-1 rounded-lg border p-2.5", nodeStyles(n.state))}>
               <span className="block text-[13px] font-semibold leading-4">{n.label}</span>
-              {n.sub && <span className="mt-0.5 block font-mono text-[11px] text-muted-foreground">{n.sub}</span>}
+              {n.sub && <span className="mt-0.5 block font-mono text-xs text-muted-foreground">{n.sub}</span>}
             </span>
           </li>
         ))}

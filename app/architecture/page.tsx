@@ -42,12 +42,12 @@ export default function ArchitecturePage() {
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
           <div>
-            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Main path</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Main path</h2>
             <ol className="mt-4">
               {LAYERS.map(([t, b], i) => (
                 <li key={t} className="relative flex gap-4 pb-6 last:pb-0">
                   {i < LAYERS.length - 1 && <span className="absolute left-[15px] top-8 h-[calc(100%-24px)] w-px bg-border" aria-hidden />}
-                  <span className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-card font-mono text-[11px] font-semibold" aria-hidden>
+                  <span className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-card font-mono text-xs font-semibold" aria-hidden>
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="rounded-lg border bg-card p-4">
@@ -59,7 +59,7 @@ export default function ArchitecturePage() {
             </ol>
           </div>
           <div>
-            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Alongside</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Alongside</h2>
             <div className="mt-4 space-y-3">
               {SIDE.map(([t, b]) => (
                 <Card key={t} className="p-4">
@@ -73,7 +73,7 @@ export default function ArchitecturePage() {
       </section>
       <section className="border-t bg-muted/30">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-          <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Conceptual pipeline</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Conceptual pipeline</h2>
           <div className="mt-4">
             <CodeSnippet
               code={`Mission → Scope/Risk → Planner → Tasks → Tools → Observer → Outcome → Memory/Graph/Evidence → Verification → Report`}

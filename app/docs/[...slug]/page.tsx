@@ -31,7 +31,7 @@ export default function DocPage({ params }: Props) {
 
   return (
     <article>
-      <nav aria-label="Breadcrumb" className="mb-4 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+      <nav aria-label="Breadcrumb" className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
         <Link href="/docs" className="hover:text-foreground">docs</Link>
         <span aria-hidden> / </span>
         <span>{doc.category}</span>
@@ -40,7 +40,7 @@ export default function DocPage({ params }: Props) {
 
       {doc.headings.length > 0 && (
         <nav aria-label="On this page" className="mt-10 rounded-lg border bg-muted/30 p-4 lg:hidden">
-          <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">On this page</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">On this page</h2>
           <ul className="mt-2 space-y-1">
             {doc.headings.map((h) => (
               <li key={h.id} className={h.level === 3 ? "pl-4" : ""}>
@@ -53,7 +53,7 @@ export default function DocPage({ params }: Props) {
         </nav>
       )}
 
-      <div className="mt-10 flex flex-col gap-2 border-t pt-4 font-mono text-[11px] text-muted-foreground sm:flex-row sm:justify-between">
+      <div className="mt-10 flex flex-col gap-2 border-t pt-4 font-mono text-xs text-muted-foreground sm:flex-row sm:justify-between">
         <span>source: {doc.updatedFrom}</span>
         <a href={editUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-foreground">
           Edit this page on GitHub →
@@ -63,7 +63,7 @@ export default function DocPage({ params }: Props) {
       <nav aria-label="Previous and next document" className="mt-6 grid gap-3 sm:grid-cols-2">
         {prev ? (
           <Link href={prev.path} className="rounded-lg border p-4 hover:bg-muted">
-            <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">← Previous</span>
+            <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">← Previous</span>
             <span className="mt-1 block font-medium">{prev.title}</span>
           </Link>
         ) : (
@@ -71,7 +71,7 @@ export default function DocPage({ params }: Props) {
         )}
         {next ? (
           <Link href={next.path} className="rounded-lg border p-4 text-right hover:bg-muted">
-            <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">Next →</span>
+            <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Next →</span>
             <span className="mt-1 block font-medium">{next.title}</span>
           </Link>
         ) : (

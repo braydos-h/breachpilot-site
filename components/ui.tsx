@@ -6,7 +6,7 @@ export function Badge({ children, className }: { children: ReactNode; className?
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border bg-muted/60 px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground",
+        "inline-flex items-center gap-1.5 rounded-full border bg-muted/60 px-2.5 py-0.5 text-xs font-medium uppercase tracking-wider text-muted-foreground",
         className
       )}
     >
@@ -40,7 +40,7 @@ export function SectionHeading({
 }) {
   return (
     <div className={cn("max-w-2xl", align === "center" ? "mx-auto text-center" : "text-left")}>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">{eyebrow}</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{eyebrow}</p>
       <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">{title}</h2>
       {lede ? <p className="mt-3 text-[15px] leading-7 text-muted-foreground">{lede}</p> : null}
     </div>
@@ -61,7 +61,7 @@ export function CodeSnippet({
   return (
     <div className={cn("overflow-hidden rounded-lg border bg-card", className)}>
       <div className="flex items-center justify-between border-b bg-muted/50 px-3 py-1.5">
-        <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+        <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
           {title ?? lang ?? "shell"}
         </span>
         <CopyButton text={code} label={title ? `Copy ${title}` : "Copy command"} />
@@ -75,7 +75,7 @@ export function CodeSnippet({
 
 export function MetaLabel({ children }: { children: ReactNode }) {
   return (
-    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">{children}</p>
+    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{children}</p>
   );
 }
 

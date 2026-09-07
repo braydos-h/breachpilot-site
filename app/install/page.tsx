@@ -92,7 +92,7 @@ export default function InstallPage() {
           </div>
         </div>
 
-        <h2 className="mt-12 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">After install</h2>
+        <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">After install</h2>
         <div className="mt-3">
           <CodeSnippet
             code={`bp                  # launch the local WebUI (default, opens http://127.0.0.1:8765)\nbp --setup-api-keys # store OLLAMA_API_KEY and friends in secr.json\nbp --doctor         # environment check — expect all [OK]\nbp --self-test      # safe localhost-only smoke test`}
@@ -100,13 +100,13 @@ export default function InstallPage() {
           />
         </div>
 
-        <h2 className="mt-12 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Essential</h2>
+        <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Essential</h2>
         <RequirementsTable rows={ESSENTIAL} />
 
-        <h2 className="mt-12 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Optional — skip if WebUI-only</h2>
+        <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Optional — skip if WebUI-only</h2>
         <RequirementsTable rows={OPTIONAL} />
 
-        <h2 className="mt-12 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">First lab run</h2>
+        <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">First lab run</h2>
         <div className="mt-3">
           <CodeSnippet
             code={`docker run --rm -p 8080:80 vulnerables/web-dvwa   # local victim on http://127.0.0.1:8080\nbp --target 127.0.0.1 --mode recon --goal initial_access --yes`}

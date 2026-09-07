@@ -78,7 +78,7 @@ export function SearchResults() {
             <Link href={d.path} className="font-medium underline-offset-4 hover:underline">
               {d.title}
             </Link>
-            <p className="mt-0.5 font-mono text-[11px] text-muted-foreground">
+            <p className="mt-0.5 font-mono text-xs text-muted-foreground">
               {d.category} · /docs/{d.slug}
             </p>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">{snippet(d.body, q)}</p>

@@ -38,7 +38,7 @@ export default function PluginsPage() {
               </div>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{p.purpose}</p>
               {p.needsCredentials && (
-                <p className="mt-2 font-mono text-[11px] text-muted-foreground">requires API credentials / server config</p>
+                <p className="mt-2 font-mono text-xs text-muted-foreground">requires API credentials / server config</p>
               )}
             </Card>
           ))}

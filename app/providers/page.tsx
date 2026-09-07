@@ -23,7 +23,7 @@ export default function ProvidersPage() {
         <div className="grid gap-4 lg:grid-cols-3">
           {PROVIDERS.map((p) => (
             <Card key={p.id}>
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{p.id}</p>
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">{p.id}</p>
               <h2 className="mt-1 text-lg font-semibold tracking-tight">{p.name}</h2>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{p.desc}</p>
               <p className="mt-3 font-mono text-[12px] leading-5">{p.config}</p>
@@ -33,7 +33,7 @@ export default function ProvidersPage() {
         </div>
         <div className="mt-8 grid gap-4 lg:grid-cols-2">
           <div>
-            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Role-based model routing</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Role-based model routing</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
               The model router maps aliases to clients, so different roles — planning, exploitation, peer consult,
               titling — can run on different models. Peer consultation is advisory only: consulted models get no tool
@@ -41,7 +41,7 @@ export default function ProvidersPage() {
             </p>
           </div>
           <div>
-            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Embeddings stay local and optional</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Embeddings stay local and optional</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
               Semantic memory and skill matching embed over nomic-embed-text via the local host by default — or disable
               embeddings entirely and fall back to keyword storage and deterministic matching. Zero network, zero env reads.

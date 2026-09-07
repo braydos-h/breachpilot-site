@@ -112,7 +112,7 @@ export function SwarmDiagram() {
           return (
             <div key={a.id} className="relative rounded-lg border bg-card p-4">
               <span className="absolute -top-px left-1/2 h-6 w-px -translate-x-1/2 -translate-y-full bg-border" aria-hidden />
-              <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+              <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
                 <Icon className="h-3.5 w-3.5" aria-hidden /> {a.id}
               </p>
               <p className="mt-1 font-semibold">{a.name}</p>
@@ -172,7 +172,7 @@ export function ProductTour() {
       </div>
       <div className="mt-4 grid gap-4 lg:grid-cols-[1.1fr_1fr]" role="tabpanel" aria-label={`${active.label} preview`}>
         <div className="overflow-hidden rounded-xl border bg-card">
-          <div className="border-b bg-muted/40 px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+          <div className="border-b bg-muted/40 px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-muted-foreground">
             {active.label} · illustrative
           </div>
           <ul className="space-y-1.5 bg-grid-sm p-4 font-mono text-[12px] leading-5">
@@ -216,7 +216,7 @@ export function Screenshots({ available }: { available: Record<string, boolean> 
     <div className="mt-10 grid gap-4 sm:grid-cols-2">
       {SCREENSHOTS.map((s) => (
         <figure key={s.file} className="overflow-hidden rounded-xl border bg-card">
-          <div className="border-b bg-muted/40 px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+          <div className="border-b bg-muted/40 px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-muted-foreground">
             {s.label}
           </div>
           {available[s.file] ? (
@@ -224,7 +224,7 @@ export function Screenshots({ available }: { available: Record<string, boolean> 
             <img src={`/screenshots/${s.file}`} alt={`BreachPilot WebUI — ${s.label}`} className="aspect-[16/10] w-full object-cover object-top" loading="lazy" />
           ) : (
             <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-1 border-b border-dashed bg-grid-sm p-6 text-center" role="img" aria-label={`Placeholder — ${s.label} screenshot not yet provided`}>
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">screenshot pending</p>
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">screenshot pending</p>
               <p className="max-w-xs text-sm text-muted-foreground">Add <code className="rounded border bg-muted px-1 font-mono text-[12px]">public/screenshots/{s.file}</code></p>
             </div>
           )}

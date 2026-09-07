@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function DocsSearchPage() {
   return (
     <div>
-      <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Docs search</p>
+      <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Docs search</p>
       <Suspense fallback={<p className="mt-4 text-sm text-muted-foreground">Loading search…</p>}>
         <SearchResults />
       </Suspense>

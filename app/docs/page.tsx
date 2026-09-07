@@ -28,7 +28,7 @@ export default function DocsIndexPage() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {groups.map((g) => (
             <section key={g.category} aria-label={g.category}>
-              <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                 {g.category}
               </h2>
               <ul className="mt-3 space-y-2">
@@ -37,7 +37,7 @@ export default function DocsIndexPage() {
                     <Link href={d.path} className="text-[15px] font-medium underline-offset-4 hover:underline">
                       {d.title}
                     </Link>
-                    <p className="font-mono text-[11px] text-muted-foreground">{d.slug}</p>
+                    <p className="font-mono text-xs text-muted-foreground">{d.slug}</p>
                   </li>
                 ))}
               </ul>

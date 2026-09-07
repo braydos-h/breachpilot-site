@@ -43,7 +43,7 @@ export function DocsSidebar({ groups }: { groups: NavGroup[] }) {
       <div className="mt-4 space-y-5">
         {filtered.map((g) => (
           <nav key={g.category} aria-label={`Docs — ${g.category}`}>
-            <h2 className="px-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            <h2 className="px-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               {g.category}
             </h2>
             <ul className="mt-1.5 space-y-0.5">

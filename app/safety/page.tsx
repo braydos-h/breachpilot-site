@@ -35,7 +35,7 @@ export default function SafetyPage() {
       </PageHero>
 
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">The layers</h2>
+        <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">The layers</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {LAYERS.map(([t, b]) => (
             <Card key={t}>
@@ -48,7 +48,7 @@ export default function SafetyPage() {
 
       <section className="border-t bg-muted/30">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-          <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Attack / full-access mode, stated plainly</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Attack / full-access mode, stated plainly</h2>
           <div className="mt-4 rounded-xl border bg-card p-6">
             <p className="text-[15px] leading-7">
               In <code className="rounded border bg-muted px-1.5 font-mono text-sm">full_access</code>, the policy
@@ -79,7 +79,7 @@ export default function SafetyPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">What to read next</h2>
+        <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">What to read next</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-3">
           {[
             ["Safety model", "Scope checks, risk checks, permission modes, audit records, secure dev rules.", "/docs/safety-model"],

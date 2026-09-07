@@ -32,7 +32,7 @@ export default function SwarmPage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {SWARM_AGENTS.map((a) => (
             <Card key={a.id}>
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{a.id}</p>
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">{a.id}</p>
               <h2 className="mt-1 text-lg font-semibold tracking-tight">{a.name}</h2>
               <p className="mt-1 text-sm font-medium text-foreground/80">{a.job}</p>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{DETAIL[a.id]}</p>

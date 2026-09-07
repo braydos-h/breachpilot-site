@@ -22,7 +22,7 @@ export default function HomePage() {
     <div>
       {/* announcement */}
       <div className="border-b">
-        <p className="mx-auto max-w-6xl px-4 py-2 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground sm:px-6">
+        <p className="mx-auto max-w-6xl px-4 py-2 text-center font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground sm:px-6">
           Open source · Apache 2.0 · Local-first
         </p>
       </div>
@@ -32,7 +32,7 @@ export default function HomePage() {
         <div className="bg-radial-fade pointer-events-none absolute inset-0 bg-grid" aria-hidden />
         <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pt-20">
           <div className="max-w-3xl">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
               Open-source autonomous security assessment
             </p>
             <h1 className="mt-4 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
@@ -74,7 +74,7 @@ export default function HomePage() {
 
           <div className="mt-12 animate-fade-in-up">
             <MissionControl />
-            <p className="mt-2 text-center font-mono text-[11px] text-muted-foreground">
+            <p className="mt-2 text-center font-mono text-xs text-muted-foreground">
               illustrative lab run · 127.0.0.1 · recon → initial access → verify → report
             </p>
           </div>
@@ -147,7 +147,7 @@ export default function HomePage() {
       <section className="border-t">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           <div className="rounded-xl border bg-card p-6 sm:p-8">
-            <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               <ShieldAlert className="h-4 w-4" aria-hidden /> Built for authorized security testing
             </p>
             <blockquote className="mt-3 border-l-2 border-foreground pl-4 text-lg font-medium leading-8 tracking-tight">

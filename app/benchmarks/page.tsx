@@ -37,7 +37,7 @@ export default function BenchmarksPage() {
       />
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="rounded-xl border bg-card p-5 sm:p-6" role="img" aria-label="Illustrative benchmark dashboard: verified vs claimed outcomes per trial">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">suite · illustrative shape, no scores</p>
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">suite · illustrative shape, no scores</p>
           <ul className="mt-4 space-y-2 font-mono text-[12px]">
             {[
               ["trial-01 · dvwa-login", "ok", "VERIFIED"],
@@ -60,11 +60,11 @@ export default function BenchmarksPage() {
 
         <div className="mt-10 grid gap-8 lg:grid-cols-2">
           <div>
-            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">How a trial runs</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">How a trial runs</h2>
             <ol className="mt-4 space-y-3">
               {FLOW.map(([t, b], i) => (
                 <li key={t} className="flex gap-3">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border bg-card font-mono text-[11px] font-semibold" aria-hidden>
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border bg-card font-mono text-xs font-semibold" aria-hidden>
                     {i + 1}
                   </span>
                   <div>
@@ -76,7 +76,7 @@ export default function BenchmarksPage() {
             </ol>
           </div>
           <div>
-            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">What gets measured</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">What gets measured</h2>
             <div className="mt-4 space-y-3">
               {METRICS.map(([t, b]) => (
                 <Card key={t} className="p-4">
