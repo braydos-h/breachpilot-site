@@ -1,0 +1,48 @@
+{
+  "version": "0.68.4",
+  "commit": "1a80fd153df6a28ef979b1659b6f9464364190b8",
+  "commitShort": "1a80fd153df6",
+  "commitDate": "2026-09-07T21:34:18+09:30",
+  "describe": "beta-534-g1a80fd1",
+  "latestTag": "v0.49.2",
+  "versionTags": [
+    "v0.49.2"
+  ],
+  "staticRoutes": {
+    "": "2026-09-07T19:38:25+09:30",
+    "/features": "2026-09-07T19:38:25+09:30",
+    "/features/swarm": "2026-09-07T19:38:25+09:30",
+    "/architecture": "2026-09-07T19:38:25+09:30",
+    "/providers": "2026-09-07T19:38:25+09:30",
+    "/plugins": "2026-09-07T19:38:25+09:30",
+    "/benchmarks": "2026-09-07T19:38:25+09:30",
+    "/safety": "2026-09-07T19:38:25+09:30",
+    "/install": "2026-09-07T19:38:25+09:30",
+    "/docs": "2026-09-07T19:38:25+09:30",
+    "/contributing": "2026-09-07T19:38:25+09:30",
+    "/security": "2026-09-07T19:38:25+09:30",
+    "/privacy": "2026-09-07T19:38:25+09:30",
+    "/legal": "2026-09-07T19:38:25+09:30",
+    "/releases": "2026-09-07T21:34:18+09:30"
+  },
+  "skills": 139,
+  "plugins": 14,
+  "mcpTools": 153,
+  "toolFamilies": 33,
+  "attackFamilies": 15,
+  "swarmAgents": 6,
+  "witnessAdvisory": true,
+  "method": {
+    "version": "pyproject.toml [project] version",
+    "skills": "count of skills/*/SKILL.md",
+    "plugins": "count of plugins/*/plugin.yaml excluding example*",
+    "mcpTools": "AST-shape regex ^\\s*@\\w+\\.tool\\( over tools/mcp_tools/**/*.py",
+    "toolFamilies": "distinct register_*_tools() in tools/mcp_tools/**/*.py",
+    "attackFamilies": "tools/attack_modules/modules files+subdirs, ics_iot merged into ics",
+    "swarmAgents": "tools/swarm/agents/*_agent.py excluding advisory witness_agent.py",
+    "docDates": "git log -1 --format=%cI per docs file, else synced copy mtime"
+  },
+  "source": "adjacent BreachPilot checkout",
+  "generatedAt": "2026-09-07T12:34:33.552Z",
+  "stale": false
+}

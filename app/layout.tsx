@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { VERSION } from "@/lib/meta";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -62,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               operatingSystem: "Linux, Windows",
               url: SITE.url,
               downloadUrl: SITE.installSh,
-              softwareVersion: "0.49",
+              softwareVersion: VERSION,
               license: "https://www.apache.org/licenses/LICENSE-2.0",
               offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
               description: SITE.description,

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Card, CodeSnippet } from "@/components/ui";
+import { META } from "@/lib/meta";
 
 export const metadata: Metadata = {
   title: "Architecture",
@@ -15,14 +16,14 @@ const LAYERS = [
   ["WebUI / API", "Loopback-only console at 127.0.0.1:8765 — bearer-token auth, real-time events over WebSocket. Transport-neutral AssessmentService underneath."],
   ["Goal Engine / Planner", "Resolves preset or custom goals, gates by risk profile (SAFE / GATED / HIGH), builds the AttackPlan DAG."],
   ["Exploit Agent", "The Flow A loop: understand → hypothesize → plan → execute → interpret → reflect → recover → validate. Policy-gated."],
-  ["MCP Tool Layer", "120+ tools across 29 families, registered via collect_tools() with @audit_tool / @require_allowlist decorators."],
+  ["MCP Tool Layer", `${META.mcpTools ?? "120+"} tools across ${META.toolFamilies ?? "29"} families, registered via collect_tools() with @audit_tool / @require_allowlist decorators.`],
   ["Target-locked execution", "Disposable sandbox worker + target-IP allowlist lock. Off-allowlist destinations are BLOCKED; sandbox failures fail closed."],
 ];
 
 const SIDE = [
   ["Swarm Orchestrator", "Six specialists on a shared blackboard for single-target depth."],
   ["Autonomous Orchestrator", "Persistent multi-phase campaigns with adaptive aggression and resume."],
-  ["Skills + Memory", "140+ advisory skills, semantic memory, experience store, attack memory."],
+  ["Skills + Memory", `${META.skills ?? "140+"} advisory skills, semantic memory, experience store, attack memory.`],
   ["Provider layer", "Pluggable chat/generate adapters (Ollama, OpenCode Go, ChatGPT) behind one ModelClient contract."],
   ["Evidence / OutcomeJudge", "Execution outcome vs evidential outcome — CONFIRMED / REFUTED / EXHAUSTED."],
   ["Finding verifier + Reports", "Validation scoring, Markdown/HTML reports, MITRE export, ticketing."],

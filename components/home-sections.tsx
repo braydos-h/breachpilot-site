@@ -17,7 +17,8 @@ import { useState } from "react";
 import { AttackGraph } from "@/components/attack-graph";
 import { Badge, Card, MetaLabel, SectionHeading, StatusDot } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { METRICS, SWARM_AGENTS } from "@/lib/site";
+import { DERIVED_METRICS, META } from "@/lib/meta";
+import { SWARM_AGENTS } from "@/lib/site";
 
 const AGENT_ICONS: Record<string, typeof Radar> = {
   Radar,
@@ -29,16 +30,9 @@ const AGENT_ICONS: Record<string, typeof Radar> = {
 };
 
 export function StatsRow() {
-  const stats = [
-    { value: METRICS.skills, label: METRICS.skillsNote },
-    { value: METRICS.mcpTools, label: METRICS.mcpToolsNote },
-    { value: METRICS.attackFamilies, label: METRICS.attackFamiliesNote },
-    { value: METRICS.agents, label: METRICS.agentsNote },
-    { value: METRICS.toolFamilies, label: METRICS.toolFamiliesNote },
-  ];
   return (
     <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-3 lg:grid-cols-5">
-      {stats.map((s) => (
+      {DERIVED_METRICS.map((s) => (
         <div key={s.label} className="bg-card px-5 py-6 text-center">
           <dd className="text-3xl font-semibold tracking-tight tabular-nums">{s.value}</dd>
           <dt className="mt-1 text-[13px] text-muted-foreground">{s.label}</dt>
@@ -72,7 +66,7 @@ const WHY = [
   {
     icon: Brain,
     title: "Persistent knowledge",
-    body: "140+ advisory skills with deterministic and semantic selection, cross-mission semantic memory over nomic-embed-text, per-attempt attack memory and Bayesian experience scoring. Lessons survive the run.",
+    body: `${META.skills ?? "140+"} advisory skills with deterministic and semantic selection, cross-mission semantic memory over nomic-embed-text, per-attempt attack memory and Bayesian experience scoring. Lessons survive the run.`,
   },
 ];
 

@@ -14,20 +14,6 @@ export const SITE = {
 
 export const REPO_URL = SITE.repo;
 
-/** Centralized project metrics — update as the repository changes. */
-export const METRICS = {
-  skills: "140+",
-  skillsNote: "advisory skills (skills/ SKILL.md catalog)",
-  mcpTools: "120+",
-  mcpToolsNote: "MCP tools",
-  toolFamilies: "29",
-  toolFamiliesNote: "tool families",
-  attackFamilies: "15",
-  attackFamiliesNote: "attack-module families",
-  agents: "6",
-  agentsNote: "specialist swarm agents",
-} as const;
-
 export type NavLink = { href: string; label: string };
 
 export const NAV_LINKS: NavLink[] = [

@@ -16,20 +16,32 @@ jobs:
           node-version: 20
           cache: npm
 
-      # prebuild (scripts/sync-docs.mjs) expects the main BreachPilot
-      # repo's docs/ + README.md as siblings of this checkout, so
-      # sparse-clone just those into the right place.
-      - name: Fetch BreachPilot docs (prebuild sync source)
+      # prebuild (scripts/sync-docs.mjs + generate-meta.mjs) expects the main
+      # BreachPilot repo's docs/ + README.md beside this checkout, and the full
+      # repo for derived counts — so sparse-clone the metadata inputs.
+      - name: Fetch BreachPilot repo (docs sync + metadata source)
         run: |
           PARENT_DIR="$(dirname "$GITHUB_WORKSPACE")"
-          rm -rf "$PARENT_DIR/docs" "$PARENT_DIR/README.md"
+          rm -rf "$PARENT_DIR/docs" "$PARENT_DIR/README.md" "$PARENT_DIR/BreachPilot"
           git clone --depth 1 --filter=blob:none --sparse https://github.com/braydos-h/BreachPilot.git /tmp/breachpilot
           cd /tmp/breachpilot
-          git sparse-checkout set docs README.md
-          cp -r docs "$PARENT_DIR/docs"
-          cp README.md "$PARENT_DIR/README.md"
+          git sparse-checkout set docs README.md pyproject.toml skills plugins tools/swarm/agents tools/mcp_tools tools/attack_modules
+          mkdir -p "$PARENT_DIR/BreachPilot"
+          cp -r docs README.md pyproject.toml skills plugins tools "$PARENT_DIR/BreachPilot/"
 
       - run: npm ci
-      - run: npm run lint
+
+      - name: Sync docs + generate metadata (strict)
+        run: npm run prebuild
+        env:
+          STRICT_META: "1"
+
       - run: npm run typecheck
+      - run: npm run lint
       - run: npm run build
+
+      - name: Check internal links in static export
+        run: npm run check:links
+
+      - name: Accessibility smoke test (axe-core, key pages)
+        run: node scripts/check-a11y.mjs

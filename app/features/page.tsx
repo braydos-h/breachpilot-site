@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Card, CodeSnippet, SectionHeading } from "@/components/ui";
+import { META } from "@/lib/meta";
 
 export const metadata: Metadata = {
   title: "Features",
@@ -29,7 +30,7 @@ const RECON: Array<[string, string]> = [
 ];
 
 const EXPLOIT: Array<[string, string]> = [
-  ["15 attack-module families", "web, auth_creds, crypto_jwt, deserialize, network_smb, privesc, services, ssh, synthesis, supply_chain, persistence, ad, ics_iot, detection and orchestrator_phases."],
+  [`${META.attackFamilies ?? 15} attack-module families`, "web, auth_creds, crypto_jwt, deserialize, network_smb, privesc, services, ssh, synthesis, supply_chain, persistence, ad, ics_iot, detection and orchestrator_phases."],
   ["Applicability scoring", "Each module scores itself 0–100 against the target's services, ports and CVEs; experience-aware ranking learns across runs."],
   ["Prerequisite modeling", "Modules declare requires / produces / read_only / cost / phase_hint, so the planner composes prerequisites dynamically via find_producers."],
   ["Payload crafting + mutation", "PayloadCrafter and ExploitMutator with parameter-tweak, encoding-change, delivery-swap and context-aware strategies."],
