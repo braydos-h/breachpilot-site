@@ -197,6 +197,44 @@ export function ProductTour() {
   );
 }
 
+/**
+ * Real WebUI screenshots. Drop PNGs into public/screenshots/ named:
+ *   run-creation.png · attack-graph.png · evidence-findings.png · final-report.png
+ * (1200px+ wide, redacted lab targets only — 127.0.0.1 / example lab hosts.)
+ * Missing files render a labeled placeholder so the section never shows a
+ * broken image; add the file and it appears with no code change.
+ */
+const SCREENSHOTS = [
+  { file: "run-creation.png", label: "Run creation", desc: "Target, model, goal and allowlist review before launch." },
+  { file: "attack-graph.png", label: "Attack graph", desc: "ReactFlow DAG — ready/blocked steps, hypotheses, evidence links." },
+  { file: "evidence-findings.png", label: "Evidence & findings", desc: "Confirmed findings with probe output and the SHA-256 audit chain." },
+  { file: "final-report.png", label: "Final report", desc: "Rendered Markdown/HTML report with MITRE export." },
+] as const;
+
+export function Screenshots({ available }: { available: Record<string, boolean> }) {
+  return (
+    <div className="mt-10 grid gap-4 sm:grid-cols-2">
+      {SCREENSHOTS.map((s) => (
+        <figure key={s.file} className="overflow-hidden rounded-xl border bg-card">
+          <div className="border-b bg-muted/40 px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+            {s.label}
+          </div>
+          {available[s.file] ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={`/screenshots/${s.file}`} alt={`BreachPilot WebUI — ${s.label}`} className="aspect-[16/10] w-full object-cover object-top" loading="lazy" />
+          ) : (
+            <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-1 border-b border-dashed bg-grid-sm p-6 text-center" role="img" aria-label={`Placeholder — ${s.label} screenshot not yet provided`}>
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">screenshot pending</p>
+              <p className="max-w-xs text-sm text-muted-foreground">Add <code className="rounded border bg-muted px-1 font-mono text-[12px]">public/screenshots/{s.file}</code></p>
+            </div>
+          )}
+          <figcaption className="p-4 text-sm leading-6 text-muted-foreground">{s.desc}</figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
 export function HomeAttackGraph() {
   return (
     <div className="mt-10">
