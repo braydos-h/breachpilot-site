@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, Github, ShieldAlert } from "lucide-react";
+import { ArrowRight, Github, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { GithubStats } from "@/components/github-stats";
 import { existsSync } from "node:fs";
@@ -20,31 +20,23 @@ function screenshotAvailability(): Record<string, boolean> {
 export default function HomePage() {
   return (
     <div>
-      {/* announcement */}
-      <div className="border-b">
-        <p className="mx-auto max-w-6xl px-4 py-2 text-center font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground sm:px-6">
-          Open source · Apache 2.0 · Local-first
-        </p>
-      </div>
-
       {/* hero */}
       <section className="bg-grid relative overflow-hidden">
         <div className="bg-radial-fade pointer-events-none absolute inset-0 bg-grid" aria-hidden />
-        <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pt-20">
+        <div className="relative mx-auto max-w-6xl px-4 pb-10 pt-10 sm:px-6 sm:pt-12">
           <div className="max-w-3xl">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Open-source autonomous security assessment
+            <p className="inline-flex rounded-full border bg-background px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
+              Open source · Apache 2.0 · Local-first
             </p>
-            <h1 className="mt-4 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="mt-3 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-[40px] lg:text-5xl">
               Autonomous security assessment. <span className="text-gradient">Operator supervised.</span>
             </h1>
             <Typewriter />
-            <p className="mt-5 max-w-2xl text-[15px] leading-7 text-muted-foreground sm:text-base">
-              BreachPilot is an open-source agentic operator for authorized security testing. It plans,
-              discovers, reasons, chains, verifies and produces evidence-backed reports — while remaining
-              target-locked, audited and operator-supervised.
+            <p className="mt-3 max-w-2xl text-[15px] leading-7 text-muted-foreground sm:text-base">
+              Open-source agentic operator for authorized testing — plans, verifies, and reports with
+              evidence, target-locked and audited.
             </p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link
                 href="/install"
                 className="inline-flex items-center justify-center gap-1.5 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
@@ -59,23 +51,30 @@ export default function HomePage() {
               >
                 <Github className="h-4 w-4" aria-hidden /> View on GitHub
               </a>
-              <Link
-                href="/docs"
-                className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground"
-              >
-                <BookOpen className="h-4 w-4" aria-hidden /> Read the docs
-              </Link>
             </div>
-            <div className="mt-3">
-              <GithubStats owner="braydos-h" repo="BreachPilot" />
+            <p className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
+              <ShieldAlert className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              <span>
+                Authorized testing only —{" "}
+                <Link href="/safety" className="underline underline-offset-4 hover:text-foreground">
+                  safety model
+                </Link>{" "}
+                ·{" "}
+                <Link href="/docs" className="underline underline-offset-4 hover:text-foreground">
+                  docs
+                </Link>
+              </span>
+            </p>
+            <div className="mt-5 max-w-md">
+              <InstallTabs compact />
             </div>
-            <InstallTabs />
           </div>
 
-          <div className="mt-12 animate-fade-in-up">
+          <div className="mx-auto mt-8 max-w-3xl animate-fade-in-up">
             <MissionControl />
-            <p className="mt-2 text-center font-mono text-xs text-muted-foreground">
-              illustrative lab run · 127.0.0.1 · recon → initial access → verify → report
+            <p className="mt-2 text-center text-sm text-muted-foreground">
+              Illustrative lab run against 127.0.0.1 — BreachPilot tests only allowlisted targets and
+              blocks everything else.
             </p>
           </div>
         </div>
@@ -84,8 +83,9 @@ export default function HomePage() {
       {/* stats */}
       <section aria-label="Project metrics" className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
         <StatsRow />
-        <p className="mt-3 text-center text-[13px] text-muted-foreground">
-          Live counts from the repository catalog — skills, tools, modules, agents, families.
+        <p className="mt-3 flex items-center justify-center gap-2 text-center text-sm text-muted-foreground">
+          Live counts from the repository catalog.
+          <GithubStats owner="braydos-h" repo="BreachPilot" />
         </p>
       </section>
 
@@ -95,7 +95,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="Why BreachPilot"
             title="A full assessment lifecycle, under supervision"
-            lede="From reconnaissance through exploitation, verification and reporting — one operator-supervised engine with the audit trail to prove what happened."
+            lede="Recon to report in one supervised engine, with proof."
           />
           <WhyGrid />
         </div>
@@ -106,7 +106,7 @@ export default function HomePage() {
         <SectionHeading
           eyebrow="Multi-agent orchestration"
           title="Six specialists, one shared blackboard"
-          lede="Parallel dispatch across recon, vuln, exploit, post-exploit, critic and reflection — with battle logs and cross-phase negotiation, plus a persistent autonomous orchestrator for extended campaigns."
+          lede="Parallel dispatch with battle logs and cross-phase negotiation — plus a persistent orchestrator for extended campaigns."
         />
         <SwarmDiagram />
       </section>
@@ -117,7 +117,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="Attack graph"
             title="A structured plan, not a prompt chain"
-            lede="Every run builds an AttackPlan DAG — prerequisites, hypotheses, ready and blocked steps, evidence and outcomes — inspectable live in the WebUI's ReactFlow graph."
+            lede="Every run builds an AttackPlan DAG — ready/blocked steps and evidence, live in the WebUI graph."
           />
           <HomeAttackGraph />
         </div>
@@ -128,7 +128,7 @@ export default function HomePage() {
         <SectionHeading
           eyebrow="Inside BreachPilot"
           title="Mission control for the whole run"
-          lede="The WebUI is a loopback-only, bearer-token console at 127.0.0.1:8765 — wizard, live stream, graph, evidence, skills, modules, benchmarks, memory, connections and system in one place."
+          lede="Loopback-only console at 127.0.0.1:8765 — wizard, stream, graph, evidence and more in one place."
         />
         <ProductTour />
       </section>
@@ -138,7 +138,7 @@ export default function HomePage() {
         <SectionHeading
           eyebrow="Screenshots"
           title="The real WebUI"
-          lede="Actual BreachPilot console captures from a local lab run — not mockups. Missing captures show exactly which file to add."
+          lede="Console captures from a local lab run — not mockups."
         />
         <Screenshots available={screenshotAvailability()} />
       </section>
@@ -146,31 +146,34 @@ export default function HomePage() {
       {/* safety strip */}
       <section className="border-t">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-          <div className="rounded-xl border bg-card p-6 sm:p-8">
-            <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              <ShieldAlert className="h-4 w-4" aria-hidden /> Built for authorized security testing
-            </p>
-            <blockquote className="mt-3 border-l-2 border-foreground pl-4 text-lg font-medium leading-8 tracking-tight">
-              Only test systems you own or have explicit written permission to assess.
-            </blockquote>
-            <p className="mt-3 max-w-3xl text-[15px] leading-7 text-muted-foreground">
-              Attack mode auto-approves in-scope actions — the safeties are the target-IP allowlist lock
-              and the mission scope gate, with every action in a tamper-evident audit chain. No softened
-              language: read exactly how it works.
-            </p>
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/safety"
-                className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
-              >
-                Read the safety model
-              </Link>
-              <Link
-                href="/install"
-                className="inline-flex items-center justify-center rounded-md border px-5 py-2.5 text-sm font-medium hover:bg-muted"
-              >
-                Install for your lab
-              </Link>
+          <div className="grid gap-6 rounded-xl border bg-card p-6 sm:p-8 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+            <div>
+              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                <ShieldAlert className="h-4 w-4" aria-hidden /> Built for authorized security testing
+              </p>
+              <blockquote className="mt-3 border-l-2 border-foreground pl-4 text-lg font-medium leading-8 tracking-tight">
+                Only test systems you own or have explicit written permission to assess.
+              </blockquote>
+            </div>
+            <div>
+              <p className="text-sm leading-6 text-muted-foreground">
+                Attack mode auto-approves in-scope actions — the safeties are the target-IP allowlist
+                lock and the mission scope gate, with every action in a tamper-evident audit chain.
+              </p>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/safety"
+                  className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+                >
+                  Read the safety model
+                </Link>
+                <Link
+                  href="/install"
+                  className="inline-flex items-center justify-center rounded-md border px-5 py-2.5 text-sm font-medium hover:bg-muted"
+                >
+                  Install for your lab
+                </Link>
+              </div>
             </div>
           </div>
         </div>

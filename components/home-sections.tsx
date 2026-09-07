@@ -15,7 +15,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { AttackGraph } from "@/components/attack-graph";
-import { Badge, Card, MetaLabel, SectionHeading, StatusDot } from "@/components/ui";
+import { Card, MetaLabel, SectionHeading } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { DERIVED_METRICS, META } from "@/lib/meta";
 import { SWARM_AGENTS } from "@/lib/site";
@@ -29,72 +29,108 @@ const AGENT_ICONS: Record<string, typeof Radar> = {
   Brain,
 };
 
+/** Metrics strip — dividers, not cards. Short labels; full method in title. */
 export function StatsRow() {
   return (
-    <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-3 lg:grid-cols-5">
+    <dl className="flex divide-x overflow-x-auto rounded-xl border bg-card">
       {DERIVED_METRICS.map((s) => (
-        <div key={s.label} className="bg-card px-5 py-6 text-center">
-          <dd className="text-3xl font-semibold tracking-tight tabular-nums">{s.value}</dd>
-          <dt className="mt-1 text-[13px] text-muted-foreground">{s.label}</dt>
+        <div key={s.label} className="min-w-0 flex-1 px-4 py-5 text-center sm:px-5 sm:py-6">
+          <dd className="text-2xl font-semibold tracking-tight tabular-nums sm:text-3xl">{s.value}</dd>
+          <dt className="mt-1 truncate text-xs text-muted-foreground" title={methodFor(s.label)}>
+            {s.label}
+          </dt>
         </div>
       ))}
     </dl>
   );
 }
 
+function methodFor(label: string): string | undefined {
+  const m = META.method as Record<string, string> | undefined;
+  if (!m) return undefined;
+  if (label === "advisory skills") return m.skills;
+  if (label === "MCP tools") return m.mcpTools;
+  if (label === "attack families") return m.attackFamilies;
+  if (label === "swarm agents") return "six fixed specialist roles";
+  if (label === "tool families") return m.toolFamilies;
+  return undefined;
+}
+
 const WHY = [
   {
     icon: Network,
     title: "Adversarial planning",
-    body: "A structured AttackPlan DAG with prerequisites, hypotheses and automated failure recovery. It retries with refined parameters, switches capabilities and composes prerequisites dynamically — every decision recorded in decision_log.jsonl.",
+    body: "Structured AttackPlan DAG with retries and failure recovery.",
+    proof: "decision_log.jsonl per run",
+    wide: true,
   },
   {
     icon: Lock,
     title: "Target-locked execution",
-    body: "Target-touching actions are constrained by the target allowlist and mission scope. Every destination is extracted from every command; anything off-allowlist is BLOCKED, scope violations land in the audit chain as SCOPE_DENIED.",
+    body: "Allowlist + mission scope gate on every action.",
+    proof: "off-allowlist BLOCKED · SCOPE_DENIED logged",
+    wide: false,
   },
   {
     icon: FileCheck2,
     title: "Evidence-based verification",
-    body: "Execution success and evidential success are separate. OutcomeJudge returns CONFIRMED, REFUTED or EXHAUSTED — findings require supporting evidence, and oracle probes decide benchmarks, never agent claims.",
+    body: "Execution success and evidential success are separate.",
+    proof: "CONFIRMED / REFUTED / EXHAUSTED + oracle probes",
+    wide: false,
   },
   {
     icon: Globe,
-    title: "Domain-aware reconnaissance",
-    body: "Hand it a domain and the platform resolves and expands the surface — certificate transparency, DNS bruteforce, subfinder/amass — auto-authorizing discovered hosts, flagging dangling-CNAME takeovers, staying scope-aware throughout.",
+    title: "Domain-aware recon",
+    body: "Domain in, scope-aware attack surface out.",
+    proof: "CT / DNS / subfinder · takeover flags",
+    wide: false,
   },
   {
     icon: Brain,
     title: "Persistent knowledge",
-    body: `${META.skills ?? "140+"} advisory skills with deterministic and semantic selection, cross-mission semantic memory over nomic-embed-text, per-attempt attack memory and Bayesian experience scoring. Lessons survive the run.`,
+    body: "Lessons survive the run.",
+    proof: `${META.skills ?? "140+"} skills · semantic + Bayesian scoring`,
+    wide: false,
   },
 ];
 
+/** Asymmetric bento: one wide card, then three narrow. Safety folds into the footer link. */
 export function WhyGrid() {
   return (
-    <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {WHY.map((w) => (
-        <Card key={w.title} className="animate-fade-in-up">
-          <w.icon className="h-5 w-5 text-foreground" aria-hidden />
-          <h3 className="mt-3 font-semibold tracking-tight">{w.title}</h3>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">{w.body}</p>
-        </Card>
-      ))}
-      <Card className="flex flex-col justify-between border-dashed">
-        <div>
+    <div className="mt-10">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {WHY.map((w) => (
+          <Card key={w.title} className={cn(w.wide && "sm:col-span-2 lg:col-span-2")}>
+            <w.icon className="h-5 w-5 text-foreground" aria-hidden />
+            <h3 className="mt-3 font-semibold tracking-tight">{w.title}</h3>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">{w.body}</p>
+            <p className="mt-2 font-mono text-xs text-muted-foreground">{w.proof}</p>
+          </Card>
+        ))}
+        <Card className="border-dashed">
           <ShieldCheck className="h-5 w-5 text-foreground" aria-hidden />
-          <h3 className="mt-3 font-semibold tracking-tight">Operator-supervised safety</h3>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            Read-only recon, approval gates, disposable sandbox workers and a tamper-evident SHA-256 audit chain.
+          <h3 className="mt-3 font-semibold tracking-tight">Operator-supervised</h3>
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            Approval gates, sandbox workers, SHA-256 audit chain.
           </p>
-        </div>
-        <Link href="/safety" className="mt-4 text-sm font-medium underline underline-offset-4">
-          Read the safety model →
-        </Link>
-      </Card>
+          <Link href="/safety" className="mt-3 inline-block text-sm font-medium underline underline-offset-4">
+            Read the safety model →
+          </Link>
+        </Card>
+      </div>
     </div>
   );
 }
+
+/** Short agent summaries for the home lifecycle strip — full detail lives on /features/swarm. */
+const AGENT_SHORT: Record<string, string> = {
+  recon: "Expand surface, stay in scope",
+  vuln: "Match CVEs to capabilities",
+  exploit: "Craft, mutate, execute",
+  post_exploit: "Loot and lateral targets",
+  critic: "Kill out-of-scope actions",
+  reflection: "Learn for the next run",
+};
 
 export function SwarmDiagram() {
   return (
@@ -103,26 +139,44 @@ export function SwarmDiagram() {
       <div className="mx-auto max-w-md rounded-xl border bg-card p-5 text-center shadow-[0_1px_2px_0_hsl(var(--foreground)/0.04)]">
         <MetaLabel>Shared blackboard + battle log</MetaLabel>
         <p className="mt-1 font-semibold">Swarm Orchestrator</p>
-        <p className="mt-1 text-sm text-muted-foreground">parallel dispatch · phase-aware skill hints · cross-phase negotiation</p>
+        <p className="mt-1 text-sm text-muted-foreground">parallel dispatch · cross-phase negotiation</p>
       </div>
-      {/* connectors + agents */}
-      <div className="mx-auto mt-0 grid max-w-4xl gap-3 pt-6 sm:grid-cols-2 lg:grid-cols-3" aria-label="Six specialist agents">
-        {SWARM_AGENTS.map((a) => {
+      {/* lifecycle strip: six steps, arrows on desktop, stacked on mobile */}
+      <ol
+        className="mx-auto mt-6 grid max-w-5xl gap-2 sm:grid-cols-2 lg:flex lg:items-stretch"
+        aria-label="Six specialist agents"
+      >
+        {SWARM_AGENTS.map((a, i) => {
           const Icon = AGENT_ICONS[a.icon] ?? Zap;
           return (
-            <div key={a.id} className="relative rounded-lg border bg-card p-4">
-              <span className="absolute -top-px left-1/2 h-6 w-px -translate-x-1/2 -translate-y-full bg-border" aria-hidden />
-              <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                <Icon className="h-3.5 w-3.5" aria-hidden /> {a.id}
-              </p>
-              <p className="mt-1 font-semibold">{a.name}</p>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">{a.job}</p>
-            </div>
+            <li key={a.id} className="flex min-w-0 flex-1 items-stretch gap-2">
+              {i > 0 && (
+                <span className="hidden shrink-0 items-center text-muted-foreground lg:flex" aria-hidden>
+                  →
+                </span>
+              )}
+              <Link
+                href="/features/swarm"
+                className="min-w-0 flex-1 rounded-lg border bg-card p-3 transition-colors hover:bg-muted"
+              >
+                <p className="flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                  <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                  <span className="truncate">{a.id}</span>
+                </p>
+                <p className="mt-1 truncate text-sm font-semibold">{a.name}</p>
+                <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                  {AGENT_SHORT[a.id] ?? a.job}
+                </p>
+              </Link>
+            </li>
           );
         })}
-      </div>
+      </ol>
       <div className="mx-auto mt-6 flex max-w-2xl flex-col items-center gap-3 text-center sm:flex-row sm:justify-center">
-        <Link href="/features/swarm" className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90">
+        <Link
+          href="/features/swarm"
+          className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90"
+        >
           Explore the swarm
         </Link>
         <Link href="/docs/swarm" className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-muted">
@@ -134,16 +188,16 @@ export function SwarmDiagram() {
 }
 
 const TOUR_VIEWS = [
-  { id: "new-run", label: "New Run", desc: "Configure target (IP or domain), model, goal and execution options, then review and launch. The allowlist is set before anything runs.", rows: ["target  127.0.0.1  ·  allowlisted", "goal  initial_access  [GATED]", "mode  attack · full_access (lab)"] },
-  { id: "live-run", label: "Live Run", desc: "Real-time event stream — tool calls, decisions and telemetry over WebSocket. Token-gated and ring-buffered.", rows: ["recon › run_full_recon → 4 ports", "vuln › CVE-2024-xxxx ↔ module 87/100", "critic › scope PASS · in-allowlist"] },
-  { id: "graph", label: "Attack Graph", desc: "Interactive ReactFlow DAG with pan, zoom, filtering, path finding and evidence inspection. Backed by AttackPlan ready/blocked steps.", rows: ["8 nodes · 2 ready · 1 blocked", "path: recon → hypothesis H-03", "evidence attached to H-03"] },
-  { id: "evidence", label: "Evidence", desc: "Reports, raw Nmap output, findings and the SHA-256 audit chain — tamper-evident, exportable to Markdown and HTML.", rows: ["H-03 PROBE … CONFIRMED", "audit chain · sha256 9f3a…c41d", "report.md + report.html rendered"] },
-  { id: "skills", label: "Skills", desc: "Browse the advisory skill catalog and per-run selection — deterministic tags plus semantic matching, re-evaluated mid-run.", rows: ["top-6 selected for this context", "jwt-algorithm-confusion … 0.91", "re-selection on new CVE"] },
-  { id: "modules", label: "Modules", desc: "Fifteen attack-module families with applicability scores (0–100) against the target's services, ports and CVEs.", rows: ["web … 87/100 · applicable", "crypto_jwt … 72/100", "privesc … gated on access"] },
-  { id: "benchmarks", label: "Benchmarks", desc: "Oracle-verified suites: claimed success vs oracle-verified success, false-positive rate, trial history and regression gates.", rows: ["VERIFIED ≠ claimed", "false_positive_rate tracked", "baseline.json regression gate"] },
-  { id: "memory", label: "Memory", desc: "Cross-mission semantic memory and experience-store lessons — what worked, against what, with what evidence.", rows: ["lesson: smb-signing-off → relay", "confidence 0.83 · 4 refs", "nomic-embed-text indexed"] },
-  { id: "connections", label: "Connections", desc: "Operator connections, listeners and beacon health — persistent RCE beacons with workspace callback management.", rows: ["listener :4444 · healthy", "beacon beacon-01 · 60s check-in", "SOCKS pivot · idle"] },
-  { id: "system", label: "System", desc: "Configuration, secrets, models and providers, skills, plugins and diagnostics. No manual YAML editing required.", rows: ["provider opencode_go · healthy", "sandbox image present", "14 plugins · 3 enabled"] },
+  { id: "new-run", label: "New Run", desc: "Set target, allowlist, goal. Review, then launch.", rows: ["target  127.0.0.1  ·  allowlisted", "goal  initial_access  [GATED]", "mode  attack · full_access (lab)"] },
+  { id: "live-run", label: "Live Run", desc: "Tool calls and decisions stream over WebSocket.", rows: ["recon › run_full_recon → 4 ports", "vuln › CVE-2024-xxxx ↔ module 87/100", "critic › scope PASS · in-allowlist"] },
+  { id: "graph", label: "Attack Graph", desc: "Pan/zoom DAG with evidence on every node.", rows: ["8 nodes · 2 ready · 1 blocked", "path: recon → hypothesis H-03", "evidence attached to H-03"] },
+  { id: "evidence", label: "Evidence", desc: "Reports plus SHA-256 audit chain, exportable.", rows: ["H-03 PROBE … CONFIRMED", "audit chain · sha256 9f3a…c41d", "report.md + report.html rendered"] },
+  { id: "skills", label: "Skills", desc: "Advisory catalog, re-selected mid-run.", rows: ["top-6 selected for this context", "jwt-algorithm-confusion … 0.91", "re-selection on new CVE"] },
+  { id: "modules", label: "Modules", desc: "Applicability scored 0–100 per target.", rows: ["web … 87/100 · applicable", "crypto_jwt … 72/100", "privesc … gated on access"] },
+  { id: "benchmarks", label: "Benchmarks", desc: "Verified success, never claimed success.", rows: ["VERIFIED ≠ claimed", "false_positive_rate tracked", "baseline.json regression gate"] },
+  { id: "memory", label: "Memory", desc: "What worked, against what, with evidence.", rows: ["lesson: smb-signing-off → relay", "confidence 0.83 · 4 refs", "nomic-embed-text indexed"] },
+  { id: "connections", label: "Connections", desc: "Listeners and beacon health at a glance.", rows: ["listener :4444 · healthy", "beacon beacon-01 · 60s check-in", "SOCKS pivot · idle"] },
+  { id: "system", label: "System", desc: "Providers, plugins, config — no YAML editing.", rows: ["provider opencode_go · healthy", "sandbox image present", "14 plugins · 3 enabled"] },
 ];
 
 export function ProductTour() {
@@ -172,7 +226,7 @@ export function ProductTour() {
       </div>
       <div className="mt-4 grid gap-4 lg:grid-cols-[1.1fr_1fr]" role="tabpanel" aria-label={`${active.label} preview`}>
         <div className="overflow-hidden rounded-xl border bg-card">
-          <div className="border-b bg-muted/40 px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          <div className="border-b bg-muted/40 px-4 py-2.5 font-mono text-xs font-medium uppercase tracking-wider text-muted-foreground">
             {active.label} · illustrative
           </div>
           <ul className="space-y-1.5 bg-grid-sm p-4 font-mono text-[12px] leading-5">
@@ -185,7 +239,7 @@ export function ProductTour() {
         </div>
         <div className="flex flex-col justify-center rounded-xl border bg-muted/30 p-6">
           <h3 className="text-lg font-semibold tracking-tight">{active.label}</h3>
-          <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{active.desc}</p>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">{active.desc}</p>
           <p className="mt-4">
             <Link href="/install" className="text-sm font-medium underline underline-offset-4">
               Run it locally →
@@ -216,7 +270,7 @@ export function Screenshots({ available }: { available: Record<string, boolean> 
     <div className="mt-10 grid gap-4 sm:grid-cols-2">
       {SCREENSHOTS.map((s) => (
         <figure key={s.file} className="overflow-hidden rounded-xl border bg-card">
-          <div className="border-b bg-muted/40 px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          <div className="border-b bg-muted/40 px-4 py-2.5 font-mono text-xs font-medium uppercase tracking-wider text-muted-foreground">
             {s.label}
           </div>
           {available[s.file] ? (
@@ -239,18 +293,9 @@ export function HomeAttackGraph() {
   return (
     <div className="mt-10">
       <AttackGraph />
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <Badge>
-          <StatusDot tone="ok" /> prerequisites
-        </Badge>
-        <Badge>
-          <StatusDot tone="warn" /> hypotheses
-        </Badge>
-        <Badge>
-          <StatusDot tone="idle" /> blocked steps
-        </Badge>
-        <Badge>evidence-linked outcomes</Badge>
-      </div>
+      <p className="mt-4 text-center font-mono text-xs text-muted-foreground">
+        prerequisites · hypotheses · blocked steps · evidence-linked outcomes
+      </p>
     </div>
   );
 }
