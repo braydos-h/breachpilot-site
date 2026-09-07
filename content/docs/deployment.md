@@ -213,7 +213,7 @@ python main.py --web                # build + serve SPA + open browser
 
 ```powershell
 # Windows: NSSM or a scheduled task
-nssm install BreachPilot "C:\BreachPilot\.venv\Scripts\python.exe" "C:\BreachPilot\main.py" --daemon
+nssm install BreachPilot "C:\Users\BH\Documents\GitHub\BreachPilot\.venv\Scripts\python.exe" "C:\Users\BH\Documents\GitHub\BreachPilot\main.py" --daemon
 ```
 
 ```bash

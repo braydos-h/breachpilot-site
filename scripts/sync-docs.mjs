@@ -10,12 +10,22 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const repoRoot = join(here, "..", "..");
-const srcDocs = join(repoRoot, "docs");
-const destDocs = join(here, "..", "content", "docs");
+const siteRoot = join(here, "..");
+const destDocs = join(siteRoot, "content", "docs");
 
-/** Top-level extras mapped to a slug. */
-const EXTRAS = [{ from: join(repoRoot, "README.md"), slug: "readme" }];
+// Source docs live in the main BreachPilot repo. Supported layouts, first hit wins:
+//  - nested:  <repo>/web (this site), <repo>/docs
+//  - sibling: <parent>/breachpilot-site, <parent>/BreachPilot/docs
+// Override with BREACHPILOT_DOCS_DIR.
+const CANDIDATES = [
+  process.env.BREACHPILOT_DOCS_DIR,
+  join(siteRoot, "..", "docs"),
+  join(siteRoot, "..", "BreachPilot", "docs"),
+].filter(Boolean);
+const srcDocs = CANDIDATES.find((d) => existsSync(d));
+
+/** Top-level extras mapped to a slug (main repo README sits next to docs/). */
+const EXTRAS = srcDocs ? [{ from: join(dirname(srcDocs), "README.md"), slug: "readme" }] : [];
 
 function copyDir(src, dest) {
   mkdirSync(dest, { recursive: true });
@@ -32,17 +42,23 @@ function copyDir(src, dest) {
   }
 }
 
-rmSync(destDocs, { recursive: true, force: true });
-mkdirSync(destDocs, { recursive: true });
-if (!existsSync(srcDocs)) {
-  console.error(`sync-docs: source docs dir missing: ${srcDocs}`);
-  process.exit(1);
-}
-copyDir(srcDocs, destDocs);
+if (srcDocs) {
+  rmSync(destDocs, { recursive: true, force: true });
+  mkdirSync(destDocs, { recursive: true });
+  copyDir(srcDocs, destDocs);
 
-const { copyFileSync } = await import("node:fs");
-for (const { from, slug } of EXTRAS) {
-  if (existsSync(from)) copyFileSync(from, join(destDocs, `${slug}.md`));
+  const { copyFileSync } = await import("node:fs");
+  for (const { from, slug } of EXTRAS) {
+    if (existsSync(from)) copyFileSync(from, join(destDocs, `${slug}.md`));
+  }
+} else {
+  // No upstream docs available (e.g. Vercel build without the sibling
+  // BreachPilot checkout): reuse the committed content/docs copies.
+  console.warn("sync-docs: source docs dir missing, reusing committed content/docs");
+  if (!existsSync(destDocs)) {
+    console.error("sync-docs: no source docs and no committed content/docs fallback");
+    process.exit(1);
+  }
 }
 
 let count = 0;
