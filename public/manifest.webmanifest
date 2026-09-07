@@ -1,0 +1,13 @@
+{
+  "name": "BreachPilot",
+  "short_name": "BreachPilot",
+  "description": "BreachPilot is an open-source, local-first autonomous platform for authorized security testing.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

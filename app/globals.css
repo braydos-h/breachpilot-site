@@ -1,0 +1,218 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* BreachPilot WebUI tokens — neutral monochrome, light theme */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 5.5%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 92%;
+    --primary-foreground: 0 0% 3.9%;
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 64.9%;
+    --accent: 0 0% 16%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 0 0% 92%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  html,
+  body {
+    overflow-x: clip;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.01em;
+  }
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: inherit;
+  }
+  table {
+    @apply text-sm;
+  }
+  thead {
+    @apply bg-muted/50 text-xs uppercase tracking-wide text-muted-foreground;
+  }
+  th {
+    @apply p-2 text-left font-medium;
+  }
+  tbody tr {
+    @apply border-t transition-colors hover:bg-primary/5;
+  }
+  tbody tr:nth-child(even) {
+    @apply bg-muted/10;
+  }
+  td {
+    @apply p-2;
+  }
+}
+
+@layer utilities {
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--border) / 0.35) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.35) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .bg-grid-sm {
+    background-image:
+      linear-gradient(to right, hsl(var(--border) / 0.25) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.25) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .bg-radial-fade {
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, #000 40%, transparent 100%);
+  }
+  .text-gradient {
+    background: linear-gradient(180deg, hsl(var(--foreground)) 0%, hsl(var(--muted-foreground)) 140%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 4px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    .animate-scan,
+    .animate-pulse-ring,
+    .animate-fade-in-up,
+    .animate-fade-in,
+    .animate-dash-flow,
+    .animate-node-pulse,
+    .animate-typing-caret {
+      animation: none !important;
+    }
+    .transition-all,
+    .transition-transform,
+    .transition-colors {
+      transition: none !important;
+    }
+  }
+}
+
+/* Markdown docs body */
+.docs-body {
+  @apply text-[15px] leading-7 text-foreground/90;
+}
+.docs-body h1 {
+  @apply mb-4 mt-2 text-3xl font-semibold tracking-tight text-foreground;
+}
+.docs-body h2 {
+  @apply mb-3 mt-10 border-b pb-2 text-xl font-semibold tracking-tight text-foreground;
+}
+.docs-body h3 {
+  @apply mb-2 mt-8 text-base font-semibold text-foreground;
+}
+.docs-body h4 {
+  @apply mb-2 mt-6 text-sm font-semibold uppercase tracking-wide text-muted-foreground;
+}
+.docs-body p {
+  @apply my-4;
+}
+.docs-body ul {
+  @apply my-4 list-disc space-y-1.5 pl-6;
+}
+.docs-body ol {
+  @apply my-4 list-decimal space-y-1.5 pl-6;
+}
+.docs-body li > ul,
+.docs-body li > ol {
+  @apply my-1.5;
+}
+.docs-body a {
+  @apply font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground;
+}
+.docs-body blockquote {
+  @apply my-4 border-l-2 border-border bg-muted/40 px-4 py-2 text-sm text-muted-foreground [&>p]:my-2;
+}
+.docs-body table {
+  @apply my-6 block w-full overflow-x-auto border text-sm;
+}
+.docs-body thead th {
+  @apply whitespace-nowrap;
+}
+.docs-body code:not(pre code) {
+  @apply rounded border bg-muted px-1.5 py-0.5 font-mono text-[13px] text-foreground;
+}
+.docs-body pre {
+  @apply my-4 overflow-x-auto rounded-lg border bg-muted/60 p-4 font-mono text-[13px] leading-6 scrollbar-thin;
+}
+.docs-body pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+.docs-body hr {
+  @apply my-8;
+}
+.docs-body img {
+  @apply rounded-lg border;
+}
