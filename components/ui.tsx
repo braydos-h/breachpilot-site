@@ -6,7 +6,7 @@ export function Badge({ children, className }: { children: ReactNode; className?
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border bg-muted/60 px-2.5 py-0.5 text-xs font-medium uppercase tracking-wider text-muted-foreground",
+        "inline-flex items-center gap-1.5 rounded-full border bg-muted/60 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground",
         className
       )}
     >
@@ -61,7 +61,7 @@ export function CodeSnippet({
   return (
     <div className={cn("overflow-hidden rounded-lg border bg-card", className)}>
       <div className="flex items-center justify-between border-b bg-muted/50 px-3 py-1.5">
-        <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        <span className="font-mono text-xs font-medium uppercase tracking-wider text-muted-foreground">
           {title ?? lang ?? "shell"}
         </span>
         <CopyButton text={code} label={title ? `Copy ${title}` : "Copy command"} />
