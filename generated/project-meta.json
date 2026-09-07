@@ -10,7 +10,7 @@
   ],
   "staticRoutes": {
     "": "2026-09-07T23:09:25+09:30",
-    "/features": "2026-09-07T22:28:50+09:30",
+    "/features": "2026-09-07T23:10:38+09:30",
     "/features/swarm": "2026-09-07T23:01:42+09:30",
     "/architecture": "2026-09-07T23:09:25+09:30",
     "/providers": "2026-09-07T23:01:42+09:30",
@@ -23,7 +23,7 @@
     "/security": "2026-09-07T19:38:25+09:30",
     "/privacy": "2026-09-07T19:38:25+09:30",
     "/legal": "2026-09-07T19:38:25+09:30",
-    "/releases": "2026-09-07T23:06:03+09:30"
+    "/releases": "2026-09-07T23:10:38+09:30"
   },
   "skills": 139,
   "plugins": 14,
@@ -43,6 +43,6 @@
     "docDates": "git log -1 --format=%cI per docs file, else synced copy mtime"
   },
   "source": "adjacent BreachPilot checkout",
-  "generatedAt": "2026-09-07T13:39:55.963Z",
+  "generatedAt": "2026-09-07T13:49:16.613Z",
   "stale": false
 }
