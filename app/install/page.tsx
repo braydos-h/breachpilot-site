@@ -12,14 +12,42 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://breachpilot.dev/install" },
 };
 
-const REQUIREMENTS: Array<[string, string, string]> = [
+const ESSENTIAL: Array<[string, string, string]> = [
   ["Python", "3.11+", "CI matrix 3.11–3.13; --doctor rejects older. python --version to check."],
   ["nmap", "on PATH or nmap.path", "Linux -O/-sS need root (nmap.sudo with sudo -n) or priv_fallback auto-downgrade."],
   ["Model endpoint", "Ollama Cloud (default) or local", "Cloud needs OLLAMA_API_KEY; embeddings stay local via ollama.embed_host."],
+];
+
+const OPTIONAL: Array<[string, string, string]> = [
   ["Node.js + npm", "Node 18+", "Only for the first WebUI build (auto-built, opens at 127.0.0.1:8765)."],
   ["Docker", "Engine / Desktop + breachpilot-sandbox image", "Sandbox is default-on; without it attacks degrade or block per config."],
   ["Disk / rights / Git", "~4GB free, admin for installs", "Git required for clone. Linux Kali arsenal optional (metasploit, hydra, impacket…)."],
 ];
+
+function RequirementsTable({ rows }: { rows: Array<[string, string, string]> }) {
+  return (
+    <div className="mt-3 overflow-x-auto rounded-xl border">
+      <table className="w-full min-w-[560px]">
+        <thead>
+          <tr>
+            <th>Need</th>
+            <th>Minimum</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(([need, min, notes]) => (
+            <tr key={need}>
+              <td className="font-medium">{need}</td>
+              <td className="font-mono text-[13px]">{min}</td>
+              <td className="text-muted-foreground">{notes}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 export default function InstallPage() {
   return (
@@ -28,13 +56,14 @@ export default function InstallPage() {
         eyebrow="Install"
         title="Install BreachPilot"
         lede="Linux is the primary platform. Windows is supported as a secondary platform. Never pipe a script you haven't read — every shortcut below has a review-first alternative."
-      />
-      <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
+      >
         {/* compact: drops the "Full install guide" self-link */}
-        <div className="mx-auto mt-8 max-w-2xl">
+        <div className="mt-6 max-w-2xl">
           <InstallTabs compact />
         </div>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
+      </PageHero>
+      <section className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
+        <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-xl border bg-card p-5">
             <h2 className="font-semibold tracking-tight">Linux — review first</h2>
             <div className="mt-3">
@@ -71,27 +100,11 @@ export default function InstallPage() {
           />
         </div>
 
-        <h2 className="mt-12 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Requirements</h2>
-        <div className="mt-3 overflow-x-auto rounded-xl border">
-          <table className="w-full min-w-[560px]">
-            <thead>
-              <tr>
-                <th>Need</th>
-                <th>Minimum</th>
-                <th>Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              {REQUIREMENTS.map(([need, min, notes]) => (
-                <tr key={need}>
-                  <td className="font-medium">{need}</td>
-                  <td className="font-mono text-[13px]">{min}</td>
-                  <td className="text-muted-foreground">{notes}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <h2 className="mt-12 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Essential</h2>
+        <RequirementsTable rows={ESSENTIAL} />
+
+        <h2 className="mt-12 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Optional — skip if WebUI-only</h2>
+        <RequirementsTable rows={OPTIONAL} />
 
         <h2 className="mt-12 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">First lab run</h2>
         <div className="mt-3">

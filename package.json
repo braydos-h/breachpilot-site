@@ -4,7 +4,7 @@
   "private": true,
   "description": "Official public website for BreachPilot — breachpilot.dev",
   "scripts": {
-    "prebuild": "node scripts/sync-docs.mjs && node scripts/generate-meta.mjs",
+    "prebuild": "node scripts/sync-docs.mjs && node scripts/generate-meta.mjs && node scripts/generate-security-txt.mjs",
     "gen:meta": "node scripts/generate-meta.mjs",
     "sync": "node scripts/sync-docs.mjs",
     "check:links": "node scripts/check-links.mjs",

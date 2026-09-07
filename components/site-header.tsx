@@ -8,9 +8,16 @@ import { ThemeToggle } from "@/components/theme";
 import { NAV_LINKS, SITE } from "@/lib/site";
 import { cn } from "@/lib/cn";
 
+function isActiveLink(pathname: string, href: string) {
+  if (pathname === href) return true;
+  // Highlight the section root for nested routes (e.g. /features/swarm → Features).
+  if (href !== "/" && pathname.startsWith(`${href}/`)) return true;
+  return false;
+}
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
 
   useEffect(() => {
     setOpen(false);
@@ -36,11 +43,12 @@ export function SiteHeader() {
         <nav aria-label="Primary" className="ml-4 hidden items-center gap-1 lg:flex">
           {NAV_LINKS.map((l) => (
             <Link
-              key={l.label}
+              key={l.href}
               href={l.href}
+              aria-current={isActiveLink(pathname, l.href) ? "page" : undefined}
               className={cn(
                 "rounded-md px-2.5 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
-                pathname === l.href && "bg-muted text-foreground"
+                isActiveLink(pathname, l.href) && "bg-muted text-foreground"
               )}
             >
               {l.label}
@@ -86,14 +94,15 @@ export function SiteHeader() {
       </div>
       {open ? (
         <nav id="mobile-nav" aria-label="Mobile" className="border-t bg-background lg:hidden">
-          <ul className="mx-auto max-w-6xl space-y-1 px-4 py-4 sm:px-6">
+          <ul className="mx-auto max-w-6xl space-y-0.5 px-4 py-3 sm:px-6">
             {NAV_LINKS.map((l) => (
-              <li key={l.label}>
+              <li key={l.href}>
                 <Link
                   href={l.href}
+                  aria-current={isActiveLink(pathname, l.href) ? "page" : undefined}
                   className={cn(
-                    "block rounded-md px-3 py-2.5 text-[15px] text-foreground/90 hover:bg-muted",
-                    pathname === l.href && "bg-muted font-medium"
+                    "block rounded-md px-3 py-2 text-sm text-foreground/90 hover:bg-muted",
+                    isActiveLink(pathname, l.href) && "bg-muted font-medium"
                   )}
                 >
                   {l.label}

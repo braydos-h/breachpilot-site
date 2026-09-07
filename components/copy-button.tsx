@@ -30,10 +30,11 @@ export function CopyButton({ text, label = "Copy to clipboard" }: { text: string
       type="button"
       onClick={copy}
       aria-label={label}
-      className="inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+      className="inline-flex h-7 items-center gap-1 rounded-md px-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
     >
       {copied ? <Check className="h-3.5 w-3.5" aria-hidden /> : <Copy className="h-3.5 w-3.5" aria-hidden />}
-      <span className="sr-only">{copied ? "Copied" : label}</span>
+      <span>{copied ? "Copied" : "Copy"}</span>
+      <span className="sr-only">{label}</span>
     </button>
   );
 }

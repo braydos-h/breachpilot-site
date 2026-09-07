@@ -17,7 +17,6 @@ export const REPO_URL = SITE.repo;
 export type NavLink = { href: string; label: string };
 
 export const NAV_LINKS: NavLink[] = [
-  { href: "/features", label: "Product" },
   { href: "/features", label: "Features" },
   { href: "/architecture", label: "Architecture" },
   { href: "/install", label: "Install" },

@@ -43,5 +43,5 @@ jobs:
       - name: Check internal links in static export
         run: npm run check:links
 
-      - name: Accessibility smoke test (axe-core, key pages)
+      - name: Accessibility smoke test (static export, key pages)
         run: node scripts/check-a11y.mjs

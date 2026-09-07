@@ -66,7 +66,7 @@ export function CodeSnippet({
         </span>
         <CopyButton text={code} label={title ? `Copy ${title}` : "Copy command"} />
       </div>
-      <pre className="scrollbar-thin overflow-x-auto p-3 font-mono text-[13px] leading-6 text-foreground">
+      <pre className="scrollbar-thin overflow-x-auto whitespace-pre-wrap break-all p-3 font-mono text-[13px] leading-6 text-foreground sm:whitespace-pre sm:break-normal">
         <code>{code}</code>
       </pre>
     </div>
