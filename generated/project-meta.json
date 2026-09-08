@@ -1,29 +1,29 @@
 {
   "version": "0.68.4",
-  "commit": "dd489acba558bf7ebd7a9ffa03d39232ecc66a1f",
-  "commitShort": "dd489acba558",
-  "commitDate": "2026-09-08T13:19:13+09:30",
-  "describe": "beta-565-gdd489ac",
+  "commit": "b01e69dabed9cb2d90cd6fbfcb0ab717faa25271",
+  "commitShort": "b01e69dabed9",
+  "commitDate": "2026-09-08T14:14:40+09:30",
+  "describe": "beta-566-gb01e69d",
   "latestTag": "v0.49.2",
   "versionTags": [
     "v0.49.2"
   ],
   "staticRoutes": {
-    "": "2026-09-08T08:28:24+09:30",
-    "/features": "2026-09-08T08:28:24+09:30",
-    "/features/swarm": "2026-09-08T08:28:24+09:30",
-    "/architecture": "2026-09-08T08:28:24+09:30",
-    "/providers": "2026-09-08T08:28:24+09:30",
-    "/plugins": "2026-09-08T08:28:24+09:30",
-    "/benchmarks": "2026-09-08T08:28:24+09:30",
-    "/safety": "2026-09-08T08:28:24+09:30",
-    "/install": "2026-09-08T08:28:24+09:30",
-    "/docs": "2026-09-08T13:19:27+09:30",
-    "/contributing": "2026-09-08T08:28:24+09:30",
-    "/security": "2026-09-08T08:28:24+09:30",
-    "/privacy": "2026-09-08T08:28:24+09:30",
-    "/legal": "2026-09-08T08:28:24+09:30",
-    "/releases": "2026-09-08T12:20:10+09:30"
+    "": "2026-09-08T14:14:09+09:30",
+    "/features": "2026-09-08T14:14:09+09:30",
+    "/features/swarm": "2026-09-08T14:14:09+09:30",
+    "/architecture": "2026-09-08T14:14:09+09:30",
+    "/providers": "2026-09-08T14:14:09+09:30",
+    "/plugins": "2026-09-08T14:14:09+09:30",
+    "/benchmarks": "2026-09-08T14:14:09+09:30",
+    "/safety": "2026-09-08T14:14:09+09:30",
+    "/install": "2026-09-08T14:14:09+09:30",
+    "/docs": "2026-09-08T14:14:09+09:30",
+    "/contributing": "2026-09-08T14:14:09+09:30",
+    "/security": "2026-09-08T14:14:09+09:30",
+    "/privacy": "2026-09-08T14:14:09+09:30",
+    "/legal": "2026-09-08T14:14:09+09:30",
+    "/releases": "2026-09-08T14:14:09+09:30"
   },
   "skills": 139,
   "plugins": 14,
@@ -43,6 +43,6 @@
     "docDates": "git log -1 --format=%cI per docs file, else synced copy mtime"
   },
   "source": "adjacent BreachPilot checkout",
-  "generatedAt": "2026-09-08T04:35:48.031Z",
+  "generatedAt": "2026-09-08T08:33:09.780Z",
   "stale": false
 }
