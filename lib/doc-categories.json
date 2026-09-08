@@ -1,0 +1,22 @@
+{
+  "$comment": "Single source of truth for docs categories. Imported by lib/docs.ts (sidebar/prev-next) and scripts/sync-docs.mjs (search-index.json). Edit here, not in either consumer.",
+  "order": [
+    "Getting Started",
+    "Core Concepts",
+    "Agent",
+    "Tooling",
+    "Platform",
+    "Extensibility",
+    "Engineering",
+    "Reference"
+  ],
+  "rules": [
+    { "match": "^(getting-started|tutorial|deployment|troubleshooting)$", "category": "Getting Started" },
+    { "match": "^(architecture|runtime-flows|safety-model|outcome-evidence|database-mission|sandbox)$", "category": "Core Concepts" },
+    { "match": "^(exploit-agent|swarm|skills|skill-authoring|prompts)$", "category": "Agent" },
+    { "match": "^(mcp-tools|mcp-wiring|attack-modules|browser-agent-design)$", "category": "Tooling" },
+    { "match": "^(webui|api|cli-reference|config-reference)$", "category": "Platform" },
+    { "match": "^(plugin-development|extension-guide|providers|provider-development)$", "category": "Extensibility" },
+    { "match": "^(testing-guide|evaluation|benchmarks|module-guide|glossary)$", "category": "Engineering" }
+  ]
+}
