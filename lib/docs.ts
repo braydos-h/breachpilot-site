@@ -225,9 +225,9 @@ export function resolveDocSlug(slug: string, href: string): string | null {
   }
   let res = stack.join("/");
   if (res.endsWith(".md")) res = res.slice(0, -3);
-  const slugs = new Set(getAllDocSlugs());
-  if (slugs.has(res)) return res;
-  if (res.startsWith("docs/") && slugs.has(res.slice(5))) return res.slice(5);
+  const slugs = getAllDocSlugs();
+  if (slugs.includes(res)) return res;
+  if (res.startsWith("docs/") && slugs.includes(res.slice(5))) return res.slice(5);
   const lower = res.toLowerCase();
   for (const s of slugs) {
     if (s.toLowerCase() === lower) return s;

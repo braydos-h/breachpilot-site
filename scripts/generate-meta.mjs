@@ -10,9 +10,17 @@
  * Output: generated/project-meta.json + generated/doc-dates.json
  */
 import { execFileSync } from "node:child_process";
-import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+
+const require = createRequire(import.meta.url);
+// Single source of truth for static routes (shared with app/sitemap.ts).
+// $comment is documentation, not a route.
+const STATIC_SOURCES = Object.fromEntries(
+  Object.entries(require("../lib/static-routes.json")).filter(([r]) => r === "" || r.startsWith("/"))
+);
 
 const here = dirname(fileURLToPath(import.meta.url));
 const siteRoot = join(here, "..");
@@ -106,7 +114,7 @@ function countMcp(root) {
     for (const m of text.matchAll(/^\s*def\s+(register_[a-z0-9_]+_tools)\s*\(/gm)) {
       if (m[1] !== "register_foo_tools") families.add(m[1]);
     }
-    for (const m of text.matchAll(/^\s*@\w+\.tool\s*\(/gm)) tools += 1;
+    tools += text.match(/^\s*@\w+\.tool\s*\(/gm)?.length ?? 0;
   }
   return { tools, families: families.size };
 }
@@ -160,7 +168,7 @@ function docDates(repoRoot, docsRel, destDocs) {
       const slug = relative(destDocs, p).replace(/\\/g, "/").replace(/\.md$/, "");
       let date = null;
       if (repoRoot && !repoRoot.docsOnly) {
-        const rel = relative(repoRoot === true ? "" : repoRoot, join(docsRel, `${slug}.md`));
+        const rel = relative(repoRoot, join(docsRel, `${slug}.md`));
         date = git(repoRoot, "log", "-1", "--format=%cI", "--", rel) || null;
       }
       if (!date) {
@@ -211,24 +219,8 @@ const latestTag = versionTags[0] ?? null;
 
 // Deterministic lastModified for static routes: last commit touching the
 // page source in THIS repo (not the build clock). Falls back to the upstream
-// commit date, never `new Date()`.
-const STATIC_SOURCES = {
-  "": ["app/page.tsx", "components/home-sections.tsx", "components/mission-control.tsx"],
-  "/features": ["app/features/page.tsx"],
-  "/features/swarm": ["app/features/swarm/page.tsx"],
-  "/architecture": ["app/architecture/page.tsx"],
-  "/providers": ["app/providers/page.tsx"],
-  "/plugins": ["app/plugins/page.tsx"],
-  "/benchmarks": ["app/benchmarks/page.tsx"],
-  "/safety": ["app/safety/page.tsx"],
-  "/install": ["app/install/page.tsx", "public/install.sh", "public/install.ps1"],
-  "/docs": ["app/docs/page.tsx", "lib/docs.ts"],
-  "/contributing": ["app/contributing/page.tsx"],
-  "/security": ["app/security/page.tsx"],
-  "/privacy": ["app/privacy/page.tsx"],
-  "/legal": ["app/legal/page.tsx"],
-  "/releases": ["app/releases/page.tsx", "generated/project-meta.json"],
-};
+// commit date, never `new Date()`. Route list lives in
+// lib/static-routes.json (shared with app/sitemap.ts).
 
 function staticDates(fallback) {
   const out = {};
@@ -281,7 +273,6 @@ const meta = {
   stale: false,
 };
 
-const { mkdirSync } = await import("node:fs");
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, "project-meta.json"), `${JSON.stringify(meta, null, 2)}\n`);
 

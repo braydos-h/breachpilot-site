@@ -3,12 +3,19 @@ import docDates from "@/generated/doc-dates.json";
 import { getAllDocSlugs } from "@/lib/docs";
 import { META } from "@/lib/meta";
 import { SITE } from "@/lib/site";
-import staticRoutes from "@/lib/static-routes.json";
+import staticRoutesJson from "@/lib/static-routes.json";
 
-const STATIC_ROUTES = Object.keys(staticRoutes).filter((r) => r === "" || r.startsWith("/")); /* skip $comment */
+// $comment documents the JSON file; it is not a route.
+const STATIC_SOURCES: Record<string, string[]> = Object.fromEntries(
+  Object.entries(staticRoutesJson).filter(
+    (entry): entry is [string, string[]] =>
+      (entry[0] === "" || entry[0].startsWith("/")) && Array.isArray(entry[1])
+  )
+);
+
+const STATIC_ROUTES = Object.keys(STATIC_SOURCES);
 
 const DATES: Record<string, string> = docDates as Record<string, string>;
-const STATIC_SOURCES: Record<string, string[]> = staticRoutes as Record<string, string[]>;
 const STATIC: Record<string, string> = (META.staticRoutes ?? {}) as Record<string, string>;
 
 function validDate(value: unknown): Date | undefined {
