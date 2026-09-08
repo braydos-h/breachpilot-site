@@ -1,6 +1,8 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import matter from "gray-matter";
+import categories from "@/lib/doc-categories.json";
+import { plainHeading, slugify } from "@/lib/slug";
 
 const CONTENT_DIR = join(process.cwd(), "content", "docs");
 const REPO_DOCS = join(process.cwd(), "..", "docs");
@@ -8,7 +10,7 @@ const REPO_DOCS = join(process.cwd(), "..", "docs");
 /**
  * Lean sidebar entry — deliberately excludes `body`/`headings`/`updatedFrom`.
  * sidebarGroups()/prevNext() feed client components, so every extra field is
- * serialized into each docs page's RSC payload (117 full bodies × every page).
+ * serialized into each docs page's RSC payload (159 full bodies × every page).
  */
 export type DocEntry = {
   slug: string;
@@ -23,13 +25,15 @@ export type DocContent = DocEntry & {
   updatedFrom: string;
 };
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .trim()
-    .replace(/[\s_]+/g, "-")
-    .replace(/-+/g, "-");
+const CAT_RULES: Array<[RegExp, string]> = categories.rules.map((r) => [new RegExp(r.match), r.category]);
+const CATEGORY_ORDER: string[] = categories.order;
+
+function categoryFor(slug: string): string {
+  const base = slug.split("/").pop() ?? slug;
+  for (const [re, cat] of CAT_RULES) {
+    if (re.test(base)) return cat;
+  }
+  return "Reference";
 }
 
 function titleFromFilename(file: string): string {
@@ -40,33 +44,11 @@ function titleFromFilename(file: string): string {
     .join(" ");
 }
 
-const CATEGORY_RULES: Array<[RegExp, string]> = [
-  [/^(getting-started|tutorial|deployment|troubleshooting)$/, "Getting Started"],
-  [/^(architecture|runtime-flows|safety-model|outcome-evidence|database-mission|sandbox)$/, "Core Concepts"],
-  [/^(exploit-agent|swarm|skills|skill-authoring|prompts)$/, "Agent"],
-  [/^(mcp-tools|mcp-wiring|attack-modules|browser-agent-design)$/, "Tooling"],
-  [/^(webui|api|cli-reference|config-reference)$/, "Platform"],
-  [/^(plugin-development|extension-guide|providers|provider-development)$/, "Extensibility"],
-  [/^(testing-guide|evaluation|benchmarks|module-guide|glossary)$/, "Engineering"],
-];
-
-const CATEGORY_ORDER = [
-  "Getting Started",
-  "Core Concepts",
-  "Agent",
-  "Tooling",
-  "Platform",
-  "Extensibility",
-  "Engineering",
-  "Reference",
-];
-
-function categoryFor(slug: string): string {
-  const base = slug.split("/").pop() ?? slug;
-  for (const [re, cat] of CATEGORY_RULES) {
-    if (re.test(base)) return cat;
-  }
-  return "Reference";
+/** Reject anything that could escape CONTENT_DIR: absolute, dot segments, escapes. */
+function validSlug(slug: string): boolean {
+  if (!slug || slug.includes("\\") || slug.includes("\0")) return false;
+  if (slug.startsWith("/") || slug.includes(":") || slug.includes("?") || slug.includes("#")) return false;
+  return !slug.split("/").some((seg) => seg === "" || seg === "." || seg === "..");
 }
 
 function listMarkdown(dir: string, base: string, out: string[]): void {
@@ -91,23 +73,60 @@ function readRaw(slug: string): { raw: string; source: string } {
   throw new Error(`doc not found: ${slug}`);
 }
 
+/**
+ * Extract title + h2/h3 headings from Markdown source.
+ * Fence-aware (a `# ...` line inside a code block is not a heading) and
+ * format-aware (plainHeading strips `[links]`, `*emphasis*`, `<html>` so the
+ * TOC id matches the id components/markdown.tsx assigns the rendered
+ * heading). Duplicate headings get `-1`, `-2` suffixes — same rule as the
+ * renderer, iterated in the same order, so ids always agree.
+ */
+function extractMeta(content: string, slug: string): { title: string; headings: DocContent["headings"] } {
+  let title: string | null = null;
+  const headings: DocContent["headings"] = [];
+  const seen = new Map<string, number>();
+  const uniqueId = (base: string): string => {
+    const n = seen.get(base) ?? 0;
+    seen.set(base, n + 1);
+    return n === 0 ? base : `${base}-${n}`;
+  };
+  const lines = content.split("\n");
+  let fence = false;
+  let prevText: string | null = null;
+  for (const line of lines) {
+    if (/^\s*```/.test(line)) {
+      fence = !fence;
+      prevText = null;
+      continue;
+    }
+    if (fence) continue;
+    const atx = line.match(/^(#{1,3})\s+(.+)/);
+    if (atx) {
+      const text = plainHeading(atx[2]);
+      if (atx[1].length === 1) {
+        if (title === null) title = text;
+      } else {
+        headings.push({ id: uniqueId(slugify(text)), text, level: atx[1].length });
+      }
+      prevText = null;
+      continue;
+    }
+    // Setext h2 (`Title\n---`) — remark renders these as <h2>, so the TOC must too.
+    if (/^---+$/.test(line.trim()) && prevText) {
+      const text = plainHeading(prevText);
+      headings.push({ id: uniqueId(slugify(text)), text, level: 2 });
+      prevText = null;
+      continue;
+    }
+    prevText = line.trim() ? line : null;
+  }
+  return { title: title ?? titleFromFilename(slug.split("/").pop() ?? slug), headings };
+}
+
 function parseDoc(slug: string): DocContent {
   const { raw, source } = readRaw(slug);
   const { content } = matter(raw);
-  const lines = content.split("\n");
-  let title = titleFromFilename(slug.split("/").pop() ?? slug);
-  for (const line of lines) {
-    const m = line.match(/^#\s+(.+)/);
-    if (m) {
-      title = m[1].trim();
-      break;
-    }
-  }
-  const headings: DocContent["headings"] = [];
-  for (const line of lines) {
-    const m = line.match(/^(#{2,3})\s+(.+)/);
-    if (m) headings.push({ id: slugify(m[2]), text: m[2].trim(), level: m[1].length });
-  }
+  const { title, headings } = extractMeta(content, slug);
   return {
     slug,
     title,
@@ -119,34 +138,45 @@ function parseDoc(slug: string): DocContent {
   };
 }
 
-let cache: DocContent[] | null = null;
+let allCache: DocContent[] | null = null;
+const docCache = new Map<string, DocContent | null>();
 
 export function getAllDocs(): DocContent[] {
-  if (cache) return cache;
+  if (allCache) return allCache;
   const slugs: string[] = [];
   listMarkdown(CONTENT_DIR, CONTENT_DIR, slugs);
   if (slugs.length === 0) listMarkdown(REPO_DOCS, REPO_DOCS, slugs);
-  cache = slugs
-    .map((slug) => {
-      try {
-        return parseDoc(slug);
-      } catch {
-        return null;
-      }
-    })
-    .filter((d): d is DocContent => d !== null)
-    .sort((a, b) => a.slug.localeCompare(b.slug));
-  return cache;
+  const docs: DocContent[] = [];
+  for (const slug of slugs) {
+    try {
+      const doc = parseDoc(slug);
+      docs.push(doc);
+      docCache.set(slug, doc);
+    } catch (err) {
+      // Never silently drop a doc: a broken file must fail the build loudly
+      // in CI, not vanish from nav/search/counts.
+      console.error(`docs: skipping unparseable ${slug}: ${(err as Error).message}`);
+    }
+  }
+  allCache = docs.sort((a, b) => a.slug.localeCompare(b.slug));
+  return allCache;
 }
 
 export function getAllDocSlugs(): string[] {
   return getAllDocs().map((d) => d.slug);
 }
 
-export function getDoc(slug: string): DocContent | null {
+export function getDoc(rawSlug: string): DocContent | null {
+  const slug = rawSlug.normalize().replace(/\\/g, "/");
+  if (!validSlug(slug)) return null;
+  const cached = docCache.get(slug);
+  if (cached !== undefined) return cached;
   try {
-    return parseDoc(slug.normalize().replace(/\\/g, "/"));
+    const doc = parseDoc(slug);
+    docCache.set(slug, doc);
+    return doc;
   } catch {
+    docCache.set(slug, null);
     return null;
   }
 }
@@ -169,4 +199,57 @@ export function prevNext(slug: string): { prev: DocEntry | null; next: DocEntry 
   const i = flat.findIndex((d) => d.slug === slug);
   if (i === -1) return { prev: null, next: null };
   return { prev: flat[i - 1] ?? null, next: flat[i + 1] ?? null };
+}
+
+/**
+ * Resolve an upstream-authored relative `.md` href (e.g. `api/auth.md`,
+ * `../safety-model.md`, `docs/README.md`) against the synced slugs.
+ * Returns the target slug, or null when the link points outside the synced
+ * tree (the renderer then links the upstream GitHub file instead of 404ing).
+ */
+export function resolveDocSlug(slug: string, href: string): string | null {
+  if (!href || href.startsWith("#") || href.startsWith("/") || !href.includes(".md")) return null;
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(href)) return null;
+  const path = href.split("#")[0].split("?")[0];
+  if (!/(^|\/)[^/]*\.md$/.test(path)) return null;
+  const base = slug.includes("/") ? slug.slice(0, slug.lastIndexOf("/")) : "";
+  const stack: string[] = [];
+  for (const part of (base ? `${base}/${path}` : path).split("/")) {
+    if (part === "" || part === ".") continue;
+    if (part === "..") {
+      if (stack.length > 0) stack.pop();
+      continue;
+    }
+    stack.push(part);
+  }
+  let res = stack.join("/");
+  if (res.endsWith(".md")) res = res.slice(0, -3);
+  const slugs = new Set(getAllDocSlugs());
+  if (slugs.has(res)) return res;
+  if (res.startsWith("docs/") && slugs.has(res.slice(5))) return res.slice(5);
+  const lower = res.toLowerCase();
+  for (const s of slugs) {
+    if (s.toLowerCase() === lower) return s;
+    if (lower.startsWith("docs/") && s.toLowerCase() === lower.slice(5)) return s;
+  }
+  return null;
+}
+
+/** Upstream GitHub URL for a doc-relative href that has no synced target. */
+export function upstreamDocUrl(slug: string, href: string): string | null {
+  const path = href.split("#")[0].split("?")[0];
+  const anchor = href.includes("#") ? href.slice(href.indexOf("#")) : "";
+  const base = slug.includes("/") ? slug.slice(0, slug.lastIndexOf("/")) : "";
+  const stack: string[] = [];
+  for (const part of (base ? `${base}/${path}` : path).split("/")) {
+    if (part === "" || part === ".") continue;
+    if (part === "..") {
+      if (stack.length > 0) stack.pop();
+      continue;
+    }
+    stack.push(part);
+  }
+  const rel = stack.join("/");
+  if (!rel || rel.startsWith("..")) return null;
+  return `https://github.com/braydos-h/BreachPilot/blob/main/docs/${rel}${anchor}`;
 }
