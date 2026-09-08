@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import matter from "gray-matter";
 import categories from "@/lib/doc-categories.json";
+import { SITE } from "@/lib/site";
 import { plainHeading, slugify } from "@/lib/slug";
 
 const CONTENT_DIR = join(process.cwd(), "content", "docs");
@@ -241,15 +242,20 @@ export function upstreamDocUrl(slug: string, href: string): string | null {
   const anchor = href.includes("#") ? href.slice(href.indexOf("#")) : "";
   const base = slug.includes("/") ? slug.slice(0, slug.lastIndexOf("/")) : "";
   const stack: string[] = [];
+  // A `..` that pops past the docs root escapes to the repo root
+  // (e.g. `../README.md` from a top-level doc means the repo README).
+  let rooted = true;
   for (const part of (base ? `${base}/${path}` : path).split("/")) {
     if (part === "" || part === ".") continue;
     if (part === "..") {
       if (stack.length > 0) stack.pop();
+      else rooted = false;
       continue;
     }
     stack.push(part);
   }
   const rel = stack.join("/");
-  if (!rel || rel.startsWith("..")) return null;
-  return `https://github.com/braydos-h/BreachPilot/blob/main/docs/${rel}${anchor}`;
+  if (!rel) return null;
+  const prefix = rooted ? "docs/" : "";
+  return `${SITE.repo}/blob/main/${prefix}${rel}${anchor}`;
 }
