@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import { FileQuestion } from "lucide-react";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  robots: { index: false },
+};
 
 export default function NotFound() {
   return (

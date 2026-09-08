@@ -7,6 +7,7 @@ next-env.d.ts
 *.log
 .env
 .env*.local
-CLAUDE.md
+# public/.well-known/security.txt is generated at prebuild (fresh Expires per
+# RFC 9116) — never commit it.
 public/.well-known/
 /.superpowers

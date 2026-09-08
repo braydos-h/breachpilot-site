@@ -6,13 +6,13 @@ import { PageHero } from "@/components/page-hero";
 import { Card } from "@/components/ui";
 import { META } from "@/lib/meta";
 import { PROVIDERS, SITE } from "@/lib/site";
+import { routeMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/architecture", {
   title: "Architecture",
   description:
     "BreachPilot architecture: operator → planner → agent → MCP tool layer → sandbox → evidence → verification → report, with swarm, memory, providers and audit alongside.",
-  alternates: { canonical: `${SITE.url}/architecture` },
-};
+});
 
 const PIPELINE_NODES: GraphNode[] = [
   { id: "operator", label: "Operator", sub: "approves gated", state: "done" },

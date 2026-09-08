@@ -9,15 +9,12 @@ import { cn } from "@/lib/cn";
 export type NavDoc = { slug: string; title: string; path: string };
 export type NavGroup = { category: string; docs: NavDoc[] };
 
-export function DocsSidebar({ groups }: { groups: NavGroup[] }) {
-  const pathname = usePathname();
-  const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
+function DocsList({ groups, query, onQuery, pathname }: {
+  groups: NavGroup[];
+  query: string;
+  onQuery: (q: string) => void;
+  pathname: string | null;
+}) {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return groups;
@@ -26,7 +23,9 @@ export function DocsSidebar({ groups }: { groups: NavGroup[] }) {
       .filter((g) => g.docs.length > 0);
   }, [groups, query]);
 
-  const list = (
+  const matchCount = filtered.reduce((n, g) => n + g.docs.length, 0);
+
+  return (
     <div>
       <label className="relative block">
         <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
@@ -34,16 +33,19 @@ export function DocsSidebar({ groups }: { groups: NavGroup[] }) {
         <input
           type="search"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => onQuery(e.target.value)}
           placeholder="Filter docs…"
           aria-label="Filter documentation pages"
-          className="w-full rounded-md border bg-background py-2 pl-9 pr-3 text-sm placeholder:text-muted-foreground"
+          className="w-full rounded-md border bg-background py-2 pl-9 pr-3 text-base placeholder:text-muted-foreground lg:text-sm"
         />
       </label>
+      <p role="status" aria-live="polite" className="sr-only">
+        {query.trim() ? `${matchCount} matching pages` : ""}
+      </p>
       <div className="mt-4 space-y-5">
         {filtered.map((g) => (
-          <nav key={g.category} aria-label={`Docs — ${g.category}`}>
-            <h2 className="px-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <section key={g.category} aria-labelledby={`docs-nav-${g.category}`}>
+            <h2 id={`docs-nav-${g.category}`} className="px-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               {g.category}
             </h2>
             <ul className="mt-1.5 space-y-0.5">
@@ -62,12 +64,22 @@ export function DocsSidebar({ groups }: { groups: NavGroup[] }) {
                 </li>
               ))}
             </ul>
-          </nav>
+          </section>
         ))}
         {filtered.length === 0 && <p className="px-2 text-sm text-muted-foreground">No pages match “{query}”.</p>}
       </div>
     </div>
   );
+}
+
+export function DocsSidebar({ groups }: { groups: NavGroup[] }) {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <>
@@ -83,14 +95,14 @@ export function DocsSidebar({ groups }: { groups: NavGroup[] }) {
           {open ? "Close contents" : "Browse docs"}
         </button>
       </div>
-      <aside className="hidden w-64 shrink-0 lg:block">
-        <div className="sticky top-[4.5rem] max-h-[calc(100vh-6rem)] overflow-y-auto pr-2 scrollbar-thin">{list}</div>
-      </aside>
-      {open && (
-        <div id="docs-sidebar-panel" className="mb-6 rounded-lg border bg-card p-4 lg:hidden">
-          {list}
+      <nav aria-label="Documentation" className="hidden w-64 shrink-0 lg:block">
+        <div className="sticky top-[4.5rem] max-h-[calc(100vh-6rem)] overflow-y-auto pr-2 scrollbar-thin">
+          <DocsList groups={groups} query={query} onQuery={setQuery} pathname={pathname} />
         </div>
-      )}
+      </nav>
+      <div id="docs-sidebar-panel" hidden={!open} className="mb-6 rounded-lg border bg-card p-4 lg:hidden">
+        <DocsList groups={groups} query={query} onQuery={setQuery} pathname={pathname} />
+      </div>
     </>
   );
 }
@@ -116,7 +128,7 @@ export function DocsSearchBox() {
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Search the docs…"
-        className="w-full rounded-lg border bg-card py-2.5 pl-10 pr-3 text-[15px] placeholder:text-muted-foreground"
+        className="w-full rounded-lg border bg-card py-2.5 pl-10 pr-3 text-base placeholder:text-muted-foreground"
       />
     </form>
   );

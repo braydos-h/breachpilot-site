@@ -76,7 +76,15 @@
   :focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
-    border-radius: inherit;
+  }
+  /* Press feedback for touch/mouse: buttons and button-like links. */
+  a[class*="bg-primary"]:active,
+  button[class*="bg-primary"]:active {
+    opacity: 0.8;
+  }
+  a[class*="hover:bg-muted"]:active,
+  button[class*="hover:bg-muted"]:active {
+    background-color: hsl(var(--muted) / 0.7);
   }
   table {
     @apply text-sm;
@@ -196,19 +204,48 @@
   @apply my-4 border-l-2 border-border bg-muted/40 px-4 py-2 text-sm text-muted-foreground [&>p]:my-2;
 }
 .docs-body table {
-  @apply my-6 block w-full overflow-x-auto border text-sm;
+  @apply w-full text-sm;
 }
 .docs-body thead th {
   @apply whitespace-nowrap;
 }
 .docs-body code:not(pre code) {
   @apply rounded border bg-muted px-1.5 py-0.5 font-mono text-[13px] text-foreground;
+  overflow-wrap: anywhere;
+}
+/* Self-link anchors on h2/h3: unadorned until hover, unlike body links. */
+.docs-body .heading-anchor {
+  @apply text-inherit no-underline hover:underline hover:decoration-foreground;
 }
 .docs-body pre {
   @apply my-4 overflow-x-auto rounded-lg border bg-muted/60 p-4 font-mono text-[13px] leading-6 scrollbar-thin;
 }
 .docs-body pre code {
   @apply bg-transparent p-0 text-inherit;
+}
+/* Scrollable wrapper for GFM tables: keeps <table> layout intact while the
+   wrapper scrolls. Keyboard-focusable (tabIndex=0) with a region label. */
+.table-scroll {
+  @apply my-6 overflow-x-auto rounded-lg border scrollbar-thin;
+}
+/* Per-block copy button: hover/focus on desktop, always visible on touch
+   (no hover there). visibility:hidden keeps it out of keyboard tab order
+   and hit-testing while invisible. */
+.code-copy {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 150ms ease-out, visibility 150ms;
+}
+.group:hover .code-copy,
+.group:focus-within .code-copy {
+  opacity: 1;
+  visibility: visible;
+}
+@media (pointer: coarse) {
+  .code-copy {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 .docs-body hr {
   @apply my-8;

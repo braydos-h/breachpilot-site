@@ -24,7 +24,7 @@ export function MissionControl() {
           <i className="h-2.5 w-2.5 rounded-full bg-border" />
           <i className="h-2.5 w-2.5 rounded-full bg-border" />
         </span>
-        <span className="ml-2 font-mono text-xs text-muted-foreground">breachpilot · live run · lab</span>
+        <span className="ml-2 min-w-0 flex-1 truncate font-mono text-xs text-muted-foreground">breachpilot · live run · lab</span>
         <span className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-foreground/20 bg-background px-2.5 py-0.5 text-xs font-semibold">
           <StatusDot tone="ok" />
           RUNNING
@@ -77,9 +77,8 @@ export function MissionControl() {
             <li className="truncate rounded border border-foreground/15 bg-background px-2.5 py-1.5 text-foreground">
               <span className="font-semibold text-foreground/60">vuln ›</span> CVE-2024-xxxx ↔ web module (87/100)
             </li>
-            <li className="rounded border border-destructive/50 border-l-4 bg-destructive/5 px-2.5 py-1.5 font-medium text-foreground">
-              <span className="font-semibold text-red-600 dark:text-red-400">critic ›</span> BLOCKED egress to
-              non-allowlist host · denied
+            <li className="truncate rounded border border-destructive/50 border-l-4 border-l-destructive bg-destructive/5 px-2.5 py-1.5 font-medium text-foreground" title="critic › BLOCKED egress to non-allowlist host · denied">
+              <span className="font-semibold text-destructive">critic ›</span> BLOCKED egress to non-allowlist host · denied
             </li>
             <li className="truncate rounded border border-foreground/15 bg-background px-2.5 py-1.5 text-foreground">
               <span className="font-semibold text-foreground/60">exploit ›</span> craft_exploit → attempt A-12

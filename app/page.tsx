@@ -4,17 +4,18 @@ import Link from "next/link";
 import { GithubStats } from "@/components/github-stats";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { HomeAttackGraph, ProductTour, Screenshots, StatsRow, SwarmDiagram, WhyGrid } from "@/components/home-sections";
+import { HomeAttackGraph, Screenshots, StatsRow, SwarmDiagram, WhyGrid } from "@/components/home-sections";
+import { ProductTour } from "@/components/product-tour";
 import { InstallTabs } from "@/components/install-tabs";
 import { MissionControl } from "@/components/mission-control";
 import { Typewriter } from "@/components/typewriter";
 import { SectionHeading } from "@/components/ui";
+import { routeMetadata } from "@/lib/metadata";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/", {
   description: SITE.description,
-  alternates: { canonical: SITE.url },
-};
+});
 
 const SHOT_FILES = ["run-creation.png", "attack-graph.png", "evidence-findings.png", "final-report.png"] as const;
 

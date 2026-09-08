@@ -37,7 +37,7 @@ function components(slug: string): Components {
     const id = uniqueId(slugify(textOf(children)));
     return (
       <Tag id={id} className="scroll-mt-20">
-        <a href={`#${id}`} aria-label={`Link to ${textOf(children)}`}>
+        <a href={`#${id}`} aria-label={`Link to ${textOf(children)}`} className="heading-anchor">
           {children}
         </a>
       </Tag>

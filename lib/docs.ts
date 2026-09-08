@@ -24,6 +24,8 @@ export type DocContent = DocEntry & {
   headings: Array<{ id: string; text: string; level: number }>;
   body: string;
   updatedFrom: string;
+  /** True when the body contains its own `# …` H1 — the page then skips its injected h1. */
+  hasH1: boolean;
 };
 
 const CAT_RULES: Array<[RegExp, string]> = categories.rules.map((r) => [new RegExp(r.match), r.category]);
@@ -82,8 +84,9 @@ function readRaw(slug: string): { raw: string; source: string } {
  * heading). Duplicate headings get `-1`, `-2` suffixes — same rule as the
  * renderer, iterated in the same order, so ids always agree.
  */
-function extractMeta(content: string, slug: string): { title: string; headings: DocContent["headings"] } {
+function extractMeta(content: string, slug: string): { title: string; headings: DocContent["headings"]; hasH1: boolean } {
   let title: string | null = null;
+  let hasH1 = false;
   const headings: DocContent["headings"] = [];
   const seen = new Map<string, number>();
   const uniqueId = (base: string): string => {
@@ -105,6 +108,7 @@ function extractMeta(content: string, slug: string): { title: string; headings: 
     if (atx) {
       const text = plainHeading(atx[2]);
       if (atx[1].length === 1) {
+        hasH1 = true;
         if (title === null) title = text;
       } else {
         headings.push({ id: uniqueId(slugify(text)), text, level: atx[1].length });
@@ -121,13 +125,15 @@ function extractMeta(content: string, slug: string): { title: string; headings: 
     }
     prevText = line.trim() ? line : null;
   }
-  return { title: title ?? titleFromFilename(slug.split("/").pop() ?? slug), headings };
+  return { title: title ?? titleFromFilename(slug.split("/").pop() ?? slug), headings, hasH1 };
 }
 
 function parseDoc(slug: string): DocContent {
   const { raw, source } = readRaw(slug);
-  const { content } = matter(raw);
-  const { title, headings } = extractMeta(content, slug);
+  // Strip a UTF-8 BOM: it would otherwise hide a leading `# …` H1 from
+  // title/heading extraction and leak into the rendered output.
+  const { content } = matter(raw.replace(/^\uFEFF/, ""));
+  const { title, headings, hasH1 } = extractMeta(content, slug);
   return {
     slug,
     title,
@@ -136,6 +142,7 @@ function parseDoc(slug: string): DocContent {
     headings,
     body: content,
     updatedFrom: source,
+    hasH1,
   };
 }
 

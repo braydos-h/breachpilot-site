@@ -12,8 +12,6 @@ export const SITE = {
   webuiDefaultPort: 8765,
 } as const;
 
-export const REPO_URL = SITE.repo;
-
 export type NavLink = { href: string; label: string };
 
 export const NAV_LINKS: NavLink[] = [
@@ -72,43 +70,6 @@ export const SWARM_AGENTS = [
   { id: "post_exploit", name: "Post Exploit", job: "Credential, loot and lateral-target handling", icon: "KeyRound" },
   { id: "critic", name: "Critic", job: "Scope, risk and policy review", icon: "ShieldCheck" },
   { id: "reflection", name: "Reflection", job: "Strategy review and lessons", icon: "Brain" },
-] as const;
-
-export const SKILL_CATEGORIES = [
-  "network",
-  "web/API",
-  "auth",
-  "JWT/OAuth",
-  "Active Directory",
-  "SMB",
-  "privilege escalation",
-  "cryptography",
-  "supply chain",
-  "detection",
-  "persistence",
-  "ICS/IoT",
-] as const;
-
-export const TOOL_FAMILIES = [
-  { name: "terminal", desc: "Shell execution with target-IP allowlist enforcement and OPSEC advisory" },
-  { name: "workspace", desc: "write_python_file / run_python_file / read_workspace_file" },
-  { name: "recon", desc: "check_os, quick_scan, run_full_recon, service fingerprinting" },
-  { name: "attack_modules", desc: "run_attack_module, craft_exploit, mutate_exploit, hypotheses" },
-  { name: "metasploit", desc: "msfconsole lifecycle, sessions, payloads, post modules" },
-  { name: "payloads", desc: "generate_payload via msfvenom" },
-  { name: "web_scan", desc: "nikto, nuclei, sqlmap, gobuster, feroxbuster, whatweb, wpscan" },
-  { name: "cracking", desc: "hashcat / john with automatic hash-type identification" },
-  { name: "credentials", desc: "Encrypted vault, Impacket lateral execution, Kerberoast" },
-  { name: "sessions", desc: "tmux, background jobs and listeners (beacons)" },
-  { name: "research", desc: "search_exploit_db, search_web_exploit, deep_research, CVE intel" },
-  { name: "domain", desc: "DNS, subdomain enumeration, AXFR, vhost, WHOIS" },
-  { name: "peer_models", desc: "consult_peer_models — advisory multi-model consultation" },
-  { name: "runtime_skills", desc: "list, search and load skills at runtime" },
-  { name: "killchain", desc: "killchain_status / attempt / plan (opt-in)" },
-  { name: "snapshots", desc: "snapshot_create / revert / list (opt-in)" },
-  { name: "retest", desc: "retest_finding — re-run a confirmed finding's probe" },
-  { name: "hitl", desc: "propose_finding / hitl_decide — human approval for findings" },
-  { name: "verify", desc: "verify_finding — re-prove a candidate with N/N probes" },
 ] as const;
 
 export type PluginInfo = { name: string; purpose: string; needsCredentials: boolean };

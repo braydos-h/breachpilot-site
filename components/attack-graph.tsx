@@ -1,5 +1,3 @@
-"use client";
-
 import { useId } from "react";
 import { cn } from "@/lib/cn";
 
@@ -15,6 +13,13 @@ const DEFAULT_NODES: GraphNode[] = [
   { id: "finding", label: "Finding", sub: "CONFIRMED / REFUTED", state: "finding" },
   { id: "report", label: "Report", sub: "timeline · CVSS · chains", state: "todo" },
 ];
+
+const STATE_LABEL: Record<GraphNode["state"], string> = {
+  done: "done",
+  active: "active",
+  todo: "todo",
+  finding: "finding",
+};
 
 function nodeStyles(state: GraphNode["state"]): string {
   switch (state) {
@@ -32,24 +37,27 @@ function nodeStyles(state: GraphNode["state"]): string {
 /**
  * Monochrome attack-plan DAG. Horizontal on desktop, vertical on mobile
  * (responsive fallback — no pan/zoom dependency for the marketing page).
+ *
+ * Server component: pure presentational SVG + HTML, no state or effects.
+ * `useId` output is sanitized — raw colons break SVG `url(#…)` references.
  */
 export function AttackGraph({ nodes = DEFAULT_NODES }: { nodes?: GraphNode[] }) {
-  const flowId = useId();
+  const flowId = useId().replace(/:/g, "");
   return (
     <div className="overflow-hidden rounded-xl border bg-card">
-      <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2.5">
-        <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b bg-muted/40 px-4 py-2.5">
+        <span className="min-w-0 truncate font-mono text-xs uppercase tracking-wider text-muted-foreground">
           attack plan · dag
         </span>
-        <span className="flex items-center gap-3 font-mono text-xs text-muted-foreground">
+        <span className="flex shrink-0 items-center gap-3 font-mono text-xs text-muted-foreground">
           <span className="inline-flex items-center gap-1.5">
-            <i className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden /> ready
+            <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden /> done
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <i className="h-2 w-2 rounded-full bg-amber-500" aria-hidden /> running
+            <span className="h-2 w-2 rounded-full bg-amber-500" aria-hidden /> active
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <i className="h-2 w-2 rounded-full bg-muted-foreground/40" aria-hidden /> blocked
+            <span className="h-2 w-2 rounded-full bg-muted-foreground/40" aria-hidden /> todo
           </span>
         </span>
       </div>
@@ -99,6 +107,15 @@ export function AttackGraph({ nodes = DEFAULT_NODES }: { nodes?: GraphNode[] }) 
           <li key={n.id} className="px-1.5 text-center">
             <p className="text-[12px] font-semibold leading-4">{n.label}</p>
             <p className="mt-1 font-mono text-[10px] leading-3 text-muted-foreground">{n.sub}</p>
+          </li>
+        ))}
+      </ol>
+      {/* screen-reader node list: the desktop label row above is aria-hidden */}
+      <ol className="sr-only">
+        {nodes.map((n) => (
+          <li key={n.id}>
+            {n.label}
+            {n.sub ? ` — ${n.sub}` : ""} ({STATE_LABEL[n.state]})
           </li>
         ))}
       </ol>

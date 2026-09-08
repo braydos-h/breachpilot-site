@@ -3,14 +3,14 @@ import Link from "next/link";
 import { InstallTabs } from "@/components/install-tabs";
 import { PageHero } from "@/components/page-hero";
 import { CodeSnippet } from "@/components/ui";
+import { routeMetadata } from "@/lib/metadata";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/install", {
   title: "Install",
   description:
     "Install BreachPilot: Linux primary platform and Windows secondary. One-line installers, review-first flows, requirements and post-install checks.",
-  alternates: { canonical: `${SITE.url}/install` },
-};
+});
 
 const ESSENTIAL: Array<[string, string, string]> = [
   ["Python", "3.11+", "CI matrix 3.11–3.13; --doctor rejects older. python --version to check."],

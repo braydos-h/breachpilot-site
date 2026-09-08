@@ -1,9 +1,9 @@
 {
   "version": "0.68.4",
-  "commit": "7e4cd5aaf6c112cb3d824ddd53e0fa3059042259",
-  "commitShort": "7e4cd5aaf6c1",
-  "commitDate": "2026-09-08T12:04:36+09:30",
-  "describe": "beta-550-g7e4cd5a",
+  "commit": "dd489acba558bf7ebd7a9ffa03d39232ecc66a1f",
+  "commitShort": "dd489acba558",
+  "commitDate": "2026-09-08T13:19:13+09:30",
+  "describe": "beta-565-gdd489ac",
   "latestTag": "v0.49.2",
   "versionTags": [
     "v0.49.2"
@@ -18,12 +18,12 @@
     "/benchmarks": "2026-09-08T08:28:24+09:30",
     "/safety": "2026-09-08T08:28:24+09:30",
     "/install": "2026-09-08T08:28:24+09:30",
-    "/docs": "2026-09-08T08:28:24+09:30",
+    "/docs": "2026-09-08T13:19:27+09:30",
     "/contributing": "2026-09-08T08:28:24+09:30",
     "/security": "2026-09-08T08:28:24+09:30",
     "/privacy": "2026-09-08T08:28:24+09:30",
     "/legal": "2026-09-08T08:28:24+09:30",
-    "/releases": "2026-09-08T08:28:24+09:30"
+    "/releases": "2026-09-08T12:20:10+09:30"
   },
   "skills": 139,
   "plugins": 14,
@@ -43,6 +43,6 @@
     "docDates": "git log -1 --format=%cI per docs file, else synced copy mtime"
   },
   "source": "adjacent BreachPilot checkout",
-  "generatedAt": "2026-09-08T02:46:24.863Z",
+  "generatedAt": "2026-09-08T04:35:48.031Z",
   "stale": false
 }

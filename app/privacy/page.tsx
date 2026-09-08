@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
+import { routeMetadata } from "@/lib/metadata";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/privacy", {
   title: "Privacy",
   description:
     "BreachPilot privacy: no analytics, no tracking, no accounts. Your theme choice stays in your browser; GitHub stats load client-side only.",
-  alternates: { canonical: `${SITE.url}/privacy` },
-};
+});
 
 export default function PrivacyPage() {
   return (

@@ -3,9 +3,8 @@
 Static Next.js export (`output: "export"`). Any static host works.
 
 ```bash
-cd web
 npm ci
-npm run build    # prebuild syncs docs from ../docs; output in out/
+npm run build    # prebuild syncs docs from the sibling BreachPilot checkout; output in out/
 ```
 
 Serve `out/` at `https://breachpilot.dev`.
@@ -49,7 +48,16 @@ the Next.js runtime + theme init; no external scripts are loaded).
 
 - No server component needs a server: GitHub stats load client-side from
   `api.github.com` and degrade gracefully offline.
-- Docs are synced at build time from `../docs` (`scripts/sync-docs.mjs`);
-  generated files are gitignored (`content/docs/`).
+- Docs are synced at build time from the sibling BreachPilot checkout
+  (`scripts/sync-docs.mjs`); the synced `content/docs/` copies are committed,
+  and `public/.well-known/security.txt` is regenerated each build (fresh
+  `Expires`). Never hand-edit either — fix the generator or upstream docs.
+- next.config.mjs leaves `trailingSlash` unset (extensionless clean URLs).
+  Whatever the host does for `/install` vs `/install/`, assert the exact
+  `/install.sh` and `/install.ps1` paths return script bytes with no
+  redirect or rewrite (see the curl checks above).
+- GitHub Pages is not a supported target (no `.nojekyll`: Jekyll would 404
+  `_next` assets). Use Netlify, Cloudflare Pages, Vercel static, or any
+  plain static host.
 - No analytics ship with the site. If any are added later, prefer
   privacy-preserving analytics and document them on `/privacy`.

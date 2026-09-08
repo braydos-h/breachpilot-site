@@ -2,14 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Card, StatusDot } from "@/components/ui";
-import { SITE } from "@/lib/site";
+import { routeMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/benchmarks", {
   title: "Benchmarks",
   description:
     "BreachPilot's oracle-verified benchmark system: claimed vs verified success, false positives, trial history, run comparison and regression gates. No invented scores.",
-  alternates: { canonical: `${SITE.url}/benchmarks` },
-};
+});
 
 const METRICS = [
   ["verified_success_rate", "Oracle-confirmed solves over trials — the only success that counts."],

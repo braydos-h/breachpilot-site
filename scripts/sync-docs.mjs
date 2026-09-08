@@ -168,7 +168,7 @@ function resolveDocSlug(slug, href) {
 }
 
 function titleFor(raw, slug) {
-  const { data, content } = matter(raw);
+  const { data, content } = matter(raw.replace(/^\uFEFF/, ""));
   if (typeof data.title === "string" && data.title.trim()) return data.title.trim();
   let fence = false;
   for (const line of content.split("\n")) {
@@ -189,12 +189,12 @@ function titleFor(raw, slug) {
  * searchable — flags and command names live there), images dropped.
  */
 function excerptFor(raw) {
-  const { content } = matter(raw);
+  const { content } = matter(raw.replace(/^\uFEFF/, ""));
   return content
     .replace(/```[^\n]*\n/g, " ")
     .replace(/<!--[\s\S]*?-->/g, " ")
     .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
-    .replace(/[#>*`[\]()!|-]/g, " ")
+    .replace(/[#>*`[\]()!|]/g, " ")
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 4000);

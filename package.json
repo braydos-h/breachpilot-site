@@ -6,11 +6,13 @@
   "scripts": {
     "prebuild": "node scripts/sync-docs.mjs && node scripts/generate-meta.mjs && node scripts/generate-security-txt.mjs",
     "gen:meta": "node scripts/generate-meta.mjs",
+    "gen:security-txt": "node scripts/generate-security-txt.mjs",
     "sync": "node scripts/sync-docs.mjs",
     "check:links": "node scripts/check-links.mjs",
+    "check:a11y": "node scripts/check-a11y.mjs",
     "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start -p 3001",
+    "start": "npx --yes serve@14 out -l 3001",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
   },
@@ -24,7 +26,7 @@
     "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "^22.8.6",
+    "@types/node": "^20.12.12",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.20",
@@ -35,7 +37,7 @@
     "typescript": "^5.6.3"
   },
   "engines": {
-    "node": "20.x"
+    "node": ">=18.18"
   },
   "allowScripts": {
     "unrs-resolver": true

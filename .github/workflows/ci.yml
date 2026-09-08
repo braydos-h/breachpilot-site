@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -35,13 +38,22 @@ jobs:
         run: npm run prebuild
         env:
           STRICT_META: "1"
+          STRICT_DOCS: "1"
 
       - run: npm run typecheck
       - run: npm run lint
-      - run: npm run build
+      # Prebuild already ran explicitly above; build the export without
+      # re-running the sync a second time.
+      - run: npx next build
 
       - name: Check internal links in static export
         run: npm run check:links
 
       - name: Accessibility smoke test (static export, key pages)
-        run: node scripts/check-a11y.mjs
+        run: npm run check:a11y
+
+      - name: Verify static export is server-free
+        run: |
+          test ! -e out/_next/server && echo "static export: no server output"
+          test -f out/install.sh && head -n 1 out/install.sh | grep -q "^#!/usr/bin/env bash"
+          test -f out/install.ps1

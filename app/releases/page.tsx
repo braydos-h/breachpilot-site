@@ -3,14 +3,14 @@ import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { CodeSnippet } from "@/components/ui";
 import { COMMIT_SHORT, LATEST_TAG, META, VERSION } from "@/lib/meta";
+import { routeMetadata } from "@/lib/metadata";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/releases", {
   title: "Releases",
   description:
     "BreachPilot release channels: stable tags, edge builds, pinned installs and what the upstream repository must publish for checksum verification.",
-  alternates: { canonical: `${SITE.url}/releases` },
-};
+});
 
 export default function ReleasesPage() {
   const tag = LATEST_TAG ?? `v${VERSION}`;

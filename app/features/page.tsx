@@ -4,14 +4,13 @@ import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Card, SectionHeading } from "@/components/ui";
 import { META } from "@/lib/meta";
-import { SITE } from "@/lib/site";
+import { routeMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/features", {
   title: "Features",
   description:
     "BreachPilot capabilities: reconnaissance, execution and chaining, adaptive intelligence and evidence-backed reporting.",
-  alternates: { canonical: `${SITE.url}/features` },
-};
+});
 
 /** Pipeline overview strip — CSS-only anchors into the four groups below. */
 const OVERVIEW = [

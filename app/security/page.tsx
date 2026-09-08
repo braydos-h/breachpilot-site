@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Card } from "@/components/ui";
+import { routeMetadata } from "@/lib/metadata";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/security", {
   title: "Security",
   description:
     "Found a vulnerability in BreachPilot? Report it privately via GitHub Security Advisories. Authorized testing only — never probe systems you don't own.",
-  alternates: { canonical: `${SITE.url}/security` },
-};
+});
 
 export default function SecurityPage() {
   return (

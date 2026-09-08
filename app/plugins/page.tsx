@@ -3,13 +3,13 @@ import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Badge, Card, SectionHeading } from "@/components/ui";
 import { PLUGINS, SITE } from "@/lib/site";
+import { routeMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/plugins", {
   title: "Plugins",
   description:
     "BreachPilot extensions: Shodan, GitHub dorks, webhooks, Sliver C2, BloodHound CE, OWASP ZAP, browser, mobile, wireless, SpiderFoot, Atomic Red Team, Caldera, firmware and SNMP — without forking core.",
-  alternates: { canonical: `${SITE.url}/plugins` },
-};
+});
 
 export default function PluginsPage() {
   return (

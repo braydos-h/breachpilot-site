@@ -65,11 +65,6 @@ const publicFiles = new Set();
   }
 })(join(process.cwd(), "public", ".well-known"), "/.well-known");
 
-for (const f of files) {
-  const rel = f.slice(outDir.length);
-  if (rel === "/404.html" || rel === "/404/index.html") continue;
-}
-
 let broken = 0;
 const hrefRe = /href="(\/[^"#?]*?)(\?[^"#]*)?(#[^"]*)?"/g;
 for (const f of files) {
@@ -78,6 +73,13 @@ for (const f of files) {
   let m;
   while ((m = hrefRe.exec(html))) {
     const target = m[1];
+    // Raw `.md` hrefs are upstream-doc links the renderer rewrites; an
+    // unrewritten one reaching the export is a broken link.
+    if (/\.md([?#]|$)/.test(target)) {
+      console.error(`unrewritten doc link: ${f.slice(outDir.length)} -> ${target}`);
+      broken += 1;
+      continue;
+    }
     if (/\.(svg|png|jpg|jpeg|webp|ico|css|js|json|xml|txt|webmanifest)$/.test(target)) {
       if (!publicFiles.has(target) && !existsSync(join(outDir, target.slice(1)))) {
         console.error(`broken asset: ${f.slice(outDir.length)} -> ${target}`);

@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -39,15 +40,26 @@ export const metadata: Metadata = {
     description: SITE.description,
     images: ["/og.png"],
   },
-  icons: { icon: "/favicon.svg", apple: "/favicon.svg" },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   manifest: "/manifest.webmanifest",
   alternates: { canonical: SITE.url },
   category: "technology",
 };
 
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+};
+
 const THEME_INIT = `(function(){try{var t=localStorage.getItem("breachpilot-theme");if(t==="dark"||t==="light"){document.documentElement.classList.toggle("dark",t==="dark")}else if(window.matchMedia("(prefers-color-scheme: dark)").matches){document.documentElement.classList.add("dark")}}catch(e){}})();`;
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -79,7 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <SiteHeader />
-        <main id="main-content">{children}</main>
+        <main id="main-content" tabIndex={-1} className="focus:outline-none">{children}</main>
         <SiteFooter />
       </body>
     </html>

@@ -3,13 +3,13 @@ import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Card, SectionHeading } from "@/components/ui";
 import { SITE, SWARM_AGENTS } from "@/lib/site";
+import { routeMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/features/swarm", {
   title: "The Six-Agent Swarm",
   description:
     "BreachPilot's six specialist agents — recon, vuln, exploit, post_exploit, critic, reflection — on a shared blackboard, plus persistent autonomous campaign orchestration.",
-  alternates: { canonical: `${SITE.url}/features/swarm` },
-};
+});
 
 const DETAIL: Record<string, string> = {
   recon: "Scanning, fingerprinting and attack-surface scoring. Opens the run and keeps the target model fresh as new services appear.",

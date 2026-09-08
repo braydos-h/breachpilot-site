@@ -3,13 +3,13 @@ import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Card, CodeSnippet, SectionHeading } from "@/components/ui";
 import { PROVIDERS, SITE } from "@/lib/site";
+import { routeMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/providers", {
   title: "AI Providers",
   description:
     "BreachPilot's provider-pluggable architecture: Ollama, OpenCode Go and ChatGPT behind one ModelClient contract, with role-based routing and optional embeddings.",
-  alternates: { canonical: `${SITE.url}/providers` },
-};
+});
 
 export default function ProvidersPage() {
   return (

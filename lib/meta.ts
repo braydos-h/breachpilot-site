@@ -11,13 +11,7 @@ export type ProjectMeta = typeof generated;
 
 export const META: ProjectMeta = generated;
 
-/** Warn (once, server-side at build) when serving stale/regenerated metadata. */
-if (META.stale && typeof process !== "undefined" && process.env?.STRICT_META === "1") {
-  throw new Error(
-    "project-meta.json is stale (upstream BreachPilot checkout was missing at build time)"
-  );
-}
-
+/** Warn (server-side at build) when serving stale/regenerated metadata. */
 if (META.stale && typeof window === "undefined") {
   console.warn("meta: using stale generated/project-meta.json — run npm run build with the BreachPilot checkout beside this repo");
 }

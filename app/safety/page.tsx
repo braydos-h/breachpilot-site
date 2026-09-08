@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Card, SectionHeading } from "@/components/ui";
+import { routeMetadata } from "@/lib/metadata";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/safety", {
   title: "Safety",
   description:
     "BreachPilot safety model: operator supervision, target allowlist lock, mission scope gate, permission modes, sandbox isolation, tamper-evident audit chain. Authorized testing only.",
-  alternates: { canonical: `${SITE.url}/safety` },
-};
+});
 
 const LAYERS: Array<[string, string]> = [
   ["Disposable execution sandbox", "The isolation boundary: hardened per-run container, default-DROP network containment authorizing only the effective target allowlist. Sandbox failures fail closed — host execution is never an automatic fallback."],

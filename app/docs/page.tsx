@@ -5,14 +5,13 @@ import { DocsSearchBox } from "@/components/docs-nav";
 import { PageHero } from "@/components/page-hero";
 import { Card } from "@/components/ui";
 import { sidebarGroups } from "@/lib/docs";
-import { SITE } from "@/lib/site";
+import { routeMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/docs", {
   title: "Documentation",
   description:
     "BreachPilot documentation, generated from the repository Markdown: getting started, architecture, safety, agents, tooling, platform, extensibility and engineering.",
-  alternates: { canonical: `${SITE.url}/docs` },
-};
+});
 
 /** Pinned entry points — resolved against the synced docs, skipped when absent. */
 const START_HERE_SLUGS = ["getting-started", "safety-model", "architecture"];

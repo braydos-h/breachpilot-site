@@ -2,11 +2,12 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { CopyButton } from "@/components/copy-button";
 
-export function Badge({ children, className }: { children: ReactNode; className?: string }) {
+export function Badge({ children, tone = "muted", className }: { children: ReactNode; tone?: "muted" | "solid"; className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border bg-muted/60 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground",
+        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider",
+        tone === "solid" ? "bg-foreground text-background" : "bg-muted/60 text-muted-foreground",
         className
       )}
     >
@@ -19,7 +20,7 @@ export function StatusDot({ tone = "ok", className }: { tone?: "ok" | "warn" | "
   const tones = {
     ok: "bg-emerald-500",
     warn: "bg-amber-500",
-    bad: "bg-red-500",
+    bad: "bg-destructive",
     idle: "bg-muted-foreground/40",
   } as const;
   return (
@@ -66,7 +67,7 @@ export function CodeSnippet({
         </span>
         <CopyButton text={code} label={title ? `Copy ${title}` : "Copy command"} />
       </div>
-      <pre className="scrollbar-thin overflow-x-auto whitespace-pre-wrap break-all p-3 font-mono text-[13px] leading-6 text-foreground sm:whitespace-pre sm:break-normal">
+      <pre className="scrollbar-thin overflow-x-auto p-3 font-mono text-[13px] leading-6 text-foreground">
         <code>{code}</code>
       </pre>
     </div>

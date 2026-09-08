@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Card } from "@/components/ui";
+import { routeMetadata } from "@/lib/metadata";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/legal", {
   title: "Legal",
   description:
     "BreachPilot legal: Apache-2.0 license, authorized-use notice, and repository license links.",
-  alternates: { canonical: `${SITE.url}/legal` },
-};
+});
 
 export default function LegalPage() {
   return (

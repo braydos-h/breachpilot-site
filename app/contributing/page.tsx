@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Card, CodeSnippet, SectionHeading } from "@/components/ui";
+import { routeMetadata } from "@/lib/metadata";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = routeMetadata("/contributing", {
   title: "Contributing",
   description:
     "Contribute to BreachPilot: Apache 2.0 open source, mocked test suite, CI with lint/types/CodeQL, contribution guide and AGENTS.md.",
-  alternates: { canonical: `${SITE.url}/contributing` },
-};
+});
 
 export default function ContributingPage() {
   return (

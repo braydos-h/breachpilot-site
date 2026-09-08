@@ -6,7 +6,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t bg-muted/30">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="grid gap-10 md:grid-cols-[1.2fr_repeat(4,1fr)]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_repeat(4,1fr)]">
           <div>
             <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight" aria-label="BreachPilot home">
               <span className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
@@ -35,7 +35,7 @@ export function SiteFooter() {
                         href={l.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-foreground/80 hover:text-foreground hover:underline hover:underline-offset-4"
+                        className="inline-block py-1 text-sm text-foreground/80 hover:text-foreground hover:underline hover:underline-offset-4"
                       >
                         {l.label}
                       </a>
@@ -44,7 +44,7 @@ export function SiteFooter() {
                     <li key={l.label}>
                       <Link
                         href={l.href}
-                        className="text-sm text-foreground/80 hover:text-foreground hover:underline hover:underline-offset-4"
+                        className="inline-block py-1 text-sm text-foreground/80 hover:text-foreground hover:underline hover:underline-offset-4"
                       >
                         {l.label}
                       </Link>
@@ -56,7 +56,7 @@ export function SiteFooter() {
           ))}
         </div>
         <div className="mt-10 flex flex-col gap-2 border-t pt-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>BreachPilot · Open source under Apache 2.0</p>
+          <p>BreachPilot · Open source under {SITE.license}</p>
           <p className="font-mono text-xs">breachpilot.dev · local-first · operator-supervised</p>
         </div>
       </div>
