@@ -9,3 +9,4 @@ next-env.d.ts
 .env*.local
 CLAUDE.md
 public/.well-known/
+/.superpowers
