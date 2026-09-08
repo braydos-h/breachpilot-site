@@ -1,5 +1,5 @@
 {
-  "$comment": "Single source of truth for static routes. Keys are consumed by app/sitemap.ts (route list) and scripts/generate-meta.mjs (per-route lastModified source files). Add new pages here.",
+  "$comment": "Single source of truth for static routes. Keys are consumed by app/sitemap.ts (route list) and scripts/generate-meta.mjs (per-route lastModified source files). Add new pages here, not in either consumer.",
   "": ["app/page.tsx", "components/home-sections.tsx", "components/mission-control.tsx"],
   "/features": ["app/features/page.tsx"],
   "/features/swarm": ["app/features/swarm/page.tsx"],

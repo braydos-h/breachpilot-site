@@ -15,9 +15,9 @@ export function slugify(text: string): string {
 }
 
 /**
- * Strip inline Markdown/HTML formatting from a heading line so the sidebar
- * TOC (which sees source text like `## [Foo](bar.md)`) slugs the same id as
- * the renderer (which sees the rendered text `Foo`).
+ * Strip inline Markdown/HTML formatting from a heading source line so the
+ * sidebar TOC (which sees source text like `## [Foo](bar.md)`) slugs the
+ * same id as the renderer (which sees the rendered text `Foo`).
  */
 export function plainHeading(text: string): string {
   return text
