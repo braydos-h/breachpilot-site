@@ -7,13 +7,18 @@ import { SITE } from "@/lib/site";
 
 const TABS = [
   { id: "linux", label: "Linux", lang: "bash", title: "Linux install" },
+  { id: "macos", label: "macOS", lang: "bash", title: "macOS install" },
   { id: "windows", label: "Windows", lang: "powershell", title: "Windows install (PowerShell)" },
 ] as const;
 
 type Os = (typeof TABS)[number]["id"];
 
 function commandFor(os: Os): string {
-  return os === "linux" ? `curl -fsSL ${SITE.installSh} | bash` : `irm ${SITE.installPs1} | iex`;
+  return os === "windows" ? `irm ${SITE.installPs1} | iex` : `curl -fsSL ${SITE.installSh} | bash`;
+}
+
+function reviewHref(os: Os): string {
+  return os === "windows" ? SITE.installPs1 : SITE.installSh;
 }
 
 /**
@@ -75,7 +80,7 @@ export function InstallTabs({ compact = false }: { compact?: boolean }) {
       {!compact && (
         <p className="mt-3 text-sm text-muted-foreground">
           Prefer to read it first?{" "}
-          <a href={os === "linux" ? SITE.installSh : SITE.installPs1} className="font-medium text-foreground underline underline-offset-4">
+          <a href={reviewHref(os)} className="font-medium text-foreground underline underline-offset-4">
             Review installer before running →
           </a>{" "}
           · <a href="/install" className="font-medium text-foreground underline underline-offset-4">Full install guide</a>

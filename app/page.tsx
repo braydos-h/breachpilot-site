@@ -4,7 +4,7 @@ import Link from "next/link";
 import { GithubStats } from "@/components/github-stats";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { HomeAttackGraph, Screenshots, StatsRow, SwarmDiagram, WhyGrid } from "@/components/home-sections";
+import { HomeAttackGraph, PipelineSteps, Screenshots, StatsRow, SwarmDiagram, WhyGrid } from "@/components/home-sections";
 import { ProductTour } from "@/components/product-tour";
 import { InstallTabs } from "@/components/install-tabs";
 import { MissionControl } from "@/components/mission-control";
@@ -24,29 +24,34 @@ function screenshotAvailability(): Record<string, boolean> {
   return Object.fromEntries(SHOT_FILES.map((f) => [f, existsSync(join(dir, f))]));
 }
 
+// h1 derives from SITE.tagline so hero copy can't drift from the source of truth.
+const tagParts = SITE.tagline.split(". ");
+const tagHead = tagParts[0] ?? SITE.tagline;
+const tagTail = tagParts.slice(1).join(". ");
+
 export default function HomePage() {
   return (
     <div>
       {/* hero */}
-      <section className="bg-grid relative overflow-hidden">
+      <section aria-label="Introduction" className="bg-grid relative overflow-hidden border-b">
         <div className="bg-radial-fade pointer-events-none absolute inset-0" aria-hidden />
-        <div className="relative mx-auto max-w-6xl px-4 pb-10 pt-10 sm:px-6 sm:pt-12">
-          <div className="max-w-3xl">
+        <div className="relative mx-auto max-w-6xl px-4 pb-12 pt-12 sm:px-6 sm:pt-16">
+          <div className="mx-auto max-w-3xl text-center">
             <p className="inline-flex rounded-full border bg-background px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              Open source · Apache 2.0 · Local-first
+              Open source · {SITE.license} · Local-first
             </p>
-            <h1 className="mt-3 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-[40px] lg:text-5xl">
-              Autonomous security assessment. <span className="text-gradient">Operator supervised.</span>
+            <h1 className="mt-4 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+              {tagHead}. {tagTail ? <span className="text-gradient">{tagTail}</span> : null}
             </h1>
             <Typewriter />
-            <p className="mt-3 max-w-2xl text-[15px] leading-7 text-muted-foreground sm:text-base">
-              Open-source agentic operator for authorized testing — plans, verifies, and reports with
-              evidence, target-locked and audited.
+            <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-7 text-muted-foreground sm:text-base">
+              BreachPilot is an open-source agentic operator for authorized security testing — it
+              plans, verifies, and reports with evidence, target-locked and fully audited.
             </p>
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/install"
-                className="inline-flex items-center justify-center gap-1.5 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+                className="inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 sm:w-auto"
               >
                 Install BreachPilot <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
@@ -54,12 +59,12 @@ export default function HomePage() {
                 href={SITE.repo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-md border bg-background px-5 py-2.5 text-sm font-medium hover:bg-muted"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-md border bg-background px-5 py-2.5 text-sm font-medium hover:bg-muted sm:w-auto"
               >
                 <Github className="h-4 w-4" aria-hidden /> View on GitHub
               </a>
             </div>
-            <p className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
+            <p className="mt-4 flex items-center justify-center gap-1.5 text-sm text-muted-foreground">
               <ShieldAlert className="h-3.5 w-3.5 shrink-0" aria-hidden />
               <span>
                 Authorized testing only —{" "}
@@ -72,12 +77,12 @@ export default function HomePage() {
                 </Link>
               </span>
             </p>
-            <div className="mt-5 max-w-md">
+            <div className="mx-auto mt-6 max-w-md text-left">
               <InstallTabs compact />
             </div>
           </div>
 
-          <div className="mx-auto mt-8 max-w-3xl animate-fade-in-up">
+          <div className="mx-auto mt-10 max-w-5xl animate-fade-in-up">
             <MissionControl />
             <p className="mt-2 text-center text-sm text-muted-foreground">
               Illustrative lab run against 127.0.0.1 — BreachPilot tests only allowlisted targets and
@@ -96,52 +101,64 @@ export default function HomePage() {
         </p>
       </section>
 
-      {/* why */}
-      <section className="border-t bg-muted/30">
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      {/* pipeline */}
+      <section aria-label="Assessment pipeline" className="border-t bg-muted/30">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <SectionHeading
-            eyebrow="Why BreachPilot"
-            title="A full assessment lifecycle, under supervision"
-            lede="Recon to report in one supervised engine, with proof."
+            eyebrow="How it works"
+            title="One supervised pipeline, recon to report"
+            lede="Every run walks the same five phases — planned up front, verified with evidence, and reported with proof."
           />
-          <WhyGrid />
+          <PipelineSteps />
         </div>
+      </section>
+
+      {/* why */}
+      <section aria-label="Why BreachPilot" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+        <SectionHeading
+          eyebrow="Why BreachPilot"
+          title="A full assessment lifecycle, under supervision"
+          lede="Recon to report in one supervised engine, with proof."
+        />
+        <WhyGrid />
       </section>
 
       {/* swarm */}
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <SectionHeading
-          eyebrow="Multi-agent orchestration"
-          title="Six specialists, one shared blackboard"
-          lede="Parallel dispatch with battle logs and cross-phase negotiation — plus a persistent orchestrator for extended campaigns."
-        />
-        <SwarmDiagram />
-      </section>
-
-      {/* attack graph */}
-      <section className="border-t bg-muted/30">
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      <section aria-label="Multi-agent orchestration" className="border-t bg-muted/30">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <SectionHeading
-            eyebrow="Attack graph"
-            title="A structured plan, not a prompt chain"
-            lede="Every run builds an AttackPlan DAG — ready/blocked steps and evidence, live in the WebUI graph."
+            eyebrow="Multi-agent orchestration"
+            title="Six specialists, one shared blackboard"
+            lede="Parallel dispatch with battle logs and cross-phase negotiation — plus a persistent orchestrator for extended campaigns."
           />
-          <HomeAttackGraph />
+          <SwarmDiagram />
         </div>
       </section>
 
-      {/* product tour */}
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      {/* attack graph */}
+      <section aria-label="Attack graph" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
         <SectionHeading
-          eyebrow="Inside BreachPilot"
-          title="Mission control for the whole run"
-          lede={`Loopback-only console at 127.0.0.1:${SITE.webuiDefaultPort} — wizard, stream, graph, evidence and more in one place.`}
+          eyebrow="Attack graph"
+          title="A structured plan, not a prompt chain"
+          lede="Every run builds an AttackPlan DAG — ready/blocked steps and evidence, live in the WebUI graph."
         />
-        <ProductTour />
+        <HomeAttackGraph />
+      </section>
+
+      {/* product tour */}
+      <section aria-label="Product tour" className="border-t bg-muted/30">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+          <SectionHeading
+            eyebrow="Inside BreachPilot"
+            title="Mission control for the whole run"
+            lede={`Loopback-only console at 127.0.0.1:${SITE.webuiDefaultPort} — wizard, stream, graph, evidence and more in one place.`}
+          />
+          <ProductTour />
+        </div>
       </section>
 
       {/* real screenshots — placeholders until public/screenshots/ is populated */}
-      <section className="mx-auto max-w-6xl border-t px-4 py-16 sm:px-6">
+      <section aria-label="Screenshots" className="mx-auto max-w-6xl border-t px-4 py-16 sm:px-6 sm:py-20">
         <SectionHeading
           eyebrow="Screenshots"
           title="The real WebUI"

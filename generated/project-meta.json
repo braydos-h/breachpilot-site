@@ -1,9 +1,9 @@
 {
   "version": "0.68.4",
-  "commit": "b01e69dabed9cb2d90cd6fbfcb0ab717faa25271",
-  "commitShort": "b01e69dabed9",
-  "commitDate": "2026-09-08T14:14:40+09:30",
-  "describe": "beta-566-gb01e69d",
+  "commit": "dc2cb0f219e26e5432fe1eadfa186f528b744cbb",
+  "commitShort": "dc2cb0f219e2",
+  "commitDate": "2026-09-09T12:39:48+09:30",
+  "describe": "beta-573-gdc2cb0f",
   "latestTag": "v0.49.2",
   "versionTags": [
     "v0.49.2"
@@ -23,7 +23,7 @@
     "/security": "2026-09-08T14:14:09+09:30",
     "/privacy": "2026-09-08T14:14:09+09:30",
     "/legal": "2026-09-08T14:14:09+09:30",
-    "/releases": "2026-09-08T14:14:09+09:30"
+    "/releases": "2026-09-09T09:06:23+09:30"
   },
   "skills": 139,
   "plugins": 14,
@@ -43,6 +43,6 @@
     "docDates": "git log -1 --format=%cI per docs file, else synced copy mtime"
   },
   "source": "adjacent BreachPilot checkout",
-  "generatedAt": "2026-09-08T08:33:09.780Z",
+  "generatedAt": "2026-09-09T03:17:11.303Z",
   "stale": false
 }
