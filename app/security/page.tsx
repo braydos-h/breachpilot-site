@@ -25,7 +25,7 @@ const PILLARS = [
   {
     icon: ShieldCheck,
     title: "Private disclosure",
-    body: "Report through GitHub private advisories. Details stay visible only to maintainers until a fix is ready — never a public issue.",
+    body: "Report through GitHub private advisories. Details stay visible only to maintainers until a fix is ready. Never file a public issue.",
   },
   {
     icon: Lock,
@@ -48,12 +48,12 @@ const REPORT_STEPS = [
   {
     step: "01",
     title: "Use the private channel",
-    body: "The repository publishes no dedicated security contact, so GitHub private vulnerability reporting is the front door. Only maintainers can see the details while a fix is prepared.",
+    body: "The repository lists no dedicated security contact, so GitHub private vulnerability reporting is the front door. Only maintainers can see the details while a fix is prepared.",
   },
   {
     step: "02",
     title: "Include what matters",
-    body: "What you found, which version or commit, lab-only reproduction steps, and the impact boundary — operator box, target scope, or audit integrity.",
+    body: "What you found, which version or commit, lab-only reproduction steps, and the impact boundary: operator box, target scope, or audit integrity.",
   },
   {
     step: "03",
@@ -66,20 +66,20 @@ const GUARANTEES = [
   {
     icon: Lock,
     title: "Sandbox isolation",
-    body: "Each run executes in a disposable worker whose network containment authorizes only your effective target allowlist. Off-allowlist destinations are blocked at the tool layer, and a sandbox that cannot prove containment refuses to run.",
-    limit: "A destination guard, not a complete sandbox — the operator-box filesystem is unrestricted by design. Run on a throwaway lab host.",
+    body: "Each run executes in a disposable worker whose network containment authorizes only your effective target allowlist. Off-allowlist destinations are blocked at the tool layer, and a sandbox that cannot prove containment will not run.",
+    limit: "A destination guard, not a complete sandbox. The operator-box filesystem is unrestricted by design. Run on a throwaway lab host.",
   },
   {
     icon: KeyRound,
     title: "Credential vault",
-    body: "Looted credentials, hashes, and session tokens are encrypted at rest, handled as sensitive through the whole pipeline, and redacted from logs and reports by shape before anything is written out.",
-    limit: "Redaction covers known secret shapes — treat all run output as sensitive until you have reviewed it.",
+    body: "Looted credentials, hashes, and session tokens are encrypted at rest, handled as sensitive through the whole pipeline, and redacted from logs and reports by shape before anything gets written out.",
+    limit: "Redaction covers known secret shapes. Treat all run output as sensitive until you have reviewed it.",
   },
   {
     icon: HardDrive,
     title: "Local-first data",
     body: `Runs, evidence, and the tamper-evident audit chain live on your machine, served through a loopback-only console at 127.0.0.1:${SITE.webuiDefaultPort}. Provider keys come from environment variables only and are never written into config files.`,
-    limit: "Provider and plugin calls you configure still leave the box — review each integration before you enable it.",
+    limit: "Provider and plugin calls you configure still leave the box. Review each integration before you enable it.",
   },
 ];
 
@@ -103,7 +103,7 @@ export default function SecurityPage() {
       <PageHero
         eyebrow="Security"
         title="Found a vulnerability? Tell us privately first."
-        lede="BreachPilot ships offensive security tooling, so a flaw in BreachPilot itself carries real risk. Report it through private channels — never as a public issue — and give maintainers time to fix it before disclosing."
+        lede="BreachPilot ships offensive security tooling, so a flaw in BreachPilot itself carries real risk. Report it through private channels, never as a public issue, and give maintainers time to fix it before disclosing."
       >
         <div className="mt-6 flex flex-wrap items-center gap-2" aria-label="Security posture">
           <Badge>
@@ -134,7 +134,7 @@ export default function SecurityPage() {
         </div>
         <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground">
           {SITE.name} is {SITE.license}-licensed and local-first. Every control below is auditable in
-          the repository — security enforced in the open.
+          the repository. Security enforced in the open.
         </p>
       </PageHero>
 
@@ -142,7 +142,7 @@ export default function SecurityPage() {
         <SectionHeading
           eyebrow="Trust at a glance"
           title="Disclosure, sandbox, vault, local-first"
-          lede="Four commitments that cover the whole lifecycle: how you tell us, how runs are contained, how secrets are handled, and where your data lives."
+          lede="Four commitments covering the whole lifecycle: how you tell us, how runs are contained, how secrets are handled, and where your data lives."
           align="left"
         />
         <h2 id="pillars-heading" className="sr-only">
@@ -169,7 +169,7 @@ export default function SecurityPage() {
           <SectionHeading
             eyebrow="Coordinated disclosure"
             title="How to report"
-            lede="Three steps, one private thread. No dedicated security inbox — the advisory channel below reaches maintainers directly."
+            lede="Three steps in one private thread. There is no dedicated security inbox; the advisory channel below reaches maintainers directly."
             align="left"
           />
           <h2 id="report-heading" className="sr-only">
@@ -209,7 +209,7 @@ export default function SecurityPage() {
               <ShieldAlert className="mt-1 h-4 w-4 shrink-0" aria-hidden />
               <span>
                 <strong>Stay in scope while reporting.</strong> Reproduce in a lab you control only.
-                Only test systems you own or have explicit written permission to assess — the same
+                Only test systems you own or have explicit written permission to assess. The same
                 authorization rule as the tool itself. Do not probe systems you don&rsquo;t own to
                 prove impact.
               </span>
@@ -222,7 +222,7 @@ export default function SecurityPage() {
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
           <SectionHeading
             eyebrow="How BreachPilot protects you"
-            title="Containment, secrets, and data — stated honestly"
+            title="Containment, secrets, and data, stated honestly"
             lede="Each guarantee names its limit next to the promise. A control you misunderstand is a control you will misuse."
             align="left"
           />
@@ -377,8 +377,8 @@ export default function SecurityPage() {
             </div>
             <div>
               <p className="text-sm leading-6 text-muted-foreground">
-                Attack mode auto-approves in-scope actions — the safeties are the target-IP allowlist
-                lock and the mission scope gate, with every action in a tamper-evident audit chain.
+                Attack mode auto-approves in-scope actions. The target-IP allowlist
+                lock and the mission scope gate stay enforced, with every action in a tamper-evident audit chain.
               </p>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                 <Link

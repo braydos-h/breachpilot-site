@@ -3,7 +3,7 @@ export const SITE = {
   tagline: "Autonomous security assessment. Operator supervised.",
   pipeline: "Plan · Recon · Exploit · Verify · Report",
   description:
-    "BreachPilot is an open-source, local-first autonomous platform for authorized security testing with agentic planning, reconnaissance, evidence-backed verification and reporting.",
+    "BreachPilot is an open-source, local-first platform for authorized security testing. It plans the assessment, runs recon, checks each finding against evidence, and writes the report.",
   url: "https://breachpilot.dev",
   repo: "https://github.com/braydos-h/BreachPilot",
   license: "Apache-2.0",
@@ -75,27 +75,27 @@ export const SWARM_AGENTS = [
 export type PluginInfo = { name: string; purpose: string; needsCredentials: boolean };
 
 export const PLUGINS: PluginInfo[] = [
-  { name: "shodan_recon", purpose: "Passive Shodan OSINT — port, banner and CVE enrichment without touching the target. Advisory-only.", needsCredentials: true },
+  { name: "shodan_recon", purpose: "Passive Shodan OSINT for port, banner and CVE context without touching the target. Advisory-only.", needsCredentials: true },
   { name: "github_dorks", purpose: "Authorized-target code-leak discovery via GitHub Code Search. Finds leaked credentials in the target org's public repos, pre-recon. Advisory-only.", needsCredentials: true },
   { name: "webhook_notify", purpose: "Outbound-only Slack / Discord run-status notifications on milestones and findings.", needsCredentials: true },
-  { name: "sliver_c2", purpose: "Sliver C2 bridge — implant generation, team server and session management.", needsCredentials: true },
-  { name: "bloodhound_ce", purpose: "BloodHound CE data exchange — AD attack-path ingest and query.", needsCredentials: true },
-  { name: "zap_scan", purpose: "OWASP ZAP REST integration — spider plus active scan for authenticated web targets.", needsCredentials: true },
+  { name: "sliver_c2", purpose: "Sliver C2 bridge for implant generation, team server and session management.", needsCredentials: true },
+  { name: "bloodhound_ce", purpose: "BloodHound CE data exchange for AD attack-path ingest and query.", needsCredentials: true },
+  { name: "zap_scan", purpose: "OWASP ZAP REST integration with spider plus active scan for authenticated web targets.", needsCredentials: true },
   { name: "browser_attack", purpose: "Headless Chromium / Playwright driver for authenticated web testing and XSS-hunter callbacks.", needsCredentials: false },
-  { name: "mobile_attack", purpose: "Mobile testing — Frida, objection, apktool and jadx for local APK analysis and device instrumentation.", needsCredentials: false },
-  { name: "wireless", purpose: "Wireless / Bluetooth assessment — bettercap, aircrack-ng, hcxtools and bluez for authorized WLAN / BT testing.", needsCredentials: false },
-  { name: "spiderfoot", purpose: "SpiderFoot OSINT integration (passive) — DNS, whois, certificates and leaks in one tool.", needsCredentials: true },
-  { name: "atomic_red_team", purpose: "Atomic Red Team test YAML generator — maps weaknesses to MITRE ATT&CK techniques for detection validation. Local-only, no execution.", needsCredentials: false },
-  { name: "caldera", purpose: "MITRE Caldera adversary-emulation plugin — runs abilities against an authorized Caldera server.", needsCredentials: true },
-  { name: "firmware_analysis", purpose: "Firmware analysis — binwalk, firmadyne, FACT-extractor and EMUX for IoT firmware unpacking and emulation.", needsCredentials: false },
-  { name: "snmp", purpose: "SNMP enumeration — system inventory, users, processes and community-string checks.", needsCredentials: false },
+  { name: "mobile_attack", purpose: "Mobile testing with Frida, objection, apktool and jadx for local APK analysis and device instrumentation.", needsCredentials: false },
+  { name: "wireless", purpose: "Wireless / Bluetooth assessment with bettercap, aircrack-ng, hcxtools and bluez for authorized WLAN / BT testing.", needsCredentials: false },
+  { name: "spiderfoot", purpose: "SpiderFoot OSINT integration (passive) covering DNS, whois, certificates and leaks in one tool.", needsCredentials: true },
+  { name: "atomic_red_team", purpose: "Atomic Red Team test YAML generator mapping weaknesses to MITRE ATT&CK techniques for detection validation. Local-only, no execution.", needsCredentials: false },
+  { name: "caldera", purpose: "MITRE Caldera adversary-emulation plugin running abilities against an authorized Caldera server.", needsCredentials: true },
+  { name: "firmware_analysis", purpose: "Firmware analysis with binwalk, firmadyne, FACT-extractor and EMUX for IoT firmware unpacking and emulation.", needsCredentials: false },
+  { name: "snmp", purpose: "SNMP enumeration for system inventory, users, processes and community-string checks.", needsCredentials: false },
 ];
 
 export const PROVIDERS = [
   {
     id: "ollama",
     name: "Ollama / Ollama Cloud",
-    desc: "Default chat/generate path. Cloud endpoint with bearer key, or a local daemon. Owns context-window translation and the model catalog sync.",
+    desc: "Default chat/generate path: a cloud endpoint with bearer key, or a local daemon. Handles context-window translation and the model catalog sync.",
     config: "ollama.host · ollama.model glm-5.2:cloud · ollama.embed_host",
     auth: "OLLAMA_API_KEY (environment only, never in config)",
   },

@@ -19,22 +19,22 @@ import { routeMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = routeMetadata("/features/swarm", {
   description:
-    "BreachPilot's six specialist agents — recon, vuln, exploit, post_exploit, critic, reflection — on a shared blackboard, plus persistent autonomous campaign orchestration.",
+    "BreachPilot's six specialist agents (recon, vuln, exploit, post_exploit, critic, reflection) on a shared blackboard, plus persistent autonomous campaign orchestration.",
   title: "The Six-Agent Swarm",
 });
 
 const DETAIL: Record<string, string> = {
   critic:
-    "Pre-execution scope, risk and policy review. The conscience of the swarm: forbidden actions and disallowed assets die here, before anything runs.",
+    "Reviews scope, risk and policy before execution. Forbidden actions and disallowed assets die here, before anything runs.",
   exploit:
-    "Module selection, payload crafting and mutation, execution through the MCP tool layer under policy and allowlist.",
+    "Selects modules, crafts and mutates payloads, and executes through the MCP tool layer under policy and allowlist.",
   post_exploit:
-    "Credential and loot handling, lateral-target generation — still inside the same target lock.",
+    "Handles credentials and loot, and generates lateral targets inside the same target lock.",
   recon:
-    "Scanning, fingerprinting and attack-surface scoring. Opens the run and keeps the target model fresh as new services appear.",
+    "Scans, fingerprints, and scores the attack surface. Opens the run and keeps the target model fresh as new services appear.",
   reflection:
-    "Strategy review and lessons learned — feeds the experience store so the next run starts smarter.",
-  vuln: "CVE and exploit correlation plus module matching — pairs threat intel (NVD, EPSS, KEV) with applicable capabilities.",
+    "Reviews strategy and records lessons learned in the experience store so the next run starts smarter.",
+  vuln: "CVE and exploit correlation plus module matching, pairing threat intel (NVD, EPSS, KEV) with applicable capabilities.",
 };
 
 const ICONS: Record<string, LucideIcon> = {
@@ -61,7 +61,7 @@ const LIFECYCLE: Array<{ agent: string; phase: string; text: string; gate?: bool
     agent: "Critic",
     gate: true,
     phase: "Gate · Review",
-    text: "Scope, risk and policy review. Forbidden actions and out-of-scope assets are killed here — nothing executes without a pass.",
+    text: "Reviews scope, risk and policy. Forbidden actions and out-of-scope assets are killed here. Nothing executes without a pass.",
   },
   {
     agent: "Exploit",
@@ -71,7 +71,7 @@ const LIFECYCLE: Array<{ agent: string; phase: string; text: string; gate?: bool
   {
     agent: "Post Exploit",
     phase: "Phase 4 · Consolidate",
-    text: "Handles credentials and loot, proposes lateral targets — still inside the same target lock.",
+    text: "Handles credentials and loot, and proposes lateral targets inside the same target lock.",
   },
   {
     agent: "Reflection",
@@ -85,7 +85,7 @@ export default function SwarmPage() {
     <div>
       <PageHero
         eyebrow="Multi-agent orchestration"
-        lede="Six specialists share one blackboard with a battle log: parallel dispatch, phase-aware skill hints and cross-phase negotiation — supervised, target-locked, and fully audited. For authorized targets only."
+        lede="Six specialists share one blackboard with a battle log: parallel dispatch, phase-aware skill hints and cross-phase negotiation. Supervised, target-locked, and fully audited. For authorized targets only."
         title="The six-agent swarm"
       >
         <div className="mt-6 flex flex-wrap items-center gap-2">
@@ -115,7 +115,7 @@ export default function SwarmPage() {
         <SectionHeading
           align="left"
           eyebrow="The specialists"
-          lede="Each agent owns a phase of the assessment. They read and write shared state instead of passing messages in a chain — for authorized targets only."
+          lede="Each agent owns a phase of the assessment. They read and write shared state instead of passing messages in a chain. For authorized targets only."
           title="Six agents, one shared mission"
         />
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -153,7 +153,7 @@ export default function SwarmPage() {
           <SectionHeading
             align="left"
             eyebrow="How a run flows"
-            lede="One loop around the swarm: discover, correlate, pass the critic gate, execute, consolidate, learn — then loop with a smarter plan. Every transition is written to the battle log."
+            lede="One loop around the swarm: discover, correlate, pass the critic gate, execute, consolidate, learn, then loop with a smarter plan. Every transition is written to the battle log."
             title="The swarm lifecycle"
           />
           <ol className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -189,7 +189,7 @@ export default function SwarmPage() {
             <History aria-hidden className="mt-1 h-4 w-4 shrink-0" />
             <span>
               The loop repeats until the plan is exhausted or the operator stops it. Reflection output feeds
-              the next recon pass, so coverage compounds instead of restarting from zero.
+              the next recon pass, so coverage builds up instead of restarting from zero.
             </span>
           </p>
         </div>
@@ -199,7 +199,7 @@ export default function SwarmPage() {
         <SectionHeading
           align="left"
           eyebrow="Why it stays safe"
-          lede="Two agents exist specifically to keep the other four honest. They have no payloads — only veto power and memory."
+          lede="Two agents keep the other four honest. They carry no payloads, only veto power and memory."
           title="Critic and reflection: the oversight pair"
         />
         <div className="mt-8 grid gap-4 md:grid-cols-2">
@@ -210,7 +210,7 @@ export default function SwarmPage() {
             </div>
             <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-6 text-muted-foreground">
               <li>Checks every proposed action against mission scope and the allowlisted target lock.</li>
-              <li>Kills forbidden actions and disallowed assets before anything runs — not after.</li>
+              <li>Kills forbidden actions and disallowed assets before anything runs.</li>
               <li>Flags high-risk steps for operator confirmation instead of silently proceeding.</li>
             </ul>
           </Card>
@@ -222,7 +222,7 @@ export default function SwarmPage() {
             <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-6 text-muted-foreground">
               <li>Reviews what worked, what failed, and what the plan missed.</li>
               <li>Writes lessons to the persistent experience store for future runs.</li>
-              <li>Shifts strategy mid-run — e.g. steering recon toward newly exposed services.</li>
+              <li>Shifts strategy mid-run, for example steering recon toward newly exposed services.</li>
             </ul>
           </Card>
         </div>
@@ -239,7 +239,7 @@ export default function SwarmPage() {
             <h3 className="font-semibold tracking-tight">Battle log: full audit</h3>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
               Who decided what, and when. The battle log feeds the tamper-evident audit chain, so every
-              run is debuggable, resumable and reviewable — see the{" "}
+              run is debuggable, resumable and reviewable. See the{" "}
               <Link className="font-medium text-foreground underline underline-offset-4" href="/safety">
                 safety model
               </Link>
@@ -254,7 +254,7 @@ export default function SwarmPage() {
           <SectionHeading
             align="left"
             eyebrow="Run modes"
-            lede="One swarm, two ways to drive it — same target-IP lock and permission model either way."
+            lede="One swarm, two ways to drive it. Same target-IP lock and permission model either way."
             title="Swarm mode or campaign mode"
           />
           <div className="mt-8 grid gap-4 md:grid-cols-2">
@@ -262,8 +262,8 @@ export default function SwarmPage() {
               <h3 className="font-semibold tracking-tight">Single-target swarm mode</h3>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
                 <code className="rounded border bg-muted px-1 font-mono text-[13px]">--swarm</code>{" "}
-                decomposes one authorized target across the six specialists: parallel recon plus vuln
-                research, critic pre-check, reflection shifts. Best for going deep on a high-value system
+                splits one authorized target across the six specialists: parallel recon plus vuln
+                research, critic pre-check, reflection shifts. It fits going deep on a high-value system
                 you own or have written permission to test.
               </p>
             </Card>
@@ -271,14 +271,14 @@ export default function SwarmPage() {
               <h3 className="font-semibold tracking-tight">Persistent campaign orchestration</h3>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
                 Without <code className="rounded border bg-muted px-1 font-mono text-[13px]">--swarm</code>
-                , the autonomous campaign drives a persistent multi-phase queue — recon → exploit → privesc
-                → lateral → validation — with adaptive aggression, resume and checkpoints across one or many
+                , the autonomous campaign drives a persistent multi-phase queue (recon, exploit, privesc,
+                lateral, validation) with adaptive aggression, resume and checkpoints across one or many
                 authorized targets.
               </p>
             </Card>
           </div>
           <div className="mt-8 rounded-lg border bg-card p-4 text-sm leading-6 text-muted-foreground">
-            <span className="font-semibold text-foreground">Authorized testing only — </span>
+            <span className="font-semibold text-foreground">Authorized testing only. </span>
             the swarm runs against allowlisted targets under the mission scope gate, with every decision in
             a tamper-evident audit chain. Only test systems you own or have explicit written permission to
             assess.{" "}

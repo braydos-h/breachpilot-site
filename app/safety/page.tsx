@@ -37,31 +37,31 @@ const LAYERS: Layer[] = [
     icon: Lock,
     title: "Disposable execution sandbox",
     body: "Hardened per-run container with default-DROP network containment that authorizes only the effective target allowlist. Sandbox failures fail closed.",
-    limit: "Not a complete sandbox — the operator-box filesystem is unrestricted by design.",
+    limit: "Not a complete sandbox. The operator-box filesystem is unrestricted by design.",
   },
   {
     icon: ScrollText,
     title: "Mission authorization",
-    body: "mission.yaml declares allowed and disallowed assets, forbidden actions, rate limits, testing modes, and risk profile before anything runs.",
-    limit: "A declaration, not a detector — it only protects what you wrote down accurately.",
+    body: "mission.yaml lists allowed and disallowed assets, forbidden actions, rate limits, testing modes, and risk profile before anything runs.",
+    limit: "A declaration, not a detector. It only protects what you wrote down accurately.",
   },
   {
     icon: Filter,
     title: "Scope gate",
     body: "Exact domains, wildcards, IPs, CIDRs, explicit denies, forbidden action types, third-party detection, and per-target rate limits.",
-    limit: "Denies with a SCOPE_DENIED audit row — it cannot judge whether your scope itself was authorized.",
+    limit: "Denies with a SCOPE_DENIED audit row. It cannot judge whether your scope itself was authorized.",
   },
   {
     icon: Gauge,
     title: "Risk + budget enforcement",
     body: "Action risk classification with per-session command budgets and human approval required for high-risk actions.",
-    limit: "Budgets cap volume, not intent — an approved budget spent in-scope is still spent.",
+    limit: "Budgets cap volume, not intent. An approved budget spent in-scope is still spent.",
   },
   {
     icon: Route,
     title: "Tool routing controls",
-    body: "Which tools may run, where outputs land, and how secrets are redacted before they reach logs or reports.",
-    limit: "Redaction covers known secret shapes — treat all output as sensitive until reviewed.",
+    body: "Controls which tools may run, where outputs land, and how secrets get redacted before they reach logs or reports.",
+    limit: "Redaction covers known secret shapes. Treat all output as sensitive until reviewed.",
   },
   {
     icon: KeyRound,
@@ -72,29 +72,29 @@ const LAYERS: Layer[] = [
   {
     icon: Eye,
     title: "OPSEC advisory layer",
-    body: "Target-aware pacing and noise suggestions that help you stay quiet during authorized engagements.",
-    limit: "Advisory only — never a gate. The command always executes.",
+    body: "Target-aware pacing and noise suggestions to help you stay quiet during authorized engagements.",
+    limit: "Advisory only, never a gate. The command always executes.",
   },
   {
     icon: FileCheck,
     title: "Audit + evidence",
     body: "Evidence store, state-transition audit log, exploit-session timelines, and encrypted credential handling.",
-    limit: "Tamper-evident, not tamper-proof — export and protect the chain yourself.",
+    limit: "Tamper-evident, not tamper-proof. Export and protect the chain yourself.",
   },
 ];
 
 const OPERATOR_RULES: Array<{ title: string; body: string }> = [
   {
     title: "Written permission first",
-    body: "A signed scope, a testing window, and named contacts. Verbal approval is not authorization. No scope document, no run.",
+    body: "A signed scope, a testing window, and named contacts. Verbal approval does not count. Without a scope document, there is no run.",
   },
   {
     title: "Your lab first",
-    body: "Prove every new workflow against systems you own — a throwaway lab box on an isolated network — before any client engagement.",
+    body: "Prove every new workflow against systems you own (a throwaway lab box on an isolated network) before any client engagement.",
   },
   {
     title: "Least privilege always",
-    body: "Start in read_only, graduate to approve_only, reserve full_access for disposable lab targets. Never lead with the strongest mode.",
+    body: "Start in read_only, move up to approve_only, and save full_access for disposable lab targets. Never lead with the strongest mode.",
   },
   {
     title: "Watch the run",
@@ -106,7 +106,7 @@ const OPERATOR_RULES: Array<{ title: string; body: string }> = [
   },
   {
     title: "Stop and disclose on drift",
-    body: "Out-of-scope host, third-party asset, production impact, or unexpected egress — halt, preserve the audit chain, and notify the asset owner.",
+    body: "Out-of-scope host, third-party asset, production impact, or unexpected egress: halt, preserve the audit chain, and notify the asset owner.",
   },
 ];
 
@@ -122,7 +122,7 @@ export default function SafetyPage() {
       <PageHero
         eyebrow="Safety model"
         title="Built for authorized security testing."
-        lede="Layered controls, not a single switch — with honest language about what each layer does and what it doesn't. The attack path is unrestricted but target-locked; recon stays fully gated."
+        lede="Layered controls with honest language about what each layer does and what it cannot do. The attack path is unrestricted but target-locked, and recon stays fully gated."
       >
         <div className="mt-6 flex flex-wrap items-center gap-2" aria-label="Enforcement status">
           <Badge>
@@ -153,7 +153,7 @@ export default function SafetyPage() {
           </Link>
         </div>
         <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground">
-          {SITE.name} is {SITE.license}-licensed and local-first. Safety is enforced in the open — every control below
+          {SITE.name} is {SITE.license}-licensed and local-first. Safety is enforced in the open. Every control below
           is auditable in the repository.
         </p>
       </PageHero>
@@ -162,7 +162,7 @@ export default function SafetyPage() {
         <SectionHeading
           eyebrow="The layers"
           title={`${LAYERS.length} controls, no single point of trust`}
-          lede="Each layer narrows what the agent may do. Scope, risk, routing, and audit all have to agree before a target-touching action runs."
+          lede="Each layer narrows what the agent may do. Scope, risk, routing, and audit must all agree before a target-touching action runs."
           align="left"
         />
         <div id="layers-heading" className="sr-only">
@@ -205,7 +205,7 @@ export default function SafetyPage() {
           <SectionHeading
             eyebrow="Full-access mode"
             title="Attack posture, stated plainly"
-            lede="For authorized lab targets only. Approvals relax here — the destination guard and the scope gate do not."
+            lede="For authorized lab targets only. Approvals relax here. The destination guard and the scope gate do not."
             align="left"
           />
           <h2 id="full-access-heading" className="sr-only">
@@ -213,37 +213,37 @@ export default function SafetyPage() {
           </h2>
           <div className="mt-8 rounded-xl border border-destructive/30 bg-card p-6 sm:p-8">
             <p className="inline-flex items-center gap-2 rounded-full border border-destructive/40 bg-destructive/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-destructive">
-              <ShieldCheck className="h-3.5 w-3.5" aria-hidden /> Lab only — never against third parties
+              <ShieldCheck className="h-3.5 w-3.5" aria-hidden /> Lab only, never against third parties
             </p>
             <p className="mt-4 text-[15px] leading-7">
               In <code className="rounded border bg-muted px-1.5 font-mono text-sm">full_access</code>, the policy
-              auto-approves every in-scope action <strong>with no command-content inspection</strong> — destructive
+              auto-approves every in-scope action <strong>with no command-content inspection</strong>. Destructive
               commands, egress, reverse shells, credential dumping, Metasploit and Python write/run are all allowed
               against authorized targets. The two safeties that remain:
             </p>
             <ol className="mt-4 list-decimal space-y-2 pl-6 text-[15px] leading-7">
               <li>
-                <strong>The target-IP allowlist lock</strong> — enforced at the MCP tool layer. Every destination is
+                <strong>The target-IP allowlist lock</strong>, enforced at the MCP tool layer. Every destination is
                 extracted from every command (URL authorities, /dev/tcp hosts, LHOST/RHOST, scanner targets, bare
                 IPs, hostnames, Python script bodies, MSF RHOSTS and pivot hosts). Anything off-allowlist is{" "}
                 <code className="rounded border bg-muted px-1.5 font-mono text-sm">BLOCKED</code>. It is a destination
                 guard, <strong>not a complete sandbox</strong>.
               </li>
               <li>
-                <strong>The mission scope gate</strong> — tools mapped to forbidden-action categories, or assets
+                <strong>The mission scope gate</strong>. Tools mapped to forbidden-action categories, or assets
                 outside allow rules / inside disallowed assets, are denied with a{" "}
                 <code className="rounded border bg-muted px-1.5 font-mono text-sm">SCOPE_DENIED</code> audit row.
               </li>
             </ol>
             <p className="mt-4 text-[15px] leading-7 text-muted-foreground">
-              The operator-box filesystem is unrestricted by design — run on a throwaway lab box. Every target-touching
+              The operator-box filesystem is unrestricted by design, so run on a throwaway lab box. Every target-touching
               action, denial, and scope event lands in the tamper-evident SHA-256 audit chain.
             </p>
           </div>
 
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             <CodeSnippet
-              title="mission.yaml — scope first"
+              title="mission.yaml, scope first"
               lang="yaml"
               code={`mission:
   name: "authorized-lab-assessment"
@@ -259,7 +259,7 @@ permission_mode: "approve_only  # graduate to full_access only on throwaway host
               <ul className="mt-3 space-y-2.5 text-sm leading-6 text-muted-foreground">
                 <li className="flex gap-2">
                   <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden />
-                  Allowed targets use documentation ranges — replace with your own authorized scope.
+                  Allowed targets use documentation ranges. Replace with your own authorized scope.
                 </li>
                 <li className="flex gap-2">
                   <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden />
@@ -280,7 +280,7 @@ permission_mode: "approve_only  # graduate to full_access only on throwaway host
           <SectionHeading
             eyebrow="Scope · risk · policy"
             title="The operator is a safety layer"
-            lede="BreachPilot assumes a supervised run: written authorization, reviewed scope, a present human, and protected evidence. Skip any of these and the model does not hold."
+            lede="BreachPilot assumes a supervised run: written authorization, reviewed scope, a present human, and protected evidence. Skip any of these and the model breaks down."
             align="left"
           />
           <h2 id="operator-heading" className="sr-only">
@@ -302,7 +302,7 @@ permission_mode: "approve_only  # graduate to full_access only on throwaway host
           <SectionHeading
             eyebrow="Honest limits"
             title="What safety does not cover"
-            lede="No tool can authorize your test for you. These residual risks stay with the operator on every run."
+            lede="No tool can authorize your test for you. The operator carries these residual risks on every run."
             align="left"
           />
           <h2 id="residual-heading" className="sr-only">
@@ -326,7 +326,7 @@ permission_mode: "approve_only  # graduate to full_access only on throwaway host
             <p>
               <strong>Authorized testing only.</strong> Only test systems you own or have explicit written permission
               to assess. If you discover an out-of-scope vulnerability, stop, preserve the audit chain, and disclose
-              to the asset owner — do not verify further without fresh authorization. Misuse reports:{" "}
+              to the asset owner. Do not verify further without fresh authorization. Misuse reports:{" "}
               <a
                 href={`${SITE.repo}/issues`}
                 target="_blank"

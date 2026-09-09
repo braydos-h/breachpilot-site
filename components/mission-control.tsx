@@ -35,7 +35,7 @@ export function MissionControl() {
         {/* left: target + stages */}
         <div className="min-w-0 border-b p-5 md:border-b-0 md:border-r md:p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-foreground">
-            Target — authorized lab only
+            Target: authorized lab only
           </p>
           <p className="mt-2 flex items-center gap-2 font-mono text-sm font-medium">
             <Crosshair className="h-4 w-4 text-muted-foreground" aria-hidden />

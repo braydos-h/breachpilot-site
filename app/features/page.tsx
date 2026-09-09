@@ -32,7 +32,7 @@ import { PLUGINS, PROVIDERS, SITE, SWARM_AGENTS } from "@/lib/site";
 
 export const metadata: Metadata = routeMetadata("/features", {
   description:
-    "BreachPilot capabilities: specialist swarm, structured attack graph, oracle-checked evidence and export-ready reporting — for authorized testing only.",
+    "BreachPilot capabilities: specialist swarm, structured attack graph, oracle-checked evidence and export-ready reporting. For authorized testing only.",
   title: "Features",
 });
 
@@ -40,7 +40,7 @@ export const metadata: Metadata = routeMetadata("/features", {
 const OVERVIEW = [
   { href: "#swarm", step: "Swarm", sub: "specialists" },
   { href: "#attack-graph", step: "Attack graph", sub: "structured plan" },
-  { href: "#evidence", step: "Evidence", sub: "proven, not claimed" },
+  { href: "#evidence", step: "Evidence", sub: "evidence-backed" },
   { href: "#reporting", step: "Reporting", sub: "export-ready" },
 ];
 
@@ -115,17 +115,17 @@ function FeatureCard({
 
 const GRAPH_POINTS: Array<{ icon: LucideIcon; title: string; body: string }> = [
   {
-    body: "Capabilities declare what they need and what they produce, so the planner composes valid chains and skips dead ends — every hop still target-locked.",
+    body: "Capabilities declare what they need and what they produce. The planner composes valid chains, skips dead ends, and keeps every hop target-locked.",
     icon: GitBranch,
     title: "Prerequisite chaining",
   },
   {
-    body: "Suspicious observations become testable hypotheses with explicit pass criteria. An independent oracle probe decides each one — no credit for trying.",
+    body: "Suspicious observations become testable hypotheses with explicit pass criteria. An independent oracle probe decides each one.",
     icon: FlaskConical,
     title: "Hypothesis lifecycle",
   },
   {
-    body: "Ready, blocked and exhausted steps stay visible in the WebUI graph, with the reason attached. Stuck plans explain themselves instead of stalling silently.",
+    body: "Ready, blocked and exhausted steps stay visible in the WebUI graph, with the reason attached. A stuck plan says why it stopped.",
     icon: ListChecks,
     title: "Blocked steps stay visible",
   },
@@ -133,19 +133,19 @@ const GRAPH_POINTS: Array<{ icon: LucideIcon; title: string; body: string }> = [
 
 const EVIDENCE: Array<{ icon: LucideIcon; title: string; body: string; proof: string }> = [
   {
-    body: "Running a capability and proving a weakness are separate events. Only an independent probe that observes the claimed effect earns a confirmed finding.",
+    body: "Running a capability and proving a weakness are separate events. Only an independent probe that observes the claimed effect produces a confirmed finding.",
     icon: FileCheck2,
     proof: "CONFIRMED / REFUTED / EXHAUSTED · oracle probes",
     title: "Oracle-checked verdicts",
   },
   {
-    body: "Every proposal, approval, execution and verdict lands in a hash-chained audit log. Rerun the chain, replay the run — reviewers see exactly what the operator saw.",
+    body: "Every proposal, approval, execution and verdict lands in a hash-chained audit log. Rerun the chain to replay the run. Reviewers see the same steps the operator saw.",
     icon: History,
     proof: "SHA-256 audit chain · decision_log.jsonl",
     title: "Tamper-evident audit chain",
   },
   {
-    body: "Recovered credentials and collected material rest in an encrypted vault — for example, C:\\BreachPilot\\vault\\… — never in chat logs or terminal scrollback.",
+    body: "Recovered credentials and collected material rest in an encrypted vault (for example, C:\\BreachPilot\\vault\\…). They never land in chat logs or terminal scrollback.",
     icon: Lock,
     proof: "encrypted vault · allowlist-scoped handling",
     title: "Loot vault, still in scope",
@@ -154,19 +154,19 @@ const EVIDENCE: Array<{ icon: LucideIcon; title: string; body: string; proof: st
 
 const REPORTING: Array<{ icon: LucideIcon; title: string; body: string; proof: string }> = [
   {
-    body: "Each finding ships with timeline, severity, attack chain and linked probe output — the evidence a defender needs to reproduce the result.",
+    body: "Each finding ships with timeline, severity, attack chain and linked probe output. A defender gets the evidence needed to reproduce the result.",
     icon: FileText,
     proof: "Markdown + HTML · CVSS · chain view",
     title: "Findings reviewers trust",
   },
   {
-    body: "Confirmed techniques map to tactics and export for Navigator, so the report plugs straight into detection-gap reviews.",
+    body: "Confirmed techniques map to tactics and export for Navigator. The report plugs straight into detection-gap reviews.",
     icon: Network,
     proof: "ATT&CK Navigator export",
     title: "ATT&CK-mapped output",
   },
   {
-    body: "Findings convert to tickets with severity, reproduction context and evidence links attached — remediation starts from proof, not prose.",
+    body: "Findings convert to tickets with severity, reproduction context and evidence links attached, so remediation starts from proof.",
     icon: Ticket,
     proof: "ticket creation · evidence-linked",
     title: "Handoff to remediation",
@@ -181,13 +181,13 @@ const USE_CASES: Array<{ icon: LucideIcon; title: string; body: string; scope: s
     title: "Internal assessment teams",
   },
   {
-    body: "Emulate adversary behavior against lab infrastructure, then check which techniques your detections caught — the audit chain doubles as exercise notes.",
+    body: "Emulate adversary behavior against lab infrastructure, then check which techniques your detections caught. The audit chain works as exercise notes.",
     icon: GraduationCap,
     scope: "Scope: isolated lab ranges and cyber-range targets.",
     title: "Labs and detection validation",
   },
   {
-    body: "Re-run authorized assessments on a schedule and diff the findings. Reflection memory and the experience store mean each cycle starts smarter than the last.",
+    body: "Re-run authorized assessments on a schedule and diff the findings. Reflection memory and the experience store give each cycle a head start on the last.",
     icon: RefreshCw,
     scope: "Scope: standing written authorization, same allowlist discipline.",
     title: "Continuous authorized validation",
@@ -199,7 +199,7 @@ export default function FeaturesPage() {
     <div>
       <PageHero
         eyebrow="Capabilities"
-        lede="Specialist agents plan against allowlisted targets, chain capabilities through a structured attack graph, and prove every claim with oracle-checked evidence and export-ready reports. Capability overview, not a how-to — for authorized testing only."
+        lede="Specialist agents plan against allowlisted targets, chain capabilities through a structured attack graph, and prove each claim with oracle-checked evidence and export-ready reports. This is a capability overview. For authorized testing only."
         title="Full assessment lifecycle, under supervision"
       >
         <div className="mt-6 flex flex-wrap items-center gap-2">
@@ -246,7 +246,7 @@ export default function FeaturesPage() {
         <p className="mt-4 flex items-start gap-1.5 text-sm text-muted-foreground">
           <ShieldAlert className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
           <span>
-            Authorized testing only — only test systems you own or have explicit written permission to assess.
+            Authorized testing only. Only test systems you own or have explicit written permission to assess.
           </span>
         </p>
       </PageHero>
@@ -254,8 +254,8 @@ export default function FeaturesPage() {
       <Group
         id="swarm"
         eyebrow="Swarm"
-        lede="Parallel specialists read and write one shared blackboard instead of chaining messages — with a critic gate that kills out-of-scope actions before anything runs. For authorized targets only."
-        title="Specialists that negotiate, not a prompt chain"
+        lede="Parallel specialists read and write one shared blackboard rather than chaining messages. A critic gate kills out-of-scope actions before anything runs. For authorized targets only."
+        title="Specialists that negotiate over shared state"
       >
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {SWARM_AGENTS.map((a) => {
@@ -305,8 +305,8 @@ export default function FeaturesPage() {
       <Group
         id="attack-graph"
         eyebrow="Attack graph"
-        lede="Every run builds a structured plan — hypotheses, prerequisites and blocked steps included — rendered live in the WebUI graph. Supervised planning, not autonomous wandering."
-        title="A structured plan, not a prompt chain"
+        lede="Every run builds a structured plan with hypotheses, prerequisites and blocked steps, rendered live in the WebUI graph. Planning stays supervised throughout."
+        title="A structured plan with visible state"
         tint
       >
         <div className="grid gap-6 lg:grid-cols-[1fr_1.15fr] lg:items-start">
@@ -354,7 +354,7 @@ export default function FeaturesPage() {
       <Group
         id="reporting"
         eyebrow="Reporting"
-        lede="Reports assemble themselves from the same evidence the operator watched accumulate — timelines, chains and verdicts included."
+        lede="Reports assemble from the same evidence the operator watched accumulate: timelines, chains and verdicts."
         title="Evidence-backed, export-ready"
         tint
       >
@@ -370,7 +370,7 @@ export default function FeaturesPage() {
       <Group
         id="use-cases"
         eyebrow="Use cases"
-        lede="Where teams point it — always at systems they own or have explicit written permission to test."
+        lede="Where teams point it: systems they own or have explicit written permission to test."
         title="Built for authorized work"
       >
         <ul className="grid gap-4 md:grid-cols-3">
@@ -416,8 +416,8 @@ export default function FeaturesPage() {
             </div>
             <div>
               <p className="text-sm leading-6 text-muted-foreground">
-                Attack mode auto-approves in-scope actions — the safeties are the target-IP allowlist lock
-                and the mission scope gate, with every action in a tamper-evident audit chain.
+                Attack mode auto-approves in-scope actions. The target-IP allowlist
+                lock and the mission scope gate stay enforced, with every action in a tamper-evident audit chain.
               </p>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                 <Link

@@ -86,7 +86,7 @@ export default function LegalPage() {
       <PageHero
         eyebrow="Legal"
         title="License and authorized use"
-        lede="BreachPilot is open-source software for authorized security testing only. The license gives you the code — the authorization rule governs every use of it."
+        lede="BreachPilot is open-source software for authorized security testing only. The license gives you the code. The authorization rule governs every use of it."
       >
         <blockquote className="mt-6 max-w-2xl border-l-2 border-foreground pl-4 text-lg font-medium leading-8 tracking-tight">
           Only test systems you own or have explicit written permission to assess.
@@ -114,7 +114,7 @@ export default function LegalPage() {
               </h2>
               <p className="mt-3 text-muted-foreground">
                 {SITE.name} is open source under {SITE.license}. The full terms live in
-                the repository — this page summarizes the posture, it does not replace
+                the repository. This page summarizes the posture, it does not replace
                 the license text.
               </p>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
@@ -177,7 +177,7 @@ export default function LegalPage() {
                 What this page is
               </h2>
               <p className="mt-3 text-muted-foreground">
-                This site is the public home of an open-source security tool — not a
+                This site is the public home of an open-source security tool, not a
                 commercial SaaS terms-of-service agreement. There are no accounts, no
                 subscriptions, and no hosted assessment service. The binding documents
                 are the {SITE.license} license text and whatever written testing

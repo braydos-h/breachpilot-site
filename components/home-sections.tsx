@@ -77,25 +77,25 @@ const PIPELINE = [
     icon: Radar,
     name: "Recon",
     tag: "ports · dns · certs",
-    body: "Map the allowlisted surface — ports, services, web fingerprints — without ever leaving scope.",
+    body: "Maps the allowlisted surface: ports, services, web fingerprints. It stays in scope.",
   },
   {
     icon: Zap,
     name: "Exploit",
     tag: "capabilities · payloads",
-    body: "Match capabilities to weaknesses, then craft and execute attempts under critic review.",
+    body: "Matches capabilities to weaknesses, then crafts and executes attempts under critic review.",
   },
   {
     icon: FileCheck2,
     name: "Verify",
     tag: "oracle probes · evidence",
-    body: "Oracle probes separate real findings from noise. Every claim ends CONFIRMED, REFUTED, or EXHAUSTED.",
+    body: "Oracle probes separate real findings from noise. Each claim ends CONFIRMED, REFUTED, or EXHAUSTED.",
   },
   {
     icon: FileText,
     name: "Report",
     tag: "markdown · html · mitre",
-    body: "An evidence-linked report with timeline, severity, and MITRE mapping — ready to hand off.",
+    body: "An evidence-linked report with timeline, severity, and MITRE mapping, ready to hand off.",
   },
 ] as const;
 
@@ -138,7 +138,7 @@ const WHY = [
   {
     icon: Network,
     title: "Adversarial planning",
-    body: "AttackPlan DAGs with retries, branching hypotheses, and failure recovery — the run replans when evidence contradicts it.",
+    body: "AttackPlan DAGs carry retries, branching hypotheses, and failure recovery. The run replans when evidence contradicts it.",
     proof: "decision_log.jsonl per run",
   },
   {
@@ -150,19 +150,19 @@ const WHY = [
   {
     icon: FileCheck2,
     title: "Evidence-based verification",
-    body: "Execution success and evidential success are tracked separately, with oracle probes confirming each claim.",
+    body: "Execution success and evidential success are tracked separately. Oracle probes confirm each claim.",
     proof: "CONFIRMED / REFUTED / EXHAUSTED + oracle probes",
   },
   {
     icon: Globe,
     title: "Domain-aware recon",
-    body: "Give it a domain, get a scope-aware attack surface: certificates, DNS, subdomains, takeover flags.",
+    body: "Point it at a domain and it maps the scope-aware attack surface: certificates, DNS, subdomains, takeover flags.",
     proof: "CT / DNS / subfinder · takeover flags",
   },
   {
     icon: Brain,
     title: "Persistent knowledge",
-    body: "Lessons survive the run with semantic and Bayesian scoring, reselected mid-run as context changes.",
+    body: "Lessons survive the run. Semantic and Bayesian scoring reselect them mid-run as context changes.",
     proof: `${META.skills ?? "140+"} skills · semantic + Bayesian scoring`,
   },
 ];
@@ -184,7 +184,7 @@ export function WhyGrid() {
           <ShieldCheck className="h-5 w-5 text-foreground" aria-hidden />
           <h3 className="mt-3 font-semibold tracking-tight">Operator-supervised</h3>
           <p className="mt-1 text-sm leading-6 text-muted-foreground">
-            Approval gates, sandbox workers, and a SHA-256 audit chain. You approve the scope — the swarm stays inside it.
+            Approval gates, sandbox workers, and a SHA-256 audit chain. You approve the scope and the swarm stays inside it.
           </p>
           <Link href="/safety" className="mt-3 inline-block text-sm font-medium underline underline-offset-4">
             Read the safety model →
@@ -230,7 +230,7 @@ export function SwarmDiagram() {
               )}
               <Link
                 href="/features/swarm"
-                aria-label={`Step ${i + 1} of 6: ${a.name} — ${AGENT_SHORT[a.id]}`}
+                aria-label={`Step ${i + 1} of 6: ${a.name}: ${AGENT_SHORT[a.id]}`}
                 className="min-w-0 flex-1 rounded-lg border bg-card p-3 transition-colors hover:border-foreground/30 hover:bg-muted"
               >
                 <p className="flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-muted-foreground">
@@ -271,7 +271,7 @@ export function SwarmDiagram() {
  */
 const SCREENSHOTS = [
   { file: "run-creation.png", label: "Run creation", desc: "Target, model, goal and allowlist review before launch." },
-  { file: "attack-graph.png", label: "Attack graph", desc: "ReactFlow DAG — ready/blocked steps, hypotheses, evidence links." },
+  { file: "attack-graph.png", label: "Attack graph", desc: "ReactFlow DAG with ready and blocked steps, hypotheses, and evidence links." },
   { file: "evidence-findings.png", label: "Evidence & findings", desc: "Confirmed findings with probe output and the SHA-256 audit chain." },
   { file: "final-report.png", label: "Final report", desc: "Rendered Markdown/HTML report with MITRE export." },
 ] as const;
@@ -283,10 +283,10 @@ export function Screenshots({ available }: { available: Record<string, boolean> 
   if (!hasAny) {
     return (
       <div className="mx-auto mt-10 max-w-2xl rounded-xl border border-dashed bg-card p-6 text-center sm:p-8">
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">WebUI captures — coming soon</p>
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">WebUI captures: coming soon</p>
         <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted-foreground">
-          Real console captures from a local lab run are on the way — not mockups. Meanwhile the
-          mission-control preview and product tour above mirror the live WebUI layout.
+          Real console captures from a local lab run are on the way. The
+          mission-control preview and product tour above match the live WebUI layout.
         </p>
         <p className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
@@ -316,7 +316,7 @@ export function Screenshots({ available }: { available: Record<string, boolean> 
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={`/screenshots/${s.file}`}
-              alt={`BreachPilot WebUI — ${s.label}`}
+              alt={`BreachPilot WebUI: ${s.label}`}
               width={1200}
               height={750}
               decoding="async"
@@ -324,7 +324,7 @@ export function Screenshots({ available }: { available: Record<string, boolean> 
               loading="lazy"
             />
           ) : (
-            <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-1 border-b border-dashed bg-grid-sm p-6 text-center" role="img" aria-label={`Placeholder — ${s.label} screenshot not yet provided`}>
+            <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-1 border-b border-dashed bg-grid-sm p-6 text-center" role="img" aria-label={`Placeholder: ${s.label} screenshot not yet provided`}>
               <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">screenshot pending</p>
               <p className="max-w-xs text-sm text-muted-foreground">Add <code className="rounded border bg-muted px-1 font-mono text-[12px]">public/screenshots/{s.file}</code></p>
             </div>

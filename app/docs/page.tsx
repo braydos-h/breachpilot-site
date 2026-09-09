@@ -28,7 +28,7 @@ export default function DocsIndexPage() {
       <PageHero
         eyebrow="Documentation"
         title="Docs, from the repo itself"
-        lede="One source of truth: this section is generated at build time from the repository Markdown — never a duplicate. Pick a guide or search the whole set."
+        lede="One source of truth. This section is generated at build time from the repository Markdown, never duplicated. Pick a guide or search the whole set."
       >
         <div className="mt-6 max-w-xl">
           <DocsSearchBox />
@@ -87,7 +87,7 @@ export default function DocsIndexPage() {
           </div>
         ) : (
           <p className="mt-4 text-[15px] text-muted-foreground">
-            No guides are available right now — the docs sync runs at build time.
+            No guides are available right now. The docs sync runs at build time.
           </p>
         )}
         <div className="mt-12 rounded-xl border bg-card p-6 sm:p-8">
@@ -96,7 +96,7 @@ export default function DocsIndexPage() {
           </p>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
             These guides describe attack tooling for systems you own or have explicit written
-            permission to assess — the same scope lock and audit chain as the product itself.
+            permission to assess, under the same scope lock and audit chain as the product itself.
           </p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
             <Link

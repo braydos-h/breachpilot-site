@@ -48,8 +48,8 @@ export default function HomePage() {
             </h1>
             <Typewriter />
             <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-7 text-muted-foreground sm:text-base">
-              BreachPilot is an open-source agentic operator for authorized security testing — it
-              plans, verifies, and reports with evidence, target-locked and fully audited.
+              BreachPilot is an open-source operator for authorized security testing. It stays
+              target-locked, logs everything it does, and backs each finding with evidence.
             </p>
             <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
@@ -70,7 +70,7 @@ export default function HomePage() {
             <p className="mt-4 flex items-center justify-center gap-1.5 text-sm text-muted-foreground">
               <ShieldAlert className="h-3.5 w-3.5 shrink-0" aria-hidden />
               <span>
-                Authorized testing only —{" "}
+                Authorized testing only.{" "}
                 <Link href="/safety" className="underline underline-offset-4 hover:text-foreground">
                   safety model
                 </Link>{" "}
@@ -88,7 +88,7 @@ export default function HomePage() {
           <div className="mx-auto mt-10 max-w-5xl animate-fade-in-up">
             <MissionControl />
             <p className="mt-2 text-center text-sm text-muted-foreground">
-              Illustrative lab run against 127.0.0.1 — BreachPilot tests only allowlisted targets and
+              Illustrative lab run against 127.0.0.1. BreachPilot tests only allowlisted targets and
               blocks everything else.
             </p>
           </div>
@@ -109,8 +109,8 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <SectionHeading
             eyebrow="How it works"
-            title="One supervised pipeline, recon to report"
-            lede="Every run walks the same five phases — planned up front, verified with evidence, and reported with proof."
+            title="One supervised pipeline from recon to report"
+            lede="Every run goes through the same five phases. The plan comes first, each finding needs evidence, and the report includes proof."
           />
           <PipelineSteps />
         </div>
@@ -121,7 +121,7 @@ export default function HomePage() {
         <SectionHeading
           eyebrow="Why BreachPilot"
           title="A full assessment lifecycle, under supervision"
-          lede="Recon to report in one supervised engine, with proof."
+          lede="One supervised engine covers recon to report, and each finding ships with proof."
         />
         <WhyGrid />
       </section>
@@ -132,7 +132,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="Multi-agent orchestration"
             title="Six specialists, one shared blackboard"
-            lede="Parallel dispatch with battle logs and cross-phase negotiation — plus a persistent orchestrator for extended campaigns."
+            lede="Specialists dispatch in parallel and log to a shared battle log. A persistent orchestrator carries longer campaigns."
           />
           <SwarmDiagram />
         </div>
@@ -142,8 +142,8 @@ export default function HomePage() {
       <section aria-label="Attack graph" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
         <SectionHeading
           eyebrow="Attack graph"
-          title="A structured plan, not a prompt chain"
-          lede="Every run builds an AttackPlan DAG — ready/blocked steps and evidence, live in the WebUI graph."
+          title="Each run follows a structured plan"
+          lede="Every run builds an AttackPlan DAG. Ready and blocked steps plus evidence show live in the WebUI graph."
         />
         <HomeAttackGraph />
       </section>
@@ -154,7 +154,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="Inside BreachPilot"
             title="Mission control for the whole run"
-            lede={`Loopback-only console at 127.0.0.1:${SITE.webuiDefaultPort} — wizard, stream, graph, evidence and more in one place.`}
+            lede={`Loopback-only console at 127.0.0.1:${SITE.webuiDefaultPort} with the wizard, stream, graph, and evidence in one place.`}
           />
           <ProductTour />
         </div>
@@ -164,11 +164,11 @@ export default function HomePage() {
       <section aria-label="Screenshots" className="mx-auto max-w-6xl border-t px-4 py-16 sm:px-6 sm:py-20">
         <SectionHeading
           eyebrow="Screenshots"
-          title={hasShots ? "The real WebUI" : "The real WebUI — captures coming soon"}
+          title={hasShots ? "The real WebUI" : "The real WebUI: captures coming soon"}
           lede={
             hasShots
-              ? "Console captures from a local lab run — not mockups."
-              : "Real console captures from a local lab run are on the way — not mockups."
+              ? "Console captures from a local lab run."
+              : "Real console captures from a local lab run are on the way."
           }
         />
         <Screenshots available={shots} />
@@ -188,8 +188,8 @@ export default function HomePage() {
             </div>
             <div>
               <p className="text-sm leading-6 text-muted-foreground">
-                Attack mode auto-approves in-scope actions — the safeties are the target-IP allowlist
-                lock and the mission scope gate, with every action in a tamper-evident audit chain.
+                Attack mode auto-approves in-scope actions. The target-IP allowlist
+                lock and the mission scope gate stay enforced, with every action in a tamper-evident audit chain.
               </p>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                 <Link

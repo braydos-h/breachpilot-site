@@ -5,16 +5,16 @@ import { useId, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 
 const TOUR_VIEWS = [
-  { id: "new-run", label: "New Run", desc: "Set target, allowlist, goal. Review, then launch.", rows: ["target  127.0.0.1  ·  allowlisted", "goal  initial_access  [GATED]", "mode  attack · full_access (lab)"] },
+  { id: "new-run", label: "New Run", desc: "Set target, allowlist, and goal. Review, then launch.", rows: ["target  127.0.0.1  ·  allowlisted", "goal  initial_access  [GATED]", "mode  attack · full_access (lab)"] },
   { id: "live-run", label: "Live Run", desc: "Tool calls and decisions stream over WebSocket.", rows: ["recon › run_full_recon → 4 ports", "vuln › CVE-2024-xxxx ↔ module 87/100", "critic › scope PASS · in-allowlist"] },
   { id: "graph", label: "Attack Graph", desc: "Pan/zoom DAG with evidence on every node.", rows: ["8 nodes · 2 ready · 1 blocked", "path: recon → hypothesis H-03", "evidence attached to H-03"] },
   { id: "evidence", label: "Evidence", desc: "Reports plus SHA-256 audit chain, exportable.", rows: ["H-03 PROBE … CONFIRMED", "audit chain · sha256 9f3a…c41d", "report.md + report.html rendered"] },
   { id: "skills", label: "Skills", desc: "Advisory catalog, re-selected mid-run.", rows: ["top-6 selected for this context", "jwt-algorithm-confusion … 0.91", "re-selection on new CVE"] },
-  { id: "modules", label: "Modules", desc: "Applicability scored 0–100 per target.", rows: ["web … 87/100 · applicable", "crypto_jwt … 72/100", "privesc … gated on access"] },
+  { id: "modules", label: "Modules", desc: "Applicability scored 0 to 100 per target.", rows: ["web … 87/100 · applicable", "crypto_jwt … 72/100", "privesc … gated on access"] },
   { id: "benchmarks", label: "Benchmarks", desc: "Verified success, never claimed success.", rows: ["VERIFIED ≠ claimed", "false_positive_rate tracked", "baseline.json regression gate"] },
-  { id: "memory", label: "Memory", desc: "What worked, against what, with evidence.", rows: ["lesson: smb-signing-off → relay", "confidence 0.83 · 4 refs", "nomic-embed-text indexed"] },
+  { id: "memory", label: "Memory", desc: "What worked, against which target, with evidence.", rows: ["lesson: smb-signing-off → relay", "confidence 0.83 · 4 refs", "nomic-embed-text indexed"] },
   { id: "connections", label: "Connections", desc: "Listeners and beacon health at a glance.", rows: ["listener :4444 · healthy", "beacon beacon-01 · 60s check-in", "SOCKS pivot · idle"] },
-  { id: "system", label: "System", desc: "Providers, plugins, config — no YAML editing.", rows: ["provider opencode_go · healthy", "sandbox image present", "14 plugins · 3 enabled"] },
+  { id: "system", label: "System", desc: "Providers, plugins, config with no YAML editing.", rows: ["provider opencode_go · healthy", "sandbox image present", "14 plugins · 3 enabled"] },
 ] as const;
 
 type View = (typeof TOUR_VIEWS)[number];

@@ -24,32 +24,32 @@ const PRINCIPLES = [
   {
     icon: ShieldCheck,
     title: "Oracle decides, not the agent",
-    body: "The agent's claim never counts as a solve. An independent probe checks the target side — HTTP, file, or shell — and only a pass marks VERIFIED.",
+    body: "The agent's claim never counts as a solve. An independent probe checks the target side (HTTP, file, or shell), and only a pass marks VERIFIED.",
   },
   {
     icon: Scale,
     title: "Misses are published, not buried",
-    body: "False positives, timeouts, and infra errors are first-class verdicts. A benchmark that hides its misses is marketing, not measurement.",
+    body: "False positives, timeouts, and infra errors are first-class verdicts. A benchmark that hides its misses does not measure anything.",
   },
   {
     icon: FileCheck2,
     title: "Reproducible or marked unknown",
-    body: "Every run records git SHA, model, config hash, and sandbox plus target digests. Without that metadata, a number is anecdote.",
+    body: "Every run records git SHA, model, config hash, and sandbox plus target digests. Without that metadata, a number is a story, not a result.",
   },
 ];
 
 const FLOW = [
   {
     step: "Provision",
-    body: "Reset the deliberately-vulnerable target image to a known digest. A provision failure is recorded as INFRASTRUCTURE_ERROR — never as an exploitation failure.",
+    body: "Reset the deliberately-vulnerable target image to a known digest. A provision failure is recorded as INFRASTRUCTURE_ERROR, never as an exploitation failure.",
   },
   {
     step: "Mission",
-    body: "Run one BreachPilot mission inside the sandbox via the agent runner. No host fallback, no hand assistance, scope locked to the lab target.",
+    body: "Run one BreachPilot mission inside the sandbox via the agent runner, with no host fallback or hand assistance and scope locked to the lab target.",
   },
   {
     step: "Verify",
-    body: "Probe the target independently with declarative check executors — HTTP response, loot file, or shell state. The oracle runs outside the agent's context.",
+    body: "Probe the target independently with declarative check executors: HTTP response, loot file, or shell state. The oracle runs outside the agent's context.",
   },
   {
     step: "Classify",
@@ -83,7 +83,7 @@ const METRICS: Array<{ name: string; what: string; read: string }> = [
   {
     name: "actions_per_verified_success",
     what: "Tool-action efficiency per confirmed solve.",
-    read: "Cost of a win. Watch alongside success rate — fewer actions at the same verified rate is a real efficiency gain.",
+    read: "Cost of a win. Watch alongside success rate. Fewer actions at the same verified rate is a real efficiency gain.",
   },
   {
     name: "time_to_first_verified_success",
@@ -93,7 +93,7 @@ const METRICS: Array<{ name: string; what: string; read: string }> = [
   {
     name: "risk_ratio ± CI",
     what: "Treatment vs baseline with 1000-sample cluster-bootstrap 95% CI.",
-    read: "The regression gate. If the CI crosses 1.0, the change did not move the needle — no matter what the point estimate says.",
+    read: "The regression gate. If the CI crosses 1.0, the change did not move the needle, no matter what the point estimate says.",
   },
   {
     name: "tokens + cost",
@@ -127,7 +127,7 @@ export default function BenchmarksPage() {
       <PageHero
         eyebrow="Evaluation"
         title="Verified, or it didn't happen"
-        lede="BreachPilot benchmarks run against deliberately-vulnerable lab images, and an independent oracle confirms every claimed win. No leaderboards, no invented scores — just a method you can re-run and argue with."
+        lede="BreachPilot benchmarks run against deliberately-vulnerable lab images, and an independent oracle confirms every claimed win. We publish no leaderboards and no invented scores, only a method you can re-run and argue with."
       >
         <div className="mt-5 flex flex-wrap items-center gap-2">
           <Badge>
@@ -157,7 +157,7 @@ export default function BenchmarksPage() {
         <p className="mt-4 flex items-start gap-1.5 text-sm text-muted-foreground">
           <ShieldAlert className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
           <span>
-            Authorized lab targets only. Benchmark images are deliberately vulnerable — never point
+            Authorized lab targets only. Benchmark images are deliberately vulnerable. Never point
             them, or BreachPilot, at systems you do not own or have explicit written permission to test.
           </span>
         </p>
@@ -168,8 +168,8 @@ export default function BenchmarksPage() {
           <SectionHeading
             align="left"
             eyebrow="Ground rules"
-            title="What we refuse to publish"
-            lede="A single success percentage with no method behind it tells you nothing. These three rules are what make a BreachPilot number worth reading."
+            title="What stays unpublished"
+            lede="A single success percentage with no method behind it tells you nothing. These three rules make a BreachPilot number worth reading."
           />
           <h2 id="principles-heading" className="sr-only">
             Benchmark principles
@@ -248,7 +248,7 @@ export default function BenchmarksPage() {
               <p className="mt-4 border-t pt-4 text-[13px] leading-6 text-muted-foreground">
                 Bar widths are illustrative placeholders showing how to read the chart: muted is what
                 the agent claimed, solid is what the oracle confirmed. No BreachPilot scores are
-                published on this page — run the suites yourself and compare runs with full metadata
+                published on this page. Run the suites yourself and compare runs with full metadata
                 attached.
               </p>
             </Card>
@@ -348,12 +348,12 @@ export default function BenchmarksPage() {
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
                 Run comparison uses risk ratio of verified success against a pinned baseline, with a
                 1000-sample cluster-bootstrap 95% confidence interval. The regression gate fails a
-                change whose interval crosses 1.0 — the point estimate alone never passes.
+                change whose interval crosses 1.0. The point estimate alone never passes.
               </p>
               <ul className="mt-4 space-y-2.5 text-sm">
                 {[
                   "Pin the baseline: same target digests, same budgets, same model class.",
-                  "Report median and mean solve times — long tails matter.",
+                  "Report median and mean solve times. Long tails matter.",
                   "Count infra errors separately from exploitation failures.",
                   "Full method lives in the engineering docs, not in a footnote.",
                 ].map((item) => (
@@ -379,7 +379,7 @@ export default function BenchmarksPage() {
             </h2>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
               No scores are published here because your hardware, model, and target digests will
-              differ from ours — and those differences are the whole story. Open the WebUI
+              differ from ours, and those differences are the whole story. Open the WebUI
               Benchmarks view or follow the suite-runner guide in the docs, then compare runs with
               baselines and regression gates attached. Authorized lab environments only.
             </p>

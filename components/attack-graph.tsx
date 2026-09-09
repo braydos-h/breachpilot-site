@@ -115,7 +115,7 @@ export function AttackGraph({ nodes = DEFAULT_NODES }: { nodes?: GraphNode[] }) 
         {nodes.map((n) => (
           <li key={n.id}>
             {n.label}
-            {n.sub ? ` — ${n.sub}` : ""} ({STATE_LABEL[n.state]})
+            {n.sub ? `: ${n.sub}` : ""} ({STATE_LABEL[n.state]})
           </li>
         ))}
       </ol>

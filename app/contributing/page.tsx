@@ -23,11 +23,11 @@ const CONTENTS: Array<{ id: string; label: string }> = [
 const EXPECTATIONS: Array<[string, string]> = [
   [
     "Tests",
-    "The suite is fully mocked — no live scanning, every subprocess and network call faked. Safety-relevant code needs regression tests that prove the gate still holds.",
+    "The suite is fully mocked. No live scanning; every subprocess and network call is faked. Safety-relevant code needs regression tests that prove the gate still holds.",
   ],
   [
     "CI",
-    "Every push and pull request runs the mocked suite plus coverage, lint and format checks, type checking, package builds, and the WebUI build with its tests.",
+    "Every push and pull request runs the mocked suite plus coverage, lint and format checks, type checking, package builds, and the WebUI build and tests.",
   ],
   [
     "Quality gates",
@@ -39,7 +39,7 @@ const EXPECTATIONS: Array<[string, string]> = [
   ],
   [
     "TypeScript / WebUI",
-    "Type-check, build, and test the WebUI whenever you touch it — run all three before asking for review, not after.",
+    "Type-check, build, and test the WebUI whenever you touch it. Run all three before asking for review, not after.",
   ],
   [
     "Docs discipline",
@@ -92,7 +92,7 @@ function SafetyStrip() {
           <div>
             <p className="text-sm leading-6 text-muted-foreground">
               Contributions must preserve scope gating, the target allowlist lock, and the
-              audit trail — the safeties are the feature.
+              audit trail. Those safeties are the feature.
             </p>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -121,7 +121,7 @@ export default function ContributingPage() {
       <PageHero
         eyebrow="Open source"
         title="Contribute to BreachPilot"
-        lede={`${SITE.name} is ${SITE.license} licensed and developed in the open. The bar is a focused diff, proven tests, and docs that still match reality — read the guide and AGENTS.md, then build the smallest change that helps.`}
+        lede={`${SITE.name} is ${SITE.license} licensed and developed in the open. The bar is a focused diff, proven tests, and docs that still match reality. Read the guide and AGENTS.md, then build the smallest change that helps.`}
       >
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
           <a
@@ -153,7 +153,7 @@ export default function ContributingPage() {
           </Badge>
         </div>
         <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground">
-          {SITE.name} is for authorized testing only — contributions must preserve scope
+          {SITE.name} is for authorized testing only. Contributions must preserve scope
           gating, the target allowlist lock, and the audit trail.
         </p>
       </PageHero>
@@ -169,8 +169,8 @@ export default function ContributingPage() {
               <p className="mt-3 text-muted-foreground">
                 The repository is the source of truth for process: the contribution
                 guide covers branching and review etiquette, and AGENTS.md covers how
-                the codebase expects to be changed. Read both before writing code —
-                they answer most review comments in advance.
+                the codebase expects to be changed. Read both before writing code.
+                They answer most review comments in advance.
               </p>
               <p className="mt-3 text-muted-foreground">
                 New here? Skim the{" "}
@@ -202,7 +202,7 @@ export default function ContributingPage() {
               </h2>
               <p className="mt-3 text-muted-foreground">
                 Mocked tests, strict gates, and docs in the same pull request. The list
-                below is the standing contract — if your change weakens any of it, the
+                below is the standing contract. If your change weakens any of it, the
                 review will ask you to strengthen it instead.
               </p>
               <ul className="mt-5 grid gap-4 sm:grid-cols-2">
@@ -268,13 +268,13 @@ export default function ContributingPage() {
                 {SITE.name} ships attack tooling, so its safeties are load-bearing:
                 scope gating decides what may be touched, the target allowlist lock
                 blocks everything else, and the audit trail records every decision.
-                Contributions that relax any of the three will not merge — and changes
+                Contributions that relax any of the three will not merge. Changes
                 that strengthen them get the fastest reviews.
               </p>
               <div className="mt-5 rounded-lg border bg-card p-4">
                 <p className="text-sm leading-6">
                   <strong>Only test systems you own or have explicit written permission
-                  to assess</strong> — including when you are testing your own change.
+                  to assess</strong>, including when you are testing your own change.
                   Develop against a lab you control, and keep the authorization in
                   writing.
                 </p>

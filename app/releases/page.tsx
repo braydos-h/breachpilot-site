@@ -17,7 +17,7 @@ const TIMELINE = [
   {
     icon: Tag,
     title: "Stable tag is cut upstream",
-    body: "Maintainers cut a versioned tag in the upstream repository. The tag is the release — there is no separate binary channel to drift from.",
+    body: "Maintainers cut a versioned tag in the upstream repository. The tag is the release. There is no separate binary channel to drift from.",
   },
   {
     icon: GitBranch,
@@ -39,7 +39,7 @@ const TIMELINE = [
 const UPGRADE_STEPS = [
   "Read the release notes for the target tag, checking for breaking config or WebUI changes.",
   "Back up your config directory (for example, C:\\BreachPilot\\config) so you can roll back.",
-  "Re-run the pinned stable install with the new tag — never switch an install to a moving branch to upgrade.",
+  "Re-run the pinned stable install with the new tag. Never switch an install to a moving branch to upgrade.",
   "Confirm the printed ref and commit SHA match the published notes, then restart the WebUI.",
 ] as const;
 
@@ -55,7 +55,7 @@ export default function ReleasesPage() {
       <PageHero
         eyebrow="Releases"
         title="Stable by default, edge when you ask"
-        lede="The hosted installers pin a stable tag — never a moving branch. The version below is derived from the upstream repository at build time, and the full history lives on GitHub."
+        lede="The hosted installers pin a stable tag, never a moving branch. The version below is derived from the upstream repository at build time, and the full history lives on GitHub."
       >
         <div className="mt-5 flex flex-wrap items-center gap-2" aria-label="Current version">
           <Badge tone="solid">
@@ -92,7 +92,7 @@ export default function ReleasesPage() {
           </a>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">
-          For authorized testing only — run BreachPilot only against systems you own or have explicit
+          For authorized testing only. Run BreachPilot only against systems you own or have explicit
           permission to test.
         </p>
       </PageHero>
@@ -106,7 +106,7 @@ export default function ReleasesPage() {
               </p>
               <p className="mt-2 break-all font-mono text-2xl font-semibold tabular-nums">{tag}</p>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                Pinned by the hosted installers — never a moving branch.
+                Pinned by the hosted installers, never a moving branch.
               </p>
             </Card>
             <Card>
@@ -128,7 +128,7 @@ export default function ReleasesPage() {
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
                 {META.stale ? (
                   <span className="font-medium text-amber-600 dark:text-amber-400">
-                    Stale metadata — upstream checkout was missing at build.
+                    Stale metadata. Upstream checkout was missing at build.
                   </span>
                 ) : (
                   <>Site metadata generated from this commit.</>
@@ -143,7 +143,7 @@ export default function ReleasesPage() {
             align="left"
             eyebrow="Channels"
             title="Install a channel"
-            lede="Stable is the default and the only supported choice for assessments. Edge tracks the main tip and moves under you — contributors only."
+            lede="Stable is the default and the only supported choice for assessments. Edge tracks the main tip and moves under you. Contributors only."
           />
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             <Card>
@@ -156,7 +156,7 @@ export default function ReleasesPage() {
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
                 Resolves the newest{" "}
                 <code className="rounded border bg-muted px-1 font-mono text-[13px]">v*</code> tag
-                and checks it out detached — no branch movement. Omit{" "}
+                and checks it out detached, with no branch movement. Omit{" "}
                 <code className="rounded border bg-muted px-1 font-mono text-[13px]">--version</code>{" "}
                 to take the latest tag automatically.
               </p>
@@ -169,7 +169,7 @@ export default function ReleasesPage() {
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
                 Tracks{" "}
                 <code className="rounded border bg-muted px-1 font-mono text-[13px]">main</code> tip.
-                Moves under you — only for contributors testing unreleased work. Never use edge for
+                Moves under you. Only for contributors testing unreleased work. Never use edge for
                 an assessment you need to reproduce.
               </p>
             </Card>
@@ -181,7 +181,7 @@ export default function ReleasesPage() {
             align="left"
             eyebrow="Timeline"
             title="How a release ships"
-            lede="No hand-kept changelog on this page — tags, notes, and history are published upstream on GitHub, and this page points at them."
+            lede="No hand-kept changelog on this page. Tags, notes, and history are published upstream on GitHub, and this page points at them."
           />
           <ol className="relative mt-6 space-y-4 border-l pl-6" aria-label="Release pipeline">
             {TIMELINE.map((step) => (
@@ -204,7 +204,7 @@ export default function ReleasesPage() {
             align="left"
             eyebrow="Upgrade notes"
             title="Upgrade without surprises"
-            lede={`Upgrading is re-pinning to the new tag, then restarting the WebUI (default port ${SITE.webuiDefaultPort}). Read the notes first — breaking changes are announced there, not here.`}
+            lede={`Upgrading is re-pinning to the new tag, then restarting the WebUI (default port ${SITE.webuiDefaultPort}). Read the notes first. Breaking changes are announced there, not here.`}
           />
           <Card className="mt-6">
             <ol className="space-y-3" aria-label="Upgrade steps">
@@ -258,7 +258,7 @@ export default function ReleasesPage() {
             Every install prints the exact ref and commit SHA. Hard checksum verification needs the
             upstream repository to publish{" "}
             <code className="rounded border bg-muted px-1 font-mono text-[13px]">SHA256SUMS</code>{" "}
-            per release tag — until then, pin with{" "}
+            per release tag. Until then, pin with{" "}
             <code className="rounded border bg-muted px-1 font-mono text-[13px]">
               BREACHPILOT_SHA256
             </code>
@@ -274,7 +274,7 @@ export default function ReleasesPage() {
                 Never miss a release
               </h2>
               <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                Watch the upstream repository for releases only — security fixes ship as stable tags.
+                Watch the upstream repository for releases only. Security fixes ship as stable tags.
               </p>
             </div>
             <a
@@ -295,8 +295,8 @@ export default function ReleasesPage() {
           <ShieldCheck className="h-5 w-5 shrink-0 text-muted-foreground" aria-hidden />
           <p className="text-sm leading-6 text-muted-foreground">
             <span className="font-semibold text-foreground">Authorized testing only.</span> Release
-            tooling is for systems you own or have explicit permission to test. Every version —
-            stable or edge — carries the same scope and authorization requirements.
+            tooling is for systems you own or have explicit permission to test. Every version,
+            stable or edge, carries the same scope and authorization requirements.
           </p>
         </aside>
       </main>

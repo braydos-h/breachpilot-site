@@ -69,13 +69,13 @@ const ROUTING_ROWS = [
   },
   {
     role: "Exploitation",
-    does: "Selects capabilities and drafts payloads for operator-approved targets",
+    does: "Selects capabilities and drafts payloads for targets the operator approved",
     note: "Benefits from precise instruction following",
   },
   {
     role: "Peer consult",
     does: "Second opinion on findings and strategy",
-    note: "Advisory only — no tools, no execution",
+    note: "Advisory only, no tools, no execution",
   },
   {
     role: "Titling",
@@ -90,7 +90,7 @@ export default function ProvidersPage() {
       <PageHero
         eyebrow="AI providers"
         title="One contract. Any backend. You choose where inference runs."
-        lede="Every chat and generate call goes through the ModelClient contract and a provider registry. Engine code never talks to a vendor SDK — swap Ollama, OpenCode Go, or ChatGPT in config and your runs, memory, and reports keep working unchanged."
+        lede="Every chat and generate call goes through the ModelClient contract and a provider registry. Engine code never talks to a vendor SDK. Swap Ollama, OpenCode Go, or ChatGPT in config and your runs, memory, and reports keep working unchanged."
       >
         <div className="mt-6 flex flex-wrap items-center gap-2">
           <Badge>
@@ -138,7 +138,7 @@ export default function ProvidersPage() {
         <SectionHeading
           eyebrow={`${PROVIDERS.length} backends · one contract`}
           title="Provider catalog"
-          lede="Pick the backend that fits your lab. Each card shows the config keys it reads and where its secret lives — always the environment, never the config file."
+          lede="Pick the backend that fits your lab. Each card shows the config keys it reads and where its secret lives: always the environment, never the config file."
           align="left"
         />
         <ul className="mt-8 grid gap-4 lg:grid-cols-3" aria-label="Supported AI providers">
@@ -202,7 +202,7 @@ export default function ProvidersPage() {
           <SectionHeading
             eyebrow="Architecture"
             title="Your run never touches a vendor SDK"
-            lede="Every backend behavior lives inside its adapter. The planner, swarm, and memory layers only ever see one stable interface — so a provider swap is a config change, not a code change."
+            lede="Every backend behavior lives inside its adapter. The planner, swarm, and memory layers only ever see one stable interface. A provider swap is a config change, not a code change."
             align="left"
           />
           <ol className="mt-8 grid gap-4 md:grid-cols-3" aria-label="How provider calls flow">
@@ -210,7 +210,7 @@ export default function ProvidersPage() {
               {
                 step: "1",
                 title: "Run asks for a role",
-                body: "Planning, exploit drafting, peer consult, or titling requests a named role — not a vendor.",
+                body: "Planning, exploit drafting, peer consult, or titling requests a named role, not a vendor.",
               },
               {
                 step: "2",
@@ -241,7 +241,7 @@ export default function ProvidersPage() {
               </h3>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
                 Run planning on your strongest model, titling on the cheapest, and peer consult on a
-                different family for a genuine second opinion. Consulted models receive no tool
+                different family for a second opinion. Consulted models receive no tool
                 schemas and cannot execute anything.
               </p>
             </Card>
@@ -251,8 +251,8 @@ export default function ProvidersPage() {
               </h3>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
                 Semantic memory and skill matching embed over a local model on your own host by
-                default. Disable embeddings entirely to fall back to keyword storage — zero network,
-                zero secret reads.
+                default. Disable embeddings entirely to fall back to keyword storage, with zero network
+                traffic and zero secret reads.
               </p>
             </Card>
           </div>
@@ -264,7 +264,7 @@ export default function ProvidersPage() {
         <SectionHeading
           eyebrow="Routing"
           title="Give each job the right brain"
-          lede="One provider for everything works. Splitting roles across models works better — and peer consult stays safely advisory either way."
+          lede="One provider for everything works. Splitting roles across models works better, and peer consult stays advisory either way."
           align="left"
         />
         <div
@@ -302,7 +302,7 @@ export default function ProvidersPage() {
           <SectionHeading
             eyebrow="Secrets"
             title="Secrets live in the environment. Full stop."
-            lede="Config files are shareable, diffable, and committable — so they must never contain a key. Each provider declares which variable it reads, and BreachPilot refuses to accept secrets any other way."
+            lede="Config files are shareable, diffable, and committable, so they must never contain a key. Each provider declares which variable it reads, and BreachPilot refuses to accept secrets any other way."
             align="left"
           />
           <div className="mt-8 grid gap-4 lg:grid-cols-2">
@@ -325,18 +325,18 @@ export default function ProvidersPage() {
                 ))}
               </ul>
               <p className="mt-4 border-t pt-3 text-sm leading-6 text-muted-foreground">
-                If a key ever lands in a config file, log, or shared snippet by mistake — rotate it.
+                If a key ever lands in a config file, log, or shared snippet by mistake, rotate it.
                 Treat the config as public.
               </p>
             </Card>
             <div>
               <CodeSnippet
-                title="config.yaml — provider selection"
+                title="config.yaml provider selection"
                 code={`models:\n  provider: opencode_go   # ollama | opencode_go | chatgpt\nproviders:\n  opencode_go:\n    api_key_env: OPENCODE_GO_API_KEY   # env-only, never in config`}
               />
               <ol className="mt-4 space-y-2.5" aria-label="Setup steps">
                 {[
-                  "Export the key in your shell — never paste it into config.yaml.",
+                  "Export the key in your shell. Never paste it into config.yaml.",
                   "Set models.provider to the backend you want for this lab.",
                   "Restart the run and confirm the router resolves each role.",
                 ].map((step, i) => (
@@ -387,7 +387,7 @@ export default function ProvidersPage() {
             </h2>
             <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
               Begin on a local backend for authorized lab work, then point the same contract at a
-              hosted model for harder targets — always within scope, always operator supervised.
+              hosted model for harder targets. Always within scope, always operator supervised.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">

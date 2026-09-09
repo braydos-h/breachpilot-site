@@ -14,7 +14,7 @@ export const metadata: Metadata = routeMetadata("/install", {
 });
 
 const ESSENTIAL: Array<[string, string, string]> = [
-  ["Python", "3.11+", "CI matrix 3.11–3.13; --doctor rejects older. python --version to check."],
+  ["Python", "3.11+", "CI matrix 3.11 to 3.13; --doctor rejects older. python --version to check."],
   ["nmap", "on PATH or nmap.path", "Linux -O/-sS need root (nmap.sudo with sudo -n) or priv_fallback auto-downgrade."],
   ["Model endpoint", "Ollama Cloud (default) or local", "Cloud needs OLLAMA_API_KEY; embeddings stay local via ollama.embed_host."],
 ];
@@ -42,13 +42,13 @@ const VERIFY_STEPS = [
     icon: Stethoscope,
     title: "Doctor",
     cmd: "bp --doctor",
-    blurb: "Environment check — Python, nmap, model endpoint. Expect all [OK] before your first run.",
+    blurb: "Environment check for Python, nmap, and the model endpoint. Expect all [OK] before your first run.",
   },
   {
     icon: CheckCircle2,
     title: "Self-test",
     cmd: "bp --self-test",
-    blurb: "Safe localhost-only smoke test. No external traffic, safe to run anywhere.",
+    blurb: "Localhost-only smoke test. No external traffic, safe to run anywhere.",
   },
 ] as const;
 
@@ -84,7 +84,7 @@ export default function InstallPage() {
       <PageHero
         eyebrow="Install"
         title="Install BreachPilot in minutes"
-        lede="Linux is the primary platform, macOS and Windows are supported. The review-first flow below is recommended — the one-liner picker is an optional shortcut for scripts you have already read."
+        lede="Linux is the primary platform, macOS and Windows are supported. The review-first flow below is recommended. The one-liner picker is an optional shortcut for scripts you have already read."
       >
         <div className="mt-6 flex flex-wrap items-center gap-2">
           <Badge>Linux · primary</Badge>
@@ -94,7 +94,7 @@ export default function InstallPage() {
         <div className="mt-6 max-w-2xl">
           <InstallTabs compact />
           <p className="mt-3 text-sm text-muted-foreground">
-            For authorized testing only — only test systems you own or have explicit written permission to assess.{" "}
+            For authorized testing only. Only test systems you own or have explicit written permission to assess.{" "}
             <Link href="/safety" className="font-medium text-foreground underline underline-offset-4">Safety model →</Link>
           </p>
         </div>
@@ -157,7 +157,7 @@ export default function InstallPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Post-install</p>
           <h2 id="verify" className="mt-2 text-2xl font-semibold tracking-tight">Verify before your first run</h2>
           <p className="mt-2 max-w-2xl text-[15px] leading-7 text-muted-foreground">
-            Four commands, in order. Each step is safe to run locally — stop at the first one that fails and check the requirements below.
+            Four commands, in order. Each step is safe to run locally. Stop at the first one that fails and check the requirements below.
           </p>
           <ol className="mt-5 grid gap-4 sm:grid-cols-2">
             {VERIFY_STEPS.map((s, i) => (
@@ -184,10 +184,10 @@ export default function InstallPage() {
           <h2 id="prereqs" className="mt-2 text-2xl font-semibold tracking-tight">What you need first</h2>
           <h3 className="mt-6 font-semibold tracking-tight">Essential</h3>
           <p className="mt-1 text-sm leading-6 text-muted-foreground">
-            Install these first — <code className="rounded border bg-muted px-1 font-mono text-[13px]">bp --doctor</code> fails without them.
+            Install these first. <code className="rounded border bg-muted px-1 font-mono text-[13px]">bp --doctor</code> fails without them.
           </p>
           <RequirementsTable caption="Essential requirements" rows={ESSENTIAL} />
-          <h3 className="mt-8 font-semibold tracking-tight">Optional — skip if WebUI-only</h3>
+          <h3 className="mt-8 font-semibold tracking-tight">Optional, skip if WebUI only</h3>
           <p className="mt-1 text-sm leading-6 text-muted-foreground">
             Needed for sandboxing, the WebUI build, and full tool coverage. Safe to add later.
           </p>
@@ -198,7 +198,7 @@ export default function InstallPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">First lab run</p>
           <h2 id="first-run" className="mt-2 text-2xl font-semibold tracking-tight">Prove it on localhost</h2>
           <p className="mt-2 max-w-2xl text-[15px] leading-7 text-muted-foreground">
-            Authorized testing only — run against a local lab target you own, never against hosts you do not own or
+            Authorized testing only. Run against a local lab target you own, never against hosts you do not own or
             lack explicit written permission to assess. See the{" "}
             <Link href="/safety" className="font-medium text-foreground underline underline-offset-4">safety model</Link>.
           </p>

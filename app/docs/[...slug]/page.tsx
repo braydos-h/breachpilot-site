@@ -35,7 +35,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const bodyExcerpt = excerpt(doc.body);
   return {
     title: doc.title,
-    description: bodyExcerpt || `BreachPilot docs: ${doc.title} — generated from the repository (${slug}.md).`,
+    description: bodyExcerpt || `BreachPilot docs: ${doc.title}. Generated from the repository (${slug}.md).`,
     alternates: { canonical: `${SITE.url}/docs/${slug}` },
     openGraph: { url: `${SITE.url}/docs/${slug}` },
   };

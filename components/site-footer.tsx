@@ -23,7 +23,7 @@ export function SiteFooter() {
             </p>
           </div>
           {FOOTER_COLS.map((col) => (
-            <nav key={col.title} aria-label={`Footer — ${col.title}`}>
+            <nav key={col.title} aria-label={`Footer: ${col.title}`}>
               <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                 {col.title}
               </h2>

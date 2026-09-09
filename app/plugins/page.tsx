@@ -33,7 +33,7 @@ import { PLUGINS, SITE } from "@/lib/site";
 export const metadata: Metadata = routeMetadata("/plugins", {
   title: "Plugins",
   description:
-    "BreachPilot extensions: Shodan, GitHub dorks, webhooks, Sliver C2, BloodHound CE, OWASP ZAP, browser, mobile, wireless, SpiderFoot, Atomic Red Team, Caldera, firmware and SNMP — without forking core.",
+    "BreachPilot extensions: Shodan, GitHub dorks, webhooks, Sliver C2, BloodHound CE, OWASP ZAP, browser, mobile, wireless, SpiderFoot, Atomic Red Team, Caldera, firmware and SNMP. No core fork required.",
 });
 
 function isAdvisory(purpose: string): boolean {
@@ -131,7 +131,7 @@ export default function PluginsPage() {
       <PageHero
         eyebrow="Extensibility"
         title="Extend without forking core"
-        lede="Plugins are opt-in, trusted Python managed by tools/plugins.py: a plugin.yaml manifest plus a single register(registry) hook contributing attack modules, MCP tools, skill directories and config sections. Target-touching plugin tools carry the same allowlist lock and audit trail as core tools."
+        lede="Plugins are opt-in, trusted Python managed by tools/plugins.py: a plugin.yaml manifest plus a single register(registry) hook that contributes attack modules, MCP tools, skill directories and config sections. Target-touching plugin tools carry the same allowlist lock and audit trail as core tools."
       >
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Link
@@ -168,7 +168,7 @@ export default function PluginsPage() {
           </div>
         </dl>
         <p className="mt-6 max-w-2xl text-sm leading-6 text-muted-foreground">
-          For authorized testing only — only run plugins against systems you own or have explicit written
+          For authorized testing only. Only run plugins against systems you own or have explicit written
           permission to assess.
         </p>
       </PageHero>
@@ -177,7 +177,7 @@ export default function PluginsPage() {
         <SectionHeading
           eyebrow={`${totalCount} opt-in extensions`}
           title="Plugin catalog"
-          lede="Every plugin is disabled by default. Target-touching plugin tools carry the same allowlist lock and audit trail as core tools."
+          lede="Every plugin is disabled by default. When you enable one, its target-touching tools carry the same allowlist lock and audit trail as core tools."
           align="left"
         />
         <div id="catalog-heading" className="sr-only">
@@ -198,7 +198,7 @@ export default function PluginsPage() {
                 id="plugin-search"
                 type="search"
                 autoComplete="off"
-                placeholder="Search by name or capability — try “c2”, “osint”, “firmware”…"
+                placeholder='Search by name or capability: try "c2", "osint", "firmware"...'
                 className="w-full rounded-md border bg-background py-2 pl-9 pr-3 text-sm placeholder:text-muted-foreground/70"
               />
             </div>
@@ -296,7 +296,7 @@ export default function PluginsPage() {
             <ShieldCheck className="h-4 w-4" aria-hidden /> What “advisory-only” means
           </h2>
           <p className="mt-1">
-            Advisory-only plugins enrich your assessment without touching the target — passive OSINT and
+            Advisory-only plugins add context without touching the target. Passive OSINT and
             code-leak discovery that never sends packets to in-scope systems. They still run under the same
             audit trail, and anything active still needs explicit authorization and allowlist scope. See{" "}
             <Link
@@ -346,7 +346,7 @@ export default function PluginsPage() {
               {
                 icon: Power,
                 title: "3. Stay off until enabled",
-                body: "Every plugin ships disabled — operators opt in per engagement, never by default.",
+                body: "Every plugin ships disabled. Operators opt in per engagement, never by default.",
               },
               {
                 icon: Lock,
@@ -374,7 +374,7 @@ export default function PluginsPage() {
         <SectionHeading
           eyebrow="For authors"
           title="Safety checklist for plugin authors"
-          lede="Authorized testing only — plugins must hold the same line as core. Hard-blocked capabilities stay blocked, no matter how useful they look."
+          lede="Authorized testing only. Plugins must hold the same line as core. Hard-blocked capabilities stay blocked, no matter how useful they look."
           align="left"
         />
         <h2 id="checklist-heading" className="sr-only">
@@ -383,7 +383,7 @@ export default function PluginsPage() {
         <ul className="mt-8 grid gap-4 sm:grid-cols-2">
           {[
             "Stack the allowlist / audit decorators on every plugin MCP tool.",
-            "Respect the target lock — never expand scope from inside a plugin.",
+            "Respect the target lock. Never expand scope from inside a plugin.",
             "Redact secrets in logs, tool output and error paths.",
             "Add focused tests for each new tool and config section.",
           ].map((item) => (
@@ -423,7 +423,7 @@ export default function PluginsPage() {
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight">Prototype on an authorized lab first</h2>
             <p className="mt-3 max-w-2xl text-[15px] leading-7 text-muted-foreground">
-              Build against systems you own, keep secrets in environment variables — never in config — and
+              Build against systems you own, keep secrets in environment variables (never in config), and
               open a PR when the tests pass.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -463,7 +463,7 @@ export default function PluginsPage() {
             </div>
             <div>
               <p className="text-sm leading-6 text-muted-foreground">
-                Plugins extend what BreachPilot can do — not what it is allowed to do. Scope, allowlists and
+                Plugins extend what BreachPilot can do, not what it is allowed to do. Scope, allowlists and
                 audit apply to every plugin tool, every run. Read the{" "}
                 <Link href="/safety" className="font-medium text-foreground underline underline-offset-4">
                   safety model

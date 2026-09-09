@@ -80,7 +80,7 @@ export function InstallTabs({ compact = false }: { compact?: boolean }) {
       <p className="mt-3 text-sm text-muted-foreground">
         {compact ? (
           <>
-            Quick install above is optional — recommended:{" "}
+            Quick install above is optional. Recommended:{" "}
             <a href={reviewHref(os)} className="font-medium text-foreground underline underline-offset-4">
               Review installer before running →
             </a>

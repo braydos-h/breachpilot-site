@@ -57,7 +57,7 @@ function SafetyStrip() {
           </div>
           <div>
             <p className="text-sm leading-6 text-muted-foreground">
-              BreachPilot is an assessment tool for your own labs and engagements — scope-gated,
+              BreachPilot is an assessment tool for your own labs and engagements. Scope-gated,
               allowlist-locked, and audited.
             </p>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
@@ -87,7 +87,7 @@ export default function PrivacyPage() {
       <PageHero
         eyebrow="Privacy"
         title="As little data as possible"
-        lede="This site is a static document, not a service. There are no accounts, no analytics, and no tracking scripts — what little state exists stays in your browser, and every other request is one you choose to make."
+        lede="This site is a static document, not a service. There are no accounts, no analytics, and no tracking scripts. What little state exists stays in your browser, and every other request is one you choose to make."
       >
         <div className="mt-6 flex flex-wrap gap-2">
           <Badge>
@@ -120,7 +120,7 @@ export default function PrivacyPage() {
                 <ShieldCheck className="mt-1 h-5 w-5 shrink-0 text-foreground" aria-hidden />
                 <p>
                   If privacy-preserving measurement is ever added here, it will be documented
-                  on this page first — what it records, why, and how to opt out. Until then,
+                  on this page first: what it records, why, and how to opt out. Until then,
                   assume the answer is nothing.
                 </p>
               </div>
@@ -176,11 +176,11 @@ export default function PrivacyPage() {
                 What we never do
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-6 text-muted-foreground">
-                <li>We never sell, share, or broker browsing data — there is none to share.</li>
+                <li>We never sell, share, or broker browsing data. There is none to share.</li>
                 <li>We never fingerprint your browser or join your visit to another session.</li>
                 <li>We never load third-party fonts, tag managers, or social widgets.</li>
                 <li>
-                  We never see your assessment targets, findings, or reports — the tool
+                  We never see your assessment targets, findings, or reports. The tool
                   itself runs locally, and this site could not observe it if it tried.
                 </li>
               </ul>

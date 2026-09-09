@@ -41,20 +41,20 @@ const PIPELINE_NODES: GraphNode[] = [
 ];
 
 const LAYERS: Array<{ name: string; desc: string; tag: string }> = [
-  { name: "Operator", desc: "Starts runs, sets scope, approves gated actions. The only authority — nothing executes without an allowlisted target.", tag: "human" },
+  { name: "Operator", desc: "Starts runs, sets scope, approves gated actions. The only authority. Nothing executes without an allowlisted target.", tag: "human" },
   { name: "Planner", desc: "Resolves goals into an AttackPlan DAG, resolves policy gates, and sequences hypotheses.", tag: "control" },
-  { name: "Agent", desc: "Flow A loop: hypothesize, execute, validate. Every tool call passes the policy gate first.", tag: "control" },
-  { name: "MCP Tool Layer", desc: `${META.mcpTools ?? "120+"} tools across ${META.toolFamilies ?? "33"} families. Every tool carries @audit_tool + @require_allowlist — no allowlist entry, no execution.`, tag: "enforced" },
+  { name: "Agent", desc: "Flow A loop: hypothesize, execute, validate. Every tool call goes through the policy gate first.", tag: "control" },
+  { name: "MCP Tool Layer", desc: `${META.mcpTools ?? "120+"} tools across ${META.toolFamilies ?? "33"} families. Every tool carries @audit_tool + @require_allowlist. No allowlist entry means no execution.`, tag: "enforced" },
   { name: "Sandbox", desc: "Disposable worker locked to the target IP. Fail-closed DROP on anything outside scope.", tag: "enforced" },
-  { name: "Evidence", desc: "Execution outcome vs evidential outcome stay separate — OutcomeJudge records what was proven, not just what ran.", tag: "proven" },
-  { name: "Verification", desc: "Validation scoring per claim: CONFIRMED, REFUTED, or EXHAUSTED — with oracle probes and scoring rationale.", tag: "proven" },
+  { name: "Evidence", desc: "Execution outcome and evidential outcome stay separate. OutcomeJudge records what the run proved.", tag: "proven" },
+  { name: "Verification", desc: "Validation scoring per claim: CONFIRMED, REFUTED, or EXHAUSTED, with oracle probes and scoring rationale.", tag: "proven" },
   { name: "Report", desc: "Markdown and HTML with timeline, CVSS, and MITRE export, sealed by a SHA-256 audit chain.", tag: "proven" },
 ];
 
 const FLOW_STEPS: Array<{ step: string; title: string; desc: string }> = [
-  { step: "Scope", title: "Allowlist first", desc: "Operator declares targets. The sandbox locks to those IPs — everything else drops, fail-closed." },
-  { step: "Plan", title: "DAG, not a script", desc: "Planner builds an AttackPlan DAG of testable hypotheses, each tagged with its policy gate." },
-  { step: "Execute", title: "Gated tool calls", desc: "Agent runs MCP tools inside the sandbox. Gated and high-risk actions pause for operator approval." },
+  { step: "Scope", title: "Allowlist first", desc: "Operator declares targets. The sandbox locks to those IPs. Everything else drops, fail-closed." },
+  { step: "Plan", title: "DAG of hypotheses", desc: "Planner builds an AttackPlan DAG of testable hypotheses, each tagged with its policy gate." },
+  { step: "Execute", title: "Gated tool calls", desc: "The agent runs MCP tools inside the sandbox. Gated and high-risk actions pause for operator approval." },
   { step: "Judge", title: "Separate signal from noise", desc: "OutcomeJudge splits execution output from evidential outcome, so a crashed tool never becomes a finding." },
   { step: "Verify", title: "Prove or refute", desc: "Oracle probes re-test each claim. Only CONFIRMED findings ship; REFUTED and EXHAUSTED stay in the log." },
   { step: "Report", title: "Sealed output", desc: "Timeline, CVSS, and MITRE-mapped report with a SHA-256 audit chain from plan to finding." },
@@ -80,7 +80,7 @@ function SafetyStrip({ className = "" }: { className?: string }) {
     <p className={`flex items-center gap-1.5 text-sm text-muted-foreground ${className}`}>
       <ShieldAlert className="h-3.5 w-3.5 shrink-0" aria-hidden />
       <span>
-        Authorized testing only — every action is allowlist-gated and audited.{" "}
+        Authorized testing only. Every action is allowlist-gated and audited.{" "}
         <Link href="/safety" className="underline underline-offset-4 hover:text-foreground">
           Safety model
         </Link>
@@ -95,7 +95,7 @@ export default function ArchitecturePage() {
       <PageHero
         eyebrow="Architecture"
         title="Local-first engine, operator-supervised at every gate"
-        lede="One supervised pipeline — plan, execute, prove, report — over a target-locked tool layer. Your data stays in your lab; only your approvals move the run forward. For authorized testing only."
+        lede="One supervised pipeline (plan, execute, prove, report) over a target-locked tool layer. Your data stays in your lab. Only your approvals move the run forward. For authorized testing only."
       >
         <p className="mt-5 inline-flex max-w-full items-center gap-2 overflow-x-auto rounded-full border bg-background px-3 py-1 font-mono text-xs text-muted-foreground">
           <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" aria-hidden />
@@ -137,7 +137,7 @@ export default function ArchitecturePage() {
           align="left"
           eyebrow="Layers"
           title="The stack, top to bottom"
-          lede="Authority flows down, evidence flows up. The enforcement line between planning and execution is where scope becomes physics: no allowlist entry, no packets."
+          lede="Authority flows down, evidence flows up. The enforcement line between planning and execution turns scope into physics: no allowlist entry, no packets."
         />
         <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_1.15fr]">
           <div aria-label="Layer stack diagram">
@@ -191,7 +191,7 @@ export default function ArchitecturePage() {
             align="left"
             eyebrow="Data flow"
             title="How one finding gets made"
-            lede="Six stages from scope to sealed report. Each stage has one job — and refuses to do the next stage's job."
+            lede="Six stages from scope to sealed report. Each stage does its own job and leaves the next one alone."
           />
           <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {FLOW_STEPS.map((f, i) => (
@@ -222,8 +222,8 @@ export default function ArchitecturePage() {
               <HardDrive className="h-4 w-4" aria-hidden /> Local-first
             </p>
             <ul className="mt-3 space-y-2.5 text-sm leading-6 text-muted-foreground">
-              <li className="flex gap-2"><Database className="mt-1 h-4 w-4 shrink-0" aria-hidden /> Runs, evidence, and memory live on your machine — serve the WebUI on localhost (default port {SITE.webuiDefaultPort}).</li>
-              <li className="flex gap-2"><FileCheck2 className="mt-1 h-4 w-4 shrink-0" aria-hidden /> Reports generate locally as Markdown and HTML with a SHA-256 audit chain — no cloud round-trip required.</li>
+              <li className="flex gap-2"><Database className="mt-1 h-4 w-4 shrink-0" aria-hidden /> Runs, evidence, and memory live on your machine. Serve the WebUI on localhost (default port {SITE.webuiDefaultPort}).</li>
+              <li className="flex gap-2"><FileCheck2 className="mt-1 h-4 w-4 shrink-0" aria-hidden /> Reports generate locally as Markdown and HTML with a SHA-256 audit chain. No cloud round-trip required.</li>
               <li className="flex gap-2"><Brain className="mt-1 h-4 w-4 shrink-0" aria-hidden /> {META.skills ?? "140+"} advisory skills and semantic memory are file-backed and inspectable in your workspace.</li>
             </ul>
           </Card>
@@ -233,7 +233,7 @@ export default function ArchitecturePage() {
             </p>
             <ul className="mt-3 space-y-2.5 text-sm leading-6 text-muted-foreground">
               <li className="flex gap-2"><ShieldCheck className="mt-1 h-4 w-4 shrink-0" aria-hidden /> You set scope; the sandbox enforces it. Out-of-scope destinations drop, fail-closed.</li>
-              <li className="flex gap-2"><UserCheck className="mt-1 h-4 w-4 shrink-0" aria-hidden /> Gated and high-impact actions pause with full context — approve or deny from the WebUI.</li>
+              <li className="flex gap-2"><UserCheck className="mt-1 h-4 w-4 shrink-0" aria-hidden /> Gated and high-impact actions pause with full context. Approve or deny from the WebUI.</li>
               <li className="flex gap-2"><FileCheck2 className="mt-1 h-4 w-4 shrink-0" aria-hidden /> Every approval, tool call, and verdict lands in the audit log. Authorized testing only.</li>
             </ul>
           </Card>
@@ -264,7 +264,7 @@ export default function ArchitecturePage() {
             align="left"
             eyebrow="Alongside every run"
             title="Orchestration, memory, and models"
-            lede="Three systems ride alongside the pipeline: specialists that parallelize the work, memory that carries lessons forward, and a provider layer behind one contract."
+            lede="Three systems run next to the pipeline: specialists that split up the work, memory that carries lessons forward, and a provider layer behind one contract."
           />
           <div className="mt-8 grid gap-8 lg:grid-cols-2">
             <div>
@@ -288,7 +288,7 @@ export default function ArchitecturePage() {
             </div>
             <div className="space-y-6">
               <div>
-                <h3 className="font-semibold tracking-tight">Provider layer — one contract</h3>
+                <h3 className="font-semibold tracking-tight">Provider layer: one contract</h3>
                 <ul className="mt-4 space-y-2.5">
                   {PROVIDERS.map((p) => (
                     <li key={p.id} className="rounded-lg border bg-card px-4 py-3">
@@ -302,8 +302,8 @@ export default function ArchitecturePage() {
               <Card className="p-5">
                 <h3 className="text-[15px] font-semibold tracking-tight">Skills + memory</h3>
                 <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                  {META.skills ?? "140+"} advisory skills guide planning without executing anything themselves;
-                  semantic and experience memory carry fingerprints, layouts, and lessons across runs — all on disk, all inspectable.
+                  {META.skills ?? "140+"} advisory skills guide planning without executing anything;
+                  semantic and experience memory carry fingerprints, layouts, and lessons across runs. All on disk, all inspectable.
                 </p>
               </Card>
             </div>
