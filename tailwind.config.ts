@@ -30,6 +30,8 @@ const config: Config = {
         "dash-flow": { to: { strokeDashoffset: "-24" } },
         "node-pulse": { "0%, 100%": { opacity: "0.4" }, "50%": { opacity: "1" } },
         scanline: { "0%": { transform: "translateY(-100%)", opacity: "0" }, "10%": { opacity: "0.6" }, "90%": { opacity: "0.6" }, "100%": { transform: "translateY(100%)", opacity: "0" } },
+        heartbeat: { "0%, 100%": { transform: "scale(1)", opacity: "1" }, "50%": { transform: "scale(1.4)", opacity: "0.65" } },
+        "scan-hero": { "0%": { top: "-6rem", opacity: "0" }, "8%": { opacity: "1" }, "92%": { opacity: "1" }, "100%": { top: "100%", opacity: "0" } },
         "typing-caret": { "0%, 100%": { opacity: "1" }, "50%": { opacity: "0" } },
       },
       animation: {
@@ -38,6 +40,8 @@ const config: Config = {
         "dash-flow": "dash-flow 1.2s linear infinite",
         "node-pulse": "node-pulse 2s ease-in-out infinite",
         scan: "scanline 6s linear infinite",
+        "scan-hero": "scan-hero 9s linear infinite",
+        heartbeat: "heartbeat 2.4s ease-in-out infinite",
         "typing-caret": "typing-caret 0.8s step-end infinite",
       },
     },

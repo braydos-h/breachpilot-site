@@ -147,6 +147,16 @@
   .scrollbar-thin::-webkit-scrollbar-track {
     background: transparent;
   }
+  /* Blocked-row RGB split: hover/focus only, subtle 1px offsets.
+     Gated on no-preference so reduced-motion users never see it. */
+  @media (prefers-reduced-motion: no-preference) {
+    .rgb-split:hover,
+    .rgb-split:focus-within {
+      text-shadow:
+        1px 0 0 hsl(var(--destructive) / 0.6),
+        -1px 0 0 hsl(190 90% 50% / 0.6);
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -157,7 +167,9 @@
     .animate-fade-in,
     .animate-dash-flow,
     .animate-node-pulse,
-    .animate-typing-caret {
+    .animate-typing-caret,
+    .animate-heartbeat,
+    .animate-scan-hero {
       animation: none !important;
     }
     .transition-all,

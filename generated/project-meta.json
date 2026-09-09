@@ -1,29 +1,29 @@
 {
   "version": "0.68.4",
-  "commit": "dc2cb0f219e26e5432fe1eadfa186f528b744cbb",
-  "commitShort": "dc2cb0f219e2",
-  "commitDate": "2026-09-09T12:39:48+09:30",
-  "describe": "beta-573-gdc2cb0f",
+  "commit": "b942b9a5994fb68a3c556ed1e611448fc1035b83",
+  "commitShort": "b942b9a5994f",
+  "commitDate": "2026-09-09T12:50:17+09:30",
+  "describe": "beta-574-gb942b9a",
   "latestTag": "v0.49.2",
   "versionTags": [
     "v0.49.2"
   ],
   "staticRoutes": {
-    "": "2026-09-08T14:14:09+09:30",
-    "/features": "2026-09-08T14:14:09+09:30",
-    "/features/swarm": "2026-09-08T14:14:09+09:30",
-    "/architecture": "2026-09-08T14:14:09+09:30",
-    "/providers": "2026-09-08T14:14:09+09:30",
-    "/plugins": "2026-09-08T14:14:09+09:30",
-    "/benchmarks": "2026-09-08T14:14:09+09:30",
-    "/safety": "2026-09-08T14:14:09+09:30",
-    "/install": "2026-09-08T14:14:09+09:30",
+    "": "2026-09-09T12:49:04+09:30",
+    "/features": "2026-09-09T12:49:04+09:30",
+    "/features/swarm": "2026-09-09T12:49:04+09:30",
+    "/architecture": "2026-09-09T12:49:04+09:30",
+    "/providers": "2026-09-09T12:49:04+09:30",
+    "/plugins": "2026-09-09T12:49:04+09:30",
+    "/benchmarks": "2026-09-09T12:49:04+09:30",
+    "/safety": "2026-09-09T12:49:04+09:30",
+    "/install": "2026-09-09T12:49:04+09:30",
     "/docs": "2026-09-08T14:14:09+09:30",
-    "/contributing": "2026-09-08T14:14:09+09:30",
-    "/security": "2026-09-08T14:14:09+09:30",
-    "/privacy": "2026-09-08T14:14:09+09:30",
-    "/legal": "2026-09-08T14:14:09+09:30",
-    "/releases": "2026-09-09T09:06:23+09:30"
+    "/contributing": "2026-09-09T12:49:04+09:30",
+    "/security": "2026-09-09T12:49:04+09:30",
+    "/privacy": "2026-09-09T12:49:04+09:30",
+    "/legal": "2026-09-09T12:49:04+09:30",
+    "/releases": "2026-09-09T12:49:04+09:30"
   },
   "skills": 139,
   "plugins": 14,
@@ -43,6 +43,6 @@
     "docDates": "git log -1 --format=%cI per docs file, else synced copy mtime"
   },
   "source": "adjacent BreachPilot checkout",
-  "generatedAt": "2026-09-09T03:17:11.303Z",
+  "generatedAt": "2026-09-09T03:34:00.094Z",
   "stale": false
 }

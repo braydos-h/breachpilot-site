@@ -30,17 +30,20 @@ const tagHead = tagParts[0] ?? SITE.tagline;
 const tagTail = tagParts.slice(1).join(". ");
 
 export default function HomePage() {
+  const shots = screenshotAvailability();
+  const hasShots = Object.values(shots).some(Boolean);
   return (
     <div>
       {/* hero */}
       <section aria-label="Introduction" className="bg-grid relative overflow-hidden border-b">
         <div className="bg-radial-fade pointer-events-none absolute inset-0" aria-hidden />
+        <div className="animate-scan-hero pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-transparent via-foreground/[0.06] to-transparent" aria-hidden />
         <div className="relative mx-auto max-w-6xl px-4 pb-12 pt-12 sm:px-6 sm:pt-16">
           <div className="mx-auto max-w-3xl text-center">
             <p className="inline-flex rounded-full border bg-background px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
               Open source · {SITE.license} · Local-first
             </p>
-            <h1 className="mt-4 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="mt-4 text-[32px] font-semibold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
               {tagHead}. {tagTail ? <span className="text-gradient">{tagTail}</span> : null}
             </h1>
             <Typewriter />
@@ -157,14 +160,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* real screenshots — placeholders until public/screenshots/ is populated */}
+      {/* real screenshots — coming-soon block until public/screenshots/ is populated */}
       <section aria-label="Screenshots" className="mx-auto max-w-6xl border-t px-4 py-16 sm:px-6 sm:py-20">
         <SectionHeading
           eyebrow="Screenshots"
-          title="The real WebUI"
-          lede="Console captures from a local lab run — not mockups."
+          title={hasShots ? "The real WebUI" : "The real WebUI — captures coming soon"}
+          lede={
+            hasShots
+              ? "Console captures from a local lab run — not mockups."
+              : "Real console captures from a local lab run are on the way — not mockups."
+          }
         />
-        <Screenshots available={screenshotAvailability()} />
+        <Screenshots available={shots} />
       </section>
 
       {/* safety strip */}

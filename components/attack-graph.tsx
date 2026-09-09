@@ -135,7 +135,7 @@ export function AttackGraph({ nodes = DEFAULT_NODES }: { nodes?: GraphNode[] }) 
             >
               {String(i + 1).padStart(2, "0")}
             </span>
-            <span className={cn("flex-1 rounded-lg border p-2.5", nodeStyles(n.state))}>
+            <span className={cn("min-w-0 flex-1 rounded-lg border p-2.5", nodeStyles(n.state))}>
               <span className="block text-[13px] font-semibold leading-4">{n.label}</span>
               {n.sub && <span className="mt-0.5 block font-mono text-xs text-muted-foreground">{n.sub}</span>}
             </span>

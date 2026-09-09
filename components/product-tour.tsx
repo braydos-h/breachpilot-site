@@ -54,7 +54,10 @@ export function ProductTour({ initial = "live-run" }: { initial?: string }) {
 
   return (
     <div className="mt-10">
-      <div className="scrollbar-thin relative -mx-4 overflow-x-auto px-4 pb-2 [mask-image:linear-gradient(to_right,#000_calc(100%-2rem),transparent)] sm:mx-0 sm:px-0">
+      <p className="mb-1 text-right font-mono text-[11px] text-muted-foreground sm:hidden" aria-hidden>
+        swipe to explore →
+      </p>
+      <div className="scrollbar-thin relative -mx-4 overflow-x-auto px-4 pb-2 [mask-image:linear-gradient(to_right,#000_calc(100%-3.5rem),transparent)] sm:mx-0 sm:px-0">
         <div role="tablist" aria-label="Product views" onKeyDown={onKeyDown} className="flex min-w-max gap-2">
           {TOUR_VIEWS.map((v, i) => (
             <button
@@ -81,7 +84,7 @@ export function ProductTour({ initial = "live-run" }: { initial?: string }) {
         </div>
       </div>
       <div className="mt-4 grid gap-4 lg:grid-cols-[1.1fr_1fr]" role="tabpanel" id={`${baseId}-panel`} aria-labelledby={`${baseId}-tab-${active.id}`} tabIndex={0}>
-        <div className="overflow-hidden rounded-xl border bg-card">
+        <div className="min-w-0 overflow-hidden rounded-xl border bg-card">
           <div className="border-b bg-muted/40 px-4 py-2.5 font-mono text-xs font-medium uppercase tracking-wider text-muted-foreground">
             {active.label} · illustrative
           </div>

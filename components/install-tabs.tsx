@@ -77,15 +77,24 @@ export function InstallTabs({ compact = false }: { compact?: boolean }) {
       <div role="tabpanel" id={`${baseId}-panel`} aria-labelledby={`${baseId}-tab-${tab.id}`} tabIndex={0} className="mt-3">
         <CodeSnippet code={cmd} lang={tab.lang} title={tab.title} />
       </div>
-      {!compact && (
-        <p className="mt-3 text-sm text-muted-foreground">
-          Prefer to read it first?{" "}
-          <a href={reviewHref(os)} className="font-medium text-foreground underline underline-offset-4">
-            Review installer before running →
-          </a>{" "}
-          · <a href="/install" className="font-medium text-foreground underline underline-offset-4">Full install guide</a>
-        </p>
-      )}
+      <p className="mt-3 text-sm text-muted-foreground">
+        {compact ? (
+          <>
+            Quick install above is optional — recommended:{" "}
+            <a href={reviewHref(os)} className="font-medium text-foreground underline underline-offset-4">
+              Review installer before running →
+            </a>
+          </>
+        ) : (
+          <>
+            Prefer to read it first?{" "}
+            <a href={reviewHref(os)} className="font-medium text-foreground underline underline-offset-4">
+              Review installer before running →
+            </a>{" "}
+            · <a href="/install" className="font-medium text-foreground underline underline-offset-4">Full install guide</a>
+          </>
+        )}
+      </p>
     </div>
   );
 }

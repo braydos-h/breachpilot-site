@@ -30,15 +30,15 @@ const AGENT_ICONS: Record<AgentIcon, typeof Radar> = {
   Brain,
 };
 
-/** Metrics strip — dividers, not cards. Cells keep a min-width so the strip scrolls instead of crushing. */
+/** Metrics strip — 2-col grid on mobile, 5-col divider strip on sm+. Hairline dividers via gap-px; no min-widths so it never forces page overflow. */
 export function StatsRow() {
   return (
-    <dl className="flex divide-x overflow-x-auto rounded-xl border bg-card shadow-[0_1px_2px_0_hsl(var(--foreground)/0.04)]">
+    <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border bg-border shadow-[0_1px_2px_0_hsl(var(--foreground)/0.04)] sm:grid-cols-5">
       {DERIVED_METRICS.map((s) => {
         const method = methodFor(s.label);
         const methodId = `metric-${s.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
         return (
-          <div key={s.label} className="min-w-[128px] flex-1 px-4 py-5 text-center sm:min-w-[140px] sm:px-5 sm:py-6">
+          <div key={s.label} className="bg-card px-4 py-5 text-center last:col-span-2 sm:px-5 sm:py-6 sm:last:col-span-1">
             <dt className="text-xs text-muted-foreground">{s.label}</dt>
             <dd className="mt-1 text-2xl font-semibold tracking-tight tabular-nums sm:text-3xl" aria-describedby={method ? methodId : undefined}>
               {s.value}
@@ -277,6 +277,34 @@ const SCREENSHOTS = [
 ] as const;
 
 export function Screenshots({ available }: { available: Record<string, boolean> }) {
+  const hasAny = SCREENSHOTS.some((s) => available[s.file]);
+  // No captures yet — compact coming-soon block. Drop PNGs into
+  // public/screenshots/ and the full grid appears with no code change.
+  if (!hasAny) {
+    return (
+      <div className="mx-auto mt-10 max-w-2xl rounded-xl border border-dashed bg-card p-6 text-center sm:p-8">
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">WebUI captures — coming soon</p>
+        <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted-foreground">
+          Real console captures from a local lab run are on the way — not mockups. Meanwhile the
+          mission-control preview and product tour above mirror the live WebUI layout.
+        </p>
+        <p className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Link
+            href="/install"
+            className="inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 sm:w-auto"
+          >
+            Run it locally
+          </Link>
+          <Link
+            href="/features"
+            className="inline-flex w-full items-center justify-center rounded-md border px-5 py-2.5 text-sm font-medium hover:bg-muted sm:w-auto"
+          >
+            Explore features
+          </Link>
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="mt-10 grid gap-4 sm:grid-cols-2">
       {SCREENSHOTS.map((s) => (

@@ -26,14 +26,14 @@ export function MissionControl() {
         </span>
         <span className="ml-2 min-w-0 flex-1 truncate font-mono text-xs text-muted-foreground">breachpilot · live run · lab</span>
         <span className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-foreground/20 bg-background px-2.5 py-0.5 text-xs font-semibold">
-          <StatusDot tone="ok" />
+          <StatusDot tone="ok" className="animate-heartbeat" />
           RUNNING
         </span>
       </div>
 
       <div className="grid md:grid-cols-[1fr_1.1fr]">
         {/* left: target + stages */}
-        <div className="border-b p-5 md:border-b-0 md:border-r md:p-6">
+        <div className="min-w-0 border-b p-5 md:border-b-0 md:border-r md:p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-foreground">
             Target — authorized lab only
           </p>
@@ -66,21 +66,21 @@ export function MissionControl() {
         </div>
 
         {/* right: agent activity + evidence */}
-        <div className="bg-grid-sm p-5 md:p-6">
+        <div className="min-w-0 bg-grid-sm p-5 md:p-6">
           <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-foreground">
             <Activity className="h-3.5 w-3.5" aria-hidden /> Agent activity
           </p>
-          <ul className="mt-2.5 space-y-1.5 font-mono text-[13px] leading-6">
-            <li className="truncate rounded border border-foreground/15 bg-background px-2.5 py-1.5 text-foreground">
+          <ul className="mt-2.5 space-y-1.5 [overflow-wrap:anywhere] font-mono text-[13px] leading-6">
+            <li className="rounded border border-foreground/15 bg-background px-2.5 py-1.5 text-foreground sm:truncate">
               <span className="font-semibold text-foreground/60">recon ›</span> run_full_recon → 443/http open
             </li>
-            <li className="truncate rounded border border-foreground/15 bg-background px-2.5 py-1.5 text-foreground">
+            <li className="rounded border border-foreground/15 bg-background px-2.5 py-1.5 text-foreground sm:truncate">
               <span className="font-semibold text-foreground/60">vuln ›</span> CVE-2024-xxxx ↔ web module (87/100)
             </li>
-            <li className="truncate rounded border border-destructive/50 border-l-4 border-l-destructive bg-destructive/5 px-2.5 py-1.5 font-medium text-foreground" title="critic › BLOCKED egress to non-allowlist host · denied">
+            <li className="rgb-split rounded border border-destructive/50 border-l-4 border-l-destructive bg-destructive/5 px-2.5 py-1.5 font-medium text-foreground sm:truncate" title="critic › BLOCKED egress to non-allowlist host · denied">
               <span className="font-semibold text-destructive">critic ›</span> BLOCKED egress to non-allowlist host · denied
             </li>
-            <li className="truncate rounded border border-foreground/15 bg-background px-2.5 py-1.5 text-foreground">
+            <li className="rounded border border-foreground/15 bg-background px-2.5 py-1.5 text-foreground sm:truncate">
               <span className="font-semibold text-foreground/60">exploit ›</span> craft_exploit → attempt A-12
             </li>
           </ul>
@@ -88,17 +88,17 @@ export function MissionControl() {
             <FileCheck2 className="h-3.5 w-3.5" aria-hidden /> Evidence
           </p>
           <ul className="mt-2.5 space-y-1.5 text-[13px]">
-            <li className="flex items-center gap-2 rounded border border-foreground/20 bg-background px-2.5 py-1.5">
-              <GitBranch className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />
-              <span className="font-mono font-medium">H-03 PROBE</span>
-              <span className="ml-auto rounded-full border border-foreground/30 px-2 py-px font-mono text-xs font-semibold">
+            <li className="flex min-w-0 items-center gap-2 rounded border border-foreground/20 bg-background px-2.5 py-1.5">
+              <GitBranch className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden />
+              <span className="truncate font-mono font-medium">H-03 PROBE</span>
+              <span className="ml-auto shrink-0 rounded-full border border-foreground/30 px-2 py-px font-mono text-xs font-semibold">
                 CONFIRMED
               </span>
             </li>
-            <li className="flex items-center gap-2 rounded border border-foreground/15 bg-background px-2.5 py-1.5">
-              <Terminal className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />
-              <span className="font-mono">audit chain · sha256</span>
-              <span className="ml-auto font-mono text-xs text-muted-foreground">9f3a…c41d</span>
+            <li className="flex min-w-0 items-center gap-2 rounded border border-foreground/15 bg-background px-2.5 py-1.5">
+              <Terminal className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden />
+              <span className="truncate font-mono">audit chain · sha256</span>
+              <span className="ml-auto shrink-0 font-mono text-xs text-muted-foreground">9f3a…c41d</span>
             </li>
           </ul>
         </div>

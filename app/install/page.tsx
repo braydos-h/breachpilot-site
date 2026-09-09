@@ -84,7 +84,7 @@ export default function InstallPage() {
       <PageHero
         eyebrow="Install"
         title="Install BreachPilot in minutes"
-        lede="Linux is the primary platform, macOS and Windows are supported. Pick your OS below for the one-liner — or scroll for the review-first flow that never pipes an unread script."
+        lede="Linux is the primary platform, macOS and Windows are supported. The review-first flow below is recommended — the one-liner picker is an optional shortcut for scripts you have already read."
       >
         <div className="mt-6 flex flex-wrap items-center gap-2">
           <Badge>Linux · primary</Badge>
